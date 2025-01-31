@@ -1,0 +1,39 @@
+/* ==================================================================================================================
+ * ===== Dashboard - Styling for Medium-Large Screens ===============================================================
+ * ==================================================================================================================
+*/
+.dashboard-container {
+    @apply  w-full h-full bg-skin-fill-dark
+            /* bg-gradient-to-b from-skin-fill-lighter/85 to-skin-fill-light/85 */
+            grid grid-cols-[auto_1fr_auto];
+
+    background-image: url('/images/Blue-Background.jpg');
+    background-size: cover;
+    background-position: center;
+
+    --sidebar-sm-size: calc(var(--icon-with-padding-size) + 1.5rem);
+    --sidebar-close-size: calc(var(--icon-with-padding-size) + 1rem);
+    --icon-with-padding-size: calc(24.8px + 1rem);
+}
+
+.dashboard-container .wrapper { @apply w-min h-min sticky top-0; }
+
+.dashboard-container .main-container {
+    @apply  h-[calc(100vh-1.5rem)] m-3 overflow-auto;
+}
+
+.dashboard-container .main-container::-webkit-scrollbar { @apply hidden; }
+.dashboard-container .main-container .content-wrapper { @apply py-6; }
+
+/* ==================================================================================================================
+ * ===== Dashboard - Styling for Small Screens ======================================================================
+ * ==================================================================================================================
+*/
+.dashboard-container { 
+    @apply  max-md:grid-cols-[1fr];
+}
+.dashboard-container .main-container {
+    @apply  max-md:h-[calc(100vh-var(--sidebar-sm-size))] 
+            max-md:m-0 max-md:mb-[var(--sidebar-sm-size)]
+            max-md:rounded-t-none;
+}

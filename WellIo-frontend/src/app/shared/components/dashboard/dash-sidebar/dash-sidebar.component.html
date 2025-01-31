@@ -1,0 +1,95 @@
+<div #sidebar class="sidebar">
+    <div class="toggle-btn-container">
+        <div class="logo">W</div>
+        <button #toggleSidebarButton class="toggle-btn">
+            <i class="bx bx-chevrons-left bx-sm"></i>
+        </button>
+    </div>
+    <div class="account-info-box">
+        <a class="account-icon">JD</a>
+        <div class="account-text-info">
+            <p class="user-name">John Doe</p>
+            <p class="user-mail">johndoe.at.gmail.com</p>
+        </div>
+
+    </div>
+    <nav class="sidebar-nav">
+        <ul class="sidebar-links">
+            <li class="sidebar-link">
+                <a routerLink="" class="link active">
+                    <i class="bx bxs-dashboard bx-sm"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="sidebar-link">
+                <a routerLink="" class="link">
+                    <i class="bx bx-dumbbell  bx-sm"></i>
+                    <span>Sport</span>
+                </a>
+            </li>
+            <li class="sidebar-link">
+                <a routerLink="" class="link">
+                    <i class="bx bx-fork  bx-sm"></i>
+                    <span>Food</span>
+                </a>
+            </li>
+            <li class="sidebar-link">
+                <button #dropDownButtonForSubMenu class="dropdown-btn">
+                    <i class="bx bxs-edit bx-sm"></i>
+                    <span>Journal</span>
+                    <i class="bx bx-chevron-down bx-sm"></i>
+                </button>
+                <ul class="sub-menu">
+                    <div class="sub-menu-container">
+                        <li><a class="link">Mood Tracker</a></li>
+                        <li><a class="link">Daily Activities</a></li>
+                        <li><a class="link">Notes</a></li>
+                    </div>
+                </ul>
+            </li>
+            <li class="sidebar-link">
+                <button #dropDownButtonForSubMenu class="dropdown-btn">
+                    <i class="bx bxs-edit bx-sm"></i>
+                    <span>Journal</span>
+                    <i class="bx bx-chevron-down bx-sm"></i>
+                </button>
+                <ul class="sub-menu">
+                    <div class="sub-menu-container">
+                        <li><a class="link">Mood Tracker</a></li>
+                        <li><a class="link">Daily</a></li>
+                        <li><a class="link">Notes</a></li>
+                        <li><a class="link">Mood Tracker 2</a></li>
+                        <li><a class="link">Daily 2</a></li>
+                        <li><a class="link">Notes 2</a></li>
+                    </div>
+                </ul>
+            </li>
+            <li class="sidebar-link">
+                <a routerLink="" class="link">
+                    <i class="bx bxs-calendar bx-sm"></i>
+                    <span>Calendar</span>
+                </a>
+            </li>
+            <div class="links-divider"></div>
+            <li class="sidebar-link">
+                <a routerLink="" class="link">
+                    <i class="bx bxs-moon bx-sm"></i> <!-- bxs-sun -->
+                    <span>Dark Theme</span>
+                </a>
+            </li>
+            <li class="sidebar-link">
+                <a routerLink="" class="link">
+                    <i class="bx bxs-cog bx-sm"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+            <li class="sidebar-link">
+                <a routerLink="" class="link">
+                    <i class="bx bxs-log-out bx-sm"></i>
+                    <span>Log Out</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+

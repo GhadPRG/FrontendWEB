@@ -1,9 +1,64 @@
-/* You can add global styles to this file, and also import other style files */
 
-/* ---- Tailwind CSS Modules ---- */
+/* --- Imports --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+
+/* ----- Tailwind CSS Modules ----- */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 
+@layer base {
+    /* ----- Theme Style Variables ----- */
+    :root {
+        /* ----- Default Theme: Base ----- */
+        --color-text-light-base: 0 0 0;
+        --color-text-light-muted: 29 30 46;
+        --color-text-light-accent: 30 64 175;
+
+        --color-text-dark-base: 255 255 255;
+        --color-text-dark-muted: 242 242 242;
+        --color-text-dark-accent: 29 78 216;
+
+        --color-fill-lighter: 191 219 254; /* 200 */
+        --color-fill-light: 147 197 253; /* 300 */
+        --color-fill-medium: 96 165 259; /* 400 */
+        --color-fill-dark: 37 99 235; /* 600 */
+        --color-fill-darker: 30 64 175; /* 800 */
+
+        --color-fill-lightest: 239 246 255; /* 50 */
+        --color-fill-darkest: 23 37 84; /* 950 */
+
+        --color-text-logo: var(--color-fill-light);
+    }
+}
+
+/* @layer components {
+    .glass-panel {
+        background: linear-gradient(225deg, rgba(255 255 255 / 0.3), rgba(255 255 255 / 0.1)), rgba(255 255 255 / .15);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        filter: saturate(150%);
+        border-radius: 30px;
+        box-shadow: inset 0px 2px 4px 0px rgba(255 255 255 / 0.8),
+                    inset 0px 20px 40px 0px rgba(255 255 255 / .5),
+                    0 8px 32px rgba(0 0 0 / 0.37);
+    }
+} */
+
+
+/* ----- Global Styling --------------------------------------------------------------------------------------------- */
+*, *::before, *::after {
+    @apply m-0 p-0 box-border;
+}
+
+body { @apply min-h-screen font-poppins; }
+
+
+/* --- Scrollbars --------------------------------------------------------------------------------------------------- */
+*::-webkit-scrollbar { @apply w-2 h-2; }
+*::-webkit-scrollbar-track { @apply bg-transparent; }
+*::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb:hover { @apply bg-skin-fill-darker bg-opacity-50 rounded-xl; }

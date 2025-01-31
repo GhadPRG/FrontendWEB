@@ -1,0 +1,43 @@
+/* ==================================================================================================================
+ * ===== Header - Styling for Medium-Large Screens ==================================================================
+ * ==================================================================================================================
+*/
+.header {
+    @apply  h-40 px-3 
+            rounded-xl glass-panel
+            flex justify-between items-center space-x-3
+            text-skin-base-light;
+}
+
+/* ----- Header: Welcome Message ------------------------------------------------------------------------------------ */
+.header .welcome-content { @apply flex flex-col; }
+
+.header .welcome-content .welcome-message {
+    @apply pl-3 space-y-1;
+}
+.header .welcome-content .welcome-message .title { @apply text-3xl font-bold; }
+.header .welcome-content .welcome-message .subtitle { @apply text-sm; }
+
+/* ----- Header: Mood Tracker Content ------------------------------------------------------------------------------- */
+.header .mood-content {
+    @apply  w-min p-6
+            flex flex-col space-y-3;
+}
+
+.mood-content .mood-question-container { @apply flex justify-center items-center; }
+.mood-content .mood-question-container .mood-question { @apply text-wrap flex-1; }
+.mood-content .mood-question-container .today-mood { @apply w-20 h-20 rounded-lg bg-gray-300; }
+
+.mood-content .mood-list { @apply flex justify-center items-center space-x-3; }
+.mood-content .mood-list .mood { 
+    @apply  w-8 h-8
+            rounded-lg bg-gradient-to-br
+            transition-all ease-in-out
+            hover:scale-125;
+}
+
+.mood-content .mood-list .mood.mood-happy { @apply from-teal-400 to-teal-500; }
+.mood-content .mood-list .mood.mood-fine { @apply from-green-400 to-green-500; }
+.mood-content .mood-list .mood.mood-normal { @apply from-blue-400 to-blue-500; }
+.mood-content .mood-list .mood.mood-sad { @apply from-orange-400 to-orange-500; }
+.mood-content .mood-list .mood.mood-dispear { @apply from-red-400 to-red-500; }

@@ -1,0 +1,210 @@
+/* ==================================================================================================================
+ * ===== SideBar - Styling for Medium-Large Screens =================================================================
+ * ==================================================================================================================
+*/
+.sidebar {
+    @apply  w-64 h-[calc(100vh-1.5rem)] m-3 py-2 px-3
+            overflow-y-auto overflow-x-hidden
+            sticky top-0 self-start
+            /* bg-transparent */ rounded-xl glass-panel
+            text-nowrap text-skin-muted-light  
+            transition-all duration-500;
+}
+.sidebar i { @apply  transition-all duration-300; }
+.sidebar::-webkit-scrollbar { @apply hidden; }
+
+
+/* ----- SideBar: Logo & Toggle Button ------------------------------------------------------------------------------ */
+.sidebar .toggle-btn-container {
+    @apply  mb-4 relative flex justify-between;
+}
+.sidebar .toggle-btn-container .logo {
+    @apply  w-[var(--icon-with-padding-size)] h-[var(--icon-with-padding-size)]
+            absolute left-0
+            rounded-lg glass-panel /* bg-gradient-to-br from-skin-fill-dark to-skin-fill-darker */
+            flex justify-center items-center
+            text-2xl font-bold
+            transition-all duration-300
+            /* shadow-custom-for-button; */
+}
+
+.sidebar .toggle-btn-container .toggle-btn {
+    @apply  ml-auto p-2 
+            rounded-lg bg-opacity-0
+            flex justify-center items-center
+            cursor-pointer hover:bg-skin-lightest hover:bg-opacity-25;
+}
+
+
+/* ----- SideBar: Account-info-box ---------------------------------------------------------------------------------- */
+.sidebar .account-info-box {
+    @apply  h-40 
+            flex flex-row justify-start items-center space-x-3
+            transition-all duration-500;
+}
+
+.sidebar .account-info-box .account-icon {
+    @apply  w-20 h-20 min-w-[var(--icon-with-padding-size)] p-2
+            rounded-lg glass-panel
+            /* bg-skin-lightest/85 */
+            flex justify-end items-end
+            font-bold text-3xl text-skin-accent-light/25
+            /* shadow-custom-for-button */
+            cursor-pointer
+            transition-all duration-500 ease-in-out;
+}
+
+.sidebar .account-info-box .account-text-info { 
+    @apply  overflow-hidden 
+            flex flex-col justify-start items-start
+            transition-all duration-500 ease-in-out;
+}
+.sidebar .account-info-box .account-text-info .user-name { @apply text-xl font-bold; }
+.sidebar .account-info-box .account-text-info .user-mail { @apply text-xs; }
+
+
+/* ----- SideBar: Navigation Links ---------------------------------------------------------------------------------- */
+.sidebar .sidebar-nav .sidebar-links
+{ @apply space-y-1; }
+
+.sidebar .sidebar-nav .sidebar-link .link,
+.sidebar .sidebar-nav .sidebar-link .dropdown-btn {
+    @apply  p-2 rounded-lg overflow-hidden
+            flex items-center justify-start gap-3
+            cursor-pointer
+            hover:bg-skin-lightest hover:bg-opacity-25;
+}
+.sidebar .sidebar-nav .sidebar-link .dropdown-btn 
+{ @apply w-full text-left; }
+
+
+/* ----- SideBar: Navigation Links when Active ---------------------------------------------------------------------- */
+.sidebar .sidebar-nav .sidebar-link .link.active, 
+.sidebar .sidebar-nav .sidebar-link .link.active i 
+{ @apply text-skin-base-light; }
+
+.sidebar .sidebar-nav .sidebar-link .link.active 
+{ @apply font-bold hover:bg-transparent; }
+
+.sidebar .sidebar-nav .sidebar-link:has(.link.active) { 
+    @apply  rounded-lg glass-panel
+     /* bg-gradient-to-br from-skin-fill-dark to-skin-fill-darker
+            shadow-custom-for-button; */
+}
+
+
+/* ----- SideBar: Navigation Links' Title --------------------------------------------------------------------------- */
+.sidebar .sidebar-nav .sidebar-link .link span,
+.sidebar .sidebar-nav .sidebar-link .dropdown-btn span {
+    @apply  pl-0 flex-grow
+            transition-all duration-500;
+}
+
+
+/* ----- SideBar: Navigation Sub-Menus ------------------------------------------------------------------------------ */
+.sidebar .sidebar-nav .sidebar-link .sub-menu {
+    @apply  grid grid-rows-[0fr]
+            transition-all duration-300 ease-in-out;
+}
+.sidebar .sidebar-nav .sidebar-link .sub-menu .link 
+{ @apply pl-9; }
+
+
+/* ----- SideBar: Navigation Sub-Menus when Shown ------------------------------------------------------------------- */
+.sidebar .sidebar-nav .sidebar-link .sub-menu .sub-menu-container 
+{ @apply overflow-hidden; }
+.sidebar .sidebar-nav .sidebar-link .sub-menu.shown 
+{ @apply grid-rows-[1fr]; }
+
+
+/* ----- SideBar: Links Divider ------------------------------------------------------------------------------------- */
+.sidebar .sidebar-nav .sidebar-links .links-divider {
+    @apply  w-full h-14 relative;
+}
+
+
+/* ----- SideBar when Closed ---------------------------------------------------------------------------------------- */
+.sidebar.closed { @apply  w-[var(--sidebar-close-size)] px-2; }
+
+.sidebar.closed .toggle-btn-container .logo {
+    @apply left-[calc(-1*var(--sidebar-close-size))];
+}
+
+.sidebar.closed .sidebar-nav .sidebar-link .link span,
+.sidebar.closed .sidebar-nav .sidebar-link .dropdown-btn span
+{ @apply  pl-3; } 
+
+
+.sidebar.closed .account-info-box .account-icon {
+    @apply  min-w-[var(--icon-with-padding-size)] h-[var(--icon-with-padding-size)]
+            text-xl text-skin-accent-light/100;
+}
+
+.sidebar.closed .account-info-box .account-text-info { @apply  pl-3; }
+
+
+/* ==================================================================================================================
+ * ===== SideBar - Styling for Small Screens ======================================================================== 
+ * ==================================================================================================================
+*/
+.sidebar, .sidebar.closed {
+    @apply  max-md:w-full max-md:h-[var(--sidebar-sm-size)] max-md:py-2 max-md:px-6
+            max-md:overflow-x-auto max-md:overflow-y-hidden
+            max-md:fixed max-md:top-[unset] max-md:bottom-0
+            max-md:flex max-md:items-center;
+}
+.sidebar::-webkit-scrollbar { @apply max-md:block max-md:w-1 max-md:h-1; }
+
+
+/* ----- SideBar: Account-info-box ---------------------------------------------------------------------------------- */
+.sidebar .account-info-box
+{ @apply  max-md:hidden; }
+
+
+/* ----- SideBar: Navigation Links List ----------------------------------------------------------------------------- */
+.sidebar .sidebar-nav .sidebar-links {
+    @apply  max-md:grid max-md:grid-flow-col
+            max-md:[grid-auto-columns:_var(--icon-with-padding-size)]
+            max-md:gap-2 max-md:items-center max-md:space-y-0
+            max-md:overflow-x-auto;
+}
+
+
+/* ----- SideBar: Toggle Button, Navigation Links' Title ------------------------------------------------------------ */
+.sidebar .toggle-btn-container,
+.sidebar .sidebar-nav .sidebar-link .link span,
+.sidebar .sidebar-nav .sidebar-link .dropdown-btn span,
+.sidebar .sidebar-nav .sidebar-link .dropdown-btn i:last-child
+{ @apply  max-md:hidden; }
+
+
+/* ----- SideBar: Navigation Sub-Menus when Shown ------------------------------------------------------------------- */
+.sidebar .sidebar-nav .sidebar-link .sub-menu { 
+    @apply  max-md:h-0 max-md:py-0 max-md:overflow-hidden 
+            max-md:duration-0;
+}
+.sidebar .sidebar-nav .sidebar-link .sub-menu.shown { 
+    @apply  max-md:w-full max-md:h-auto max-md:py-2
+            max-md:fixed max-md:bottom-[var(--sidebar-sm-size)] max-md:left-0 
+            max-md:bg-skin-fill-lighter
+            max-md:flex max-md:justify-center
+            max-md:duration-300;
+}
+.sidebar .sidebar-nav .sidebar-link .sub-menu .sub-menu-container 
+{ @apply max-md:overflow-x-auto max-md:space-x-2; }
+.sidebar .sidebar-nav .sidebar-link .sub-menu li 
+{ @apply max-md:inline-flex; }
+
+.sidebar .sidebar-nav .sidebar-link .sub-menu.shown .link 
+{ @apply max-md:p-4 max-md:w-auto; }
+
+
+/* ----- SideBar: Links Divider ------------------------------------------------------------------------------------- */
+.sidebar .sidebar-nav .sidebar-links .links-divider {
+    @apply  max-md:w-full max-md:h-full
+            max-md:before:block max-md:before:w-1 max-md:before:h-1 
+            max-md:before:absolute max-md:before:top-1/2 max-md:before:left-1/2 
+            max-md:before:-translate-x-1/2 max-md:before:-translate-y-1/2
+            max-md:before:rounded-full
+            max-md:before:bg-skin-fill-darker/50;
+}

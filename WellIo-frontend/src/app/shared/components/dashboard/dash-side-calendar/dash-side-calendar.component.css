@@ -1,0 +1,42 @@
+
+/* ==================================================================================================================
+ * ===== Side Calendar - Styling for Medium-Large Screens ===========================================================
+ * ==================================================================================================================
+*/
+.side-calendar {
+    @apply  w-64 h-[calc(100vh-1.5rem)] m-3 py-2 px-3
+            overflow-y-auto overflow-x-hidden
+            sticky top-0 self-start
+            rounded-xl glass-panel
+            text-nowrap text-skin-muted-light  
+            transition-all duration-500;
+}
+.side-calendar i { @apply  transition-all duration-300; }
+.side-calendar::-webkit-scrollbar { @apply hidden; }
+
+
+/* ----- Side Calendar: Toggle Button ------------------------------------------------------------------------------- */
+.side-calendar .toggle-btn-container {
+    @apply  mb-4 relative flex justify-between;
+}
+
+.side-calendar .toggle-btn-container .toggle-btn {
+    @apply  mr-auto p-2 
+            rounded-lg bg-opacity-0
+            flex justify-center items-center
+            cursor-pointer hover:bg-skin-lightest hover:bg-opacity-25;
+}
+
+
+/* ----- Side Calendar when Closed ---------------------------------------------------------------------------------------- */
+.side-calendar.closed { @apply  w-[var(--sidebar-close-size)] px-2; }
+
+
+
+/* ==================================================================================================================
+ * ===== Side Calendar - Styling for Small Screens ================================================================== 
+ * ==================================================================================================================
+*/
+.side-calendar, .side-calendar.closed {
+    @apply  max-md:hidden;
+}
