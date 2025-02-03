@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
-import { DashHeaderComponent } from "../dashboard/dash-header/dash-header.component";
+import { Component, OnInit } from '@angular/core';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'app-dash-settings',
   standalone: true,
-  imports: [DashHeaderComponent],
+  imports: [],
   templateUrl: './dash-settings.component.html',
   styleUrl: './dash-settings.component.css'
 })
-export class DashSettingsComponent {
+export class DashSettingsComponent implements OnInit {
+
+  constructor(private dashSerive: DashboardService) {}
+
+  ngOnInit(): void {
+    this.dashSerive.setHeaderText("Your Settings");
+  }
 
 }
