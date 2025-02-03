@@ -46,6 +46,10 @@
 
         --color-fill-lightest: 239 246 255; /* 50 */
         --color-fill-darkest: 23 37 84; /* 950 */
+
+        --url-bg-grad: url('/images/Blue-Gradient.jpg');
+        --url-bg-image: url('/images/Blue-Background.jpg');
+
     }
 
     .theme-red {
@@ -84,7 +88,8 @@
 
 body { @apply min-h-screen font-poppins; }
 
-.grid-container { @apply grid grid-flow-row grid-cols-6 gap-6 text-skin-base-light; }
+.grid-container { @apply grid grid-flow-row grid-cols-6 gap-6 text-skin-base-light
+                         max-md:grid-cols-1; }
 
 
 /* --- Scrollbars --------------------------------------------------------------------------------------------------- */
