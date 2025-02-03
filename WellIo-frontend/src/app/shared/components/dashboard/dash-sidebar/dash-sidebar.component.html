@@ -16,20 +16,20 @@
     <nav class="sidebar-nav">
         <ul class="sidebar-links">
             <li class="sidebar-link">
-                <a routerLink="" class="link active">
+                <a routerLink="/dashboard" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" class="link">
                     <i class="bx bxs-dashboard bx-sm"></i>
                     <span>Home</span>
                 </a>
             </li>
             <li class="sidebar-link">
-                <a routerLink="" class="link">
-                    <i class="bx bx-dumbbell  bx-sm"></i>
+                <a routerLink="/dashboard/sport" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" class="link">
+                    <i class="bx bx-dumbbell bx-sm"></i>
                     <span>Sport</span>
                 </a>
             </li>
             <li class="sidebar-link">
-                <a routerLink="" class="link">
-                    <i class="bx bx-fork  bx-sm"></i>
+                <a routerLink="/dashboard/food" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" class="link">
+                    <i class="bx bx-fork bx-sm"></i>
                     <span>Food</span>
                 </a>
             </li>
@@ -65,26 +65,26 @@
                 </ul>
             </li>
             <li class="sidebar-link">
-                <a routerLink="" class="link">
+                <a routerLink="/dashboard/calendar" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" class="link">
                     <i class="bx bxs-calendar bx-sm"></i>
                     <span>Calendar</span>
                 </a>
             </li>
             <div class="links-divider"></div>
             <li class="sidebar-link">
-                <a routerLink="" class="link">
+                <a class="link">
                     <i class="bx bxs-moon bx-sm"></i> <!-- bxs-sun -->
                     <span>Dark Theme</span>
                 </a>
             </li>
             <li class="sidebar-link">
-                <a routerLink="" class="link">
+                <a routerLink="/dashboard/settings" class="link">
                     <i class="bx bxs-cog bx-sm"></i>
                     <span>Settings</span>
                 </a>
             </li>
             <li class="sidebar-link">
-                <a routerLink="" class="link">
+                <a class="link">
                     <i class="bx bxs-log-out bx-sm"></i>
                     <span>Log Out</span>
                 </a>

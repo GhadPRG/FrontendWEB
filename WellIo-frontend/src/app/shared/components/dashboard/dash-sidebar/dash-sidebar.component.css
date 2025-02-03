@@ -3,10 +3,10 @@
  * ==================================================================================================================
 */
 .sidebar {
-    @apply  w-64 h-[calc(100vh-1.5rem)] m-3 py-2 px-3
+    @apply  w-64 h-[calc(100vh-1.5rem)] m-3 py-3 px-3
             overflow-y-auto overflow-x-hidden
             sticky top-0 self-start
-            /* bg-transparent */ rounded-xl glass-panel
+            bg-transparent rounded-xl glass-panel
             text-nowrap text-skin-muted-light  
             transition-all duration-500;
 }
@@ -148,8 +148,10 @@
  * ==================================================================================================================
 */
 .sidebar, .sidebar.closed {
-    @apply  max-md:w-full max-md:h-[var(--sidebar-sm-size)] max-md:py-2 max-md:px-6
-            max-md:overflow-x-auto max-md:overflow-y-hidden
+    @apply  max-md:w-[calc(100vw-1.5rem)] max-md:h-[var(--sidebar-sm-size)] 
+            max-md:py-2 max-md:px-3
+            max-md:overflow-x-auto
+            max-md:overflow-y-hidden
             max-md:fixed max-md:top-[unset] max-md:bottom-0
             max-md:flex max-md:items-center;
 }
@@ -180,16 +182,22 @@
 
 /* ----- SideBar: Navigation Sub-Menus when Shown ------------------------------------------------------------------- */
 .sidebar .sidebar-nav .sidebar-link .sub-menu { 
-    @apply  max-md:h-0 max-md:py-0 max-md:overflow-hidden 
+    @apply  max-md:h-full max-md:py-0 
+            max-md:rounded-xl max-md:glass-panel max-md:bg-skin-lightest/50
             max-md:duration-0;
 }
+.sidebar:has(.sub-menu.shown) {
+    @apply  max-md:overflow-x-visible  max-md:overflow-y-visible;
+}
+
 .sidebar .sidebar-nav .sidebar-link .sub-menu.shown { 
-    @apply  max-md:w-full max-md:h-auto max-md:py-2
-            max-md:fixed max-md:bottom-[var(--sidebar-sm-size)] max-md:left-0 
-            max-md:bg-skin-fill-lighter
+    @apply  max-md:w-full max-md:h-auto max-md:py-2 max-md:z-50
+            max-md:absolute max-md:bottom-[calc(var(--sidebar-sm-size)+.25rem)] max-md:left-0 
+            /* max-md:bg-skin-fill-lighter */
             max-md:flex max-md:justify-center
             max-md:duration-300;
 }
+
 .sidebar .sidebar-nav .sidebar-link .sub-menu .sub-menu-container 
 { @apply max-md:overflow-x-auto max-md:space-x-2; }
 .sidebar .sidebar-nav .sidebar-link .sub-menu li 
@@ -208,3 +216,8 @@
             max-md:before:rounded-full
             max-md:before:bg-skin-fill-darker/50;
 }
+
+
+/* ----- SideBar: ScrollBars ---------------------------------------------------------------------------------------- */
+.sidebar::-webkit-scrollbar { @apply max-md:hidden; }
+.sidebar .sidebar-nav .sidebar-link .sub-menu .sub-menu-container::-webkit-scrollbar { @apply max-md:hidden; }

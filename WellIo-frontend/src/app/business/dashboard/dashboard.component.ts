@@ -18,4 +18,8 @@ export class DashboardComponent {
 
   constructor(private dashService: DashboardService) {}
 
+  // Sidebar Function 
+  isSidebarMenuOpened(): boolean {
+    return this.dashService.isSideBarMenuOpened();
+  }
 }

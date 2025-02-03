@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { DashboardService } from '../../../services/dashboard.service';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar-dashboard',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './dash-sidebar.component.html',
   styleUrl: './dash-sidebar.component.css'
 })
@@ -16,33 +17,33 @@ export class DashSidebarComponent implements AfterViewInit {
   @ViewChild('sidebar') sidebarRef!: ElementRef;
 
 
-  public sideNavigationLinks = [
-    {
-      path: '/dashboard',
-      label: 'DashBoard',
-      icon: 'ri-home-5-fill',
-    },
-    {
-      path: '/dashboard/sport',
-      label: 'Exercise',
-      icon: 'ri-home-5-fill',
-    },
-    {
-      path: '/dashboard/food',
-      label: 'Food',
-      icon: 'ri-home-5-fill',
-    },
-    {
-      path: '/dashboard/notes',
-      label: 'Notes',
-      icon: 'ri-home-5-fill',
-    },
-    {
-      path: '/dashboard/calendar',
-      label: 'Calendar',
-      icon: 'ri-home-5-fill',
-    },
-  ]
+  // public sideNavigationLinks = [
+  //   {
+  //     path: '/dashboard',
+  //     label: 'DashBoard',
+  //     icon: 'ri-home-5-fill',
+  //   },
+  //   {
+  //     path: '/dashboard/sport',
+  //     label: 'Exercise',
+  //     icon: 'ri-home-5-fill',
+  //   },
+  //   {
+  //     path: '/dashboard/food',
+  //     label: 'Food',
+  //     icon: 'ri-home-5-fill',
+  //   },
+  //   {
+  //     path: '/dashboard/notes',
+  //     label: 'Notes',
+  //     icon: 'ri-home-5-fill',
+  //   },
+  //   {
+  //     path: '/dashboard/calendar',
+  //     label: 'Calendar',
+  //     icon: 'ri-home-5-fill',
+  //   },
+  // ]
 
   constructor(private dashService: DashboardService) {}
 
@@ -70,6 +71,7 @@ export class DashSidebarComponent implements AfterViewInit {
     // Open SubMenu - Flip Drop-Down Icon
     btn.nextSibling.classList.toggle('shown');
     btn.children[btn.children.length - 1].classList.toggle('bx-rotate-180');
+    this.dashService.setIsSideBarMenuOpened(btn.nextSibling.classList.contains('shown'));
 
     // If Trying to Open SubMenu while Sidebar closed, then Open Sidebar
     if (this.sidebarRef.nativeElement.classList.contains('closed')) { 
