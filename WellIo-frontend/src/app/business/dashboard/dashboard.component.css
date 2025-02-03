@@ -6,10 +6,11 @@
     @apply  w-full h-full
             /* bg-skin-fill-dark bg-gradient-to-b from-skin-fill-lighter/85 to-skin-fill-light/85 */
             grid grid-cols-[auto_1fr_auto];
-
-    background-image: url('/images/Blue-Background.jpg');
+    
+    background-image: url('/images/Blue-Gradient.jpg');
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
 
     --sidebar-sm-size: calc(var(--icon-with-padding-size) + 1.5rem);
     --sidebar-close-size: calc(var(--icon-with-padding-size) + 1rem);
@@ -19,7 +20,7 @@
 .dashboard-container .wrapper { @apply w-min h-min sticky top-0; }
 
 .dashboard-container .main-container {
-    @apply  h-[calc(100vh-1.5rem)] m-3;
+    @apply  h-[calc(100vh-0.75rem)] py-3 px-3 rounded-xl;
 }
 
 .dashboard-container .main-container::-webkit-scrollbar { @apply hidden; }
@@ -33,11 +34,10 @@
     @apply  max-md:grid-cols-[1fr];
 }
 .dashboard-container .main-container {
-    @apply  max-md:h-[calc(100vh-var(--sidebar-sm-size)-3rem)]
-            max-md:m-6 max-md:mb-[calc(var(--sidebar-sm-size)+1.5rem)]
-            max-md:rounded-t-none;
+    @apply  max-md:h-[calc(100vh-var(--sidebar-sm-size)-1.25rem)]
+            max-md:mb-[calc(var(--sidebar-sm-size)+1.25rem)];
 }
 .dashboard-container .main-container.sidebar-menu-opened {
-    @apply  max-md:h-[calc(100vh-var(--sidebar-sm-size)*2-3.5rem)]
+    @apply  max-md:h-[calc(100vh-var(--sidebar-sm-size)*2-2rem)]
             max-md:mb-[calc(var(--sidebar-sm-size)*2+2rem)];
 }

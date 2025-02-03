@@ -149,7 +149,7 @@
 */
 .sidebar, .sidebar.closed {
     @apply  max-md:w-[calc(100vw-1.5rem)] max-md:h-[var(--sidebar-sm-size)] 
-            max-md:py-2 max-md:px-3
+            max-md:py-2 max-md:px-6
             max-md:overflow-x-auto
             max-md:overflow-y-hidden
             max-md:fixed max-md:top-[unset] max-md:bottom-0

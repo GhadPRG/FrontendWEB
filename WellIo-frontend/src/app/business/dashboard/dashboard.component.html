@@ -125,10 +125,8 @@
        <app-sidebar-dashboard />
     </aside>
     <main class="main-container overflow-auto" [class.sidebar-menu-opened]="isSidebarMenuOpened()">
-        <!-- <app-header-dashboard />
-        <div class="content-wrapper">
-            <router-outlet></router-outlet>
-        </div> -->
+        <app-header-dashboard />
+
         <router-outlet></router-outlet>
     </main>
     <aside class="wrapper">
