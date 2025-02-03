@@ -33,6 +33,34 @@
 
         --color-text-logo: var(--color-fill-light);
     }
+
+    .theme-blue {
+        --color-text-light-accent: 30 64 175;
+        --color-text-dark-accent: 29 78 216;
+
+        --color-fill-lighter: 191 219 254; /* 200 */
+        --color-fill-light: 147 197 253; /* 300 */
+        --color-fill-medium: 96 165 259; /* 400 */
+        --color-fill-dark: 37 99 235; /* 600 */
+        --color-fill-darker: 30 64 175; /* 800 */
+
+        --color-fill-lightest: 239 246 255; /* 50 */
+        --color-fill-darkest: 23 37 84; /* 950 */
+    }
+
+    .theme-red {
+        --color-text-light-accent: 174 30 30;
+        --color-text-dark-accent: 216 29 29;
+
+        --color-fill-lighter: 254 202 202; /* 200 */
+        --color-fill-light: 252 165 165; /* 300 */
+        --color-fill-medium: 248 113 113; /* 400 */
+        --color-fill-dark: 220 38 38; /* 600 */
+        --color-fill-darker: 153 27 27; /* 800 */
+
+        --color-fill-lightest: 254 242 242; /* 50 */
+        --color-fill-darkest: 69 10 10; /* 950 */
+    }
 }
 
 /* @layer components {
@@ -56,9 +84,73 @@
 
 body { @apply min-h-screen font-poppins; }
 
+.grid-container { @apply grid grid-flow-row grid-cols-6 gap-6 text-skin-base-light; }
+
 
 /* --- Scrollbars --------------------------------------------------------------------------------------------------- */
 *::-webkit-scrollbar { @apply w-2 h-2; }
 *::-webkit-scrollbar-track { @apply bg-transparent; }
 *::-webkit-scrollbar-thumb,
 *::-webkit-scrollbar-thumb:hover { @apply bg-skin-fill-darker bg-opacity-50 rounded-xl; }
+
+
+/* ----- Glass Title Backgrounds ------------------------------------------------------------------------------------ */
+.glass-top-title-bg { @apply rounded-tl-xl rounded-tr-xl bg-gradient-to-b from-transparent to-white/15; }
+.glass-inner-title-bg { @apply rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-white/25 to-white/5; }
+
+
+/* ----- Charts ----------------------------------------------------------------------------------------------------- */
+.donut-chart {
+    @apply rounded-full shadow-glass;
+
+    --inner-ring-percent: 50%;
+    --fill-percent: 0%;
+
+    --tw-gradient-from-position: 0;
+    --tw-gradient-to-position: var(--fill-percent);
+
+    mask: radial-gradient(circle at 50% 50%, transparent 0 var(--inner-ring-percent), black 0 75%, transparent 0);
+    background: conic-gradient(var(--tw-gradient-stops), transparent 0 100%); 
+}
+
+.bar-chart {
+    @apply  absolute top-2 left-2 bottom-2 right-2
+            rounded-[1.75rem] bg-transparent overflow-hidden
+            pointer-events-none
+            /* ----- Before: Actual Gradient ----- */
+            before:block before:w-full before:h-full
+            before:absolute before:bottom-0 
+            before:rounded-lg before:bg-gradient-to-br
+            before:shadow-glass;
+
+    --fill-percent: 0;
+    --min-fill-val: 5;
+    --delta-fill: calc(var(--fill-percent) * (100 - var(--min-fill-val)) / 100);
+    --translate-value: calc(100% - var(--min-fill-val) * 1% - var(--delta-fill) * 1%);
+}
+.vertical-bar-chart { @apply before:translate-y-[var(--translate-value)]; }
+.horizontal-bar-chart { @apply before:right-[var(--translate-value)]; }
+
+/* ----- Info Structure --------------------------------------------------------------------------------------------- */
+.info-container {
+    @apply  w-full h-full relative rounded-xl glass-panel;
+}
+
+.info-container .panel-title {
+    @apply  w-full h-16
+            flex justify-center items-center 
+            font-bold text-xl;
+}
+.info-container .info-content {
+     @apply w-11/12 h-auto mx-auto p-6 
+            grid gap-3;
+}
+
+/* ----- Base Color ------------------------------------------------------------------------------------------------- */
+
+.calories { @apply from-green-500/75 to-green-600/75; }
+.carbs { @apply from-blue-300/75  to-blue-400/75; }
+.proteins { @apply from-red-300/75 to-red-400/75; }
+.fats { @apply from-amber-300/75 to-amber-400/75; }
+.fibers { @apply from-yellow-800/75 to-yellow-900/75; }
+

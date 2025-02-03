@@ -57,23 +57,23 @@ module.exports = {
       boxShadow: {
         'custom-for-container-1': '-10px -10px 10px rgba(255 255 255 / 0.2), 15px 15px 15px rgba(0 0 0 / 0.1)',
         'custom-for-button': 'inset 4px 4px 5px rgba(255 255 255 / 0.2), inset -4px -4px 5px rgba(0 0 0 / 0.1)',
+        'glass': 'inset 0px 2px 4px 0px rgba(255 255 255 / 0.8), inset 0px 20px 40px 0px rgba(255 255 255 / .25), 0 8px 32px rgba(0 0 0 / 0.2)',
       }
     },
   },
   plugins: [
-    plugin(function ({ addComponents, theme }) {
+    plugin(function ({ addComponents }) {
       addComponents({
         '.glass-panel' : {
-          'background': 'linear-gradient(225deg, rgba(255 255 255 / 0.3), rgba(255 255 255 / 0.1)), rgba(255 255 255 / .15)',
+          'background': 'linear-gradient(225deg, rgba(255 255 255 / 0.3), rgba(255 255 255 / 0.1)), rgba(255 255 255 / .2)',
           // 'background': 'radial-gradient(ellipse at right top, rgba(255 255 255 / 0.3) 0%, rgba(var(--color-fill-light) / 0.1) 25%, rgba(var(--color-fill-dark) / .2) 62%, rgba(255 255 255 / .0) 100%), rgba(255 255 255 / .15)',
           
-          'backdrop-filter': 'blur(8px)',
           '-webkit-backdrop-filter': 'blur(8px)',
+          'backdrop-filter': 'blur(8px)',
           'filter': 'saturate(150%)',
           
           'box-shadow': 'inset 0px 2px 4px 0px rgba(255 255 255 / 0.8), inset 0px 20px 40px 0px rgba(255 255 255 / .5), 0 8px 32px rgba(0 0 0 / 0.37)',
-      }
-
+        },
       })
     }),
   ]
