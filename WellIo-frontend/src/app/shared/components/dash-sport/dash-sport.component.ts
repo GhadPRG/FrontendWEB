@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
-  selector: 'app-dash-home',
+  selector: 'app-dash-sport',
   standalone: true,
   imports: [],
-  templateUrl: './dash-home.component.html',
-  styleUrl: './dash-home.component.css'
+  templateUrl: './dash-sport.component.html',
+  styleUrl: './dash-sport.component.css'
 })
-export class DashHomeComponent implements OnInit {
-
+export class DashSportComponent implements OnInit {
+  
   constructor(private dashSerive: DashboardService) {}
 
   ngOnInit(): void {
-    this.dashSerive.setHeaderText("");
+    this.dashSerive.setHeaderText("Sport & Exercise");
   }
-  
+
 }

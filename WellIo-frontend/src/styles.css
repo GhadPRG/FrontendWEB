@@ -83,7 +83,7 @@
 
 /* ----- Global Styling --------------------------------------------------------------------------------------------- */
 *, *::before, *::after {
-    @apply m-0 p-0 box-border;
+    @apply m-0 p-0 box-border placeholder:text-skin-base-light;
 }
 
 body { @apply min-h-screen font-poppins; }
@@ -96,7 +96,7 @@ body { @apply min-h-screen font-poppins; }
 *::-webkit-scrollbar { @apply w-2 h-2; }
 *::-webkit-scrollbar-track { @apply bg-transparent; }
 *::-webkit-scrollbar-thumb,
-*::-webkit-scrollbar-thumb:hover { @apply bg-skin-fill-darker bg-opacity-50 rounded-xl; }
+*::-webkit-scrollbar-thumb:hover { @apply rounded-xl bg-skin-fill-dark/50 shadow-glass; }
 
 
 /* ----- Glass Title Backgrounds ------------------------------------------------------------------------------------ */

@@ -1,0 +1,232 @@
+.content { @apply rounded-xl glass-panel min-h-40 h-max; }
+.content .panel-title {
+    @apply  w-full h-16
+            flex justify-center items-center 
+            font-bold text-xl;
+}
+
+/* ==================================================================================================================
+ * ===== Header - Styling for Medium-Large Screens ==================================================================
+ * ==================================================================================================================
+*/
+.header {
+    @apply  /* px-3 rounded-xl glass-panel */
+            col-span-6
+            grid grid-rows-subgrid grid-cols-subgrid
+            text-skin-base-light;
+}
+
+/* ----- Header: Welcome Message ------------------------------------------------------------------------------------ */
+.header .content.welcome-content { @apply h-full p-6 col-span-4 flex flex-col justify-center items-start; }
+
+.header .welcome-content .welcome-message { @apply space-y-1; }
+.header .welcome-content .welcome-message .title { @apply text-3xl font-bold; }
+.header .welcome-content .welcome-message .subtitle { @apply text-sm; }
+
+/* ----- Header: Mood Tracker Content ------------------------------------------------------------------------------- */
+.header .content.mood-content {
+    @apply  p-6 col-span-2 flex flex-col space-y-4;
+}
+
+.mood-content .mood-question-container { @apply flex justify-center items-center; }
+.mood-content .mood-question-container .mood-question { @apply pr-6 flex-1 text-wrap; }
+.mood-content .mood-question-container .today-mood { @apply w-20 h-20 rounded-lg shadow-glass bg-white/15; }
+
+.mood-content .mood-list { @apply flex justify-center items-center space-x-3; }
+.mood-content .mood-list .mood { 
+    @apply  w-10 h-10
+            rounded-lg bg-gradient-to-br
+            shadow-glass
+            transition-all ease-in-out
+            hover:scale-125;
+}
+
+.mood-content .mood-list .mood.mood-happy { @apply from-teal-500 to-teal-700; }
+.mood-content .mood-list .mood.mood-fine { @apply from-green-500 to-green-700; }
+.mood-content .mood-list .mood.mood-normal { @apply from-blue-500 to-blue-700; }
+.mood-content .mood-list .mood.mood-sad { @apply from-orange-500 to-orange-700; }
+.mood-content .mood-list .mood.mood-dispear { @apply from-red-500 to-red-700; }
+
+
+/* ==================================================================================================================
+ * ===== Content Blocks - Styling for Medium-Large Screens ==========================================================
+ * ==================================================================================================================
+*/
+.content-container { 
+    @apply  h-32 col-span-6
+            grid grid-cols-subgrid gap-6
+            text-skin-base-light;
+}
+
+.content-container .sports-content,
+.content-container .nutrition-content 
+{ @apply col-span-3 relative; }
+
+.content-container .notes-content 
+{ @apply col-span-6; }
+
+.content-container .content .stats-container { 
+    @apply  w-11/12 max-w-[28rem] p-6 gap-3 
+            grid grid-rows-3 grid-cols-4 justify-self-center; 
+}
+
+
+/* ==================================================================================================================
+ * ===== Nutrition Stats - Styling for Medium-Large Screens =========================================================
+ * ==================================================================================================================
+*/
+.content-container .nutrition-content .nutrition-stats { 
+    @apply  w-11/12 max-w-[28rem] p-6 gap-3 
+            grid grid-rows-3 grid-cols-4 justify-self-center; 
+}
+
+/* .nutrition-content .nutrition-stats .stats { 
+    @apply  w-[5.5rem] h-48 p-3 pb-2 relative z-10
+            row-span-2 col-span-1
+            rounded-[2.25rem] shadow-glass;
+} */
+
+.nutrition-content .nutrition-stats .stats { 
+    @apply  w-full h-full p-3 pb-2 relative z-10
+            row-span-1 col-span-2
+            rounded-[2rem] shadow-glass;
+}
+
+.nutrition-content .nutrition-stats .stats .values { 
+    @apply  w-full h-full relative z-10
+            flex flex-row-reverse justify-start items-center;
+}
+.nutrition-content .nutrition-stats .stats .values .to-reach { @apply text-sm tracking-tighter before:content-['/'] before:px-1; }
+.nutrition-content .nutrition-stats .stats .values .reached { @apply text-2xl font-bold tracking-wide; }
+
+
+/* ----- Nutrition Stats: Colors & Shapes --------------------------------------------------------------------------- */
+.nutrition-content .nutrition-stats .stats.calories-stats { @apply w-full h-full row-span-1 col-span-4 text-4xl; }
+.nutrition-content .nutrition-stats .stats.calories-stats .values { @apply items-end px-3 py-1; }
+
+.nutrition-content .nutrition-stats .stats.calories-stats .values .to-reach { @apply pb-1; }
+.nutrition-content .nutrition-stats .stats.calories-stats .values .reached { @apply text-3xl font-bold; }
+
+/* ----- Nutrition Stats: Legend Boxes ------------------------------------------------------------------------------ */
+.nutrition-content .nutrition-stats .legend-container {
+    @apply  w-full h-full row-span-1 col-span-4 mt-5 pt-5 relative
+            grid grid-rows-1 grid-cols-4
+            before:block before:w-2/3 before:h-1
+            before:absolute before:top-0 before:left-1/2 before:-translate-x-1/2
+            before:rounded-full before:shadow-glass;
+}
+
+.nutrition-content .nutrition-stats .legend-container .legend-box {
+    @apply  flex flex-col justify-center items-center space-y-1;
+}
+.nutrition-content .nutrition-stats .legend-container .legend-box .legend-icon {
+    @apply  w-8 h-8 rounded-lg shadow-glass bg-gradient-to-br;
+}
+.nutrition-content .nutrition-stats .legend-container .legend-box .legend-label { @apply text-sm font-semibold; }
+
+
+/* ==================================================================================================================
+ * ===== Exercise Stats - Styling for Medium-Large Screens ==========================================================
+ * ==================================================================================================================
+*/
+.content-container .sports-content .sports-stats { @apply  p-6 grid grid-rows-3 grid-cols-4 gap-3 justify-self-center; }
+.content-container .sports-content .sports-stats .graphics { @apply w-48 h-48 relative row-span-2 col-span-2; }
+
+.sports-content .sports-stats .graphics .chart {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+ 
+
+.sports-stats .graphics .chart.first-chart { 
+    @apply w-48 h-48 from-blue-300/75  to-blue-400/75;;
+
+    --inner-ring-percent: 60%;
+    --fill-percent: 80%;
+
+}
+.sports-stats .graphics .chart.second-chart { 
+    @apply w-36 h-36 from-green-500/75 to-green-600/75;
+
+    --inner-ring-percent: 55%;
+    --fill-percent: 60%;
+
+}
+.sports-stats .graphics .chart.third-chart {
+    @apply w-24 h-24 from-red-300/75 to-red-400/75;
+
+    --fill-percent: 40%;
+}
+
+
+/* ==================================================================================================================
+ * ===== Header - Styling for Small Screens =========================================================================
+ * ==================================================================================================================
+*/
+
+.header {
+    @apply max-md:grid-cols-4;
+}
+
+.header .content.mood-content { @apply max-md:hidden; }
+
+
+
+
+
+
+
+
+/* height : 15% + (min: 15%, max: calc(100% - 0.5rem))*/
+
+
+/* .nutrition-content .nutrition-stats .fats-stats {
+    @apply  before:block before:absolute before:w-44 before:h-44 
+            /* before:rounded-xl  *
+            before:bg-white;
+} */
+/*
+.mask {
+    @apply w-44 h-44 bg-transparent shadow-glass ;
+    --r: 15px; /* the radius *
+    --s: 30px; /* the size of the corner*
+
+    /* 
+    --_m:/calc(2*var(--r)) calc(2*var(--r))
+    radial-gradient(#000 70%,#0000 72%) no-repeat;
+    
+    --mask-1: right calc(var(--s) + var(--r)) top var(--_m);
+    --mask-2: right calc(var(--s) + var(--r)) var(--_m);
+    --mask-3: radial-gradient(var(--s) at 100% 0,#0000 99%,#000 101%) calc(-1*var(--r)) var(--r) no-repeat;
+    --mask-4: conic-gradient(at calc(100% - var(--s) - 2*var(--r)) calc(var(--s) + 2*var(--r)),
+    #0000 25%,#000 0); 
+    
+    *
+
+    --_m:/calc(2*var(--r)) calc(2*var(--r))
+    radial-gradient(#000 70%,#0000 72%) no-repeat;
+
+    --mask-1: right calc(var(--s) + var(--r)) bottom var(--_m);
+    --mask-2: right 0 bottom calc(var(--s) + var(--r)) / calc(2*var(--r)) calc(2*var(--r)) radial-gradient(#000 70%,#0000 72%) no-repeat;
+    --mask-3: radial-gradient(var(--s) at 100% 100%,#0000 99%,#000 101%) calc(-1*var(--r)) calc(-1*var(--r)) no-repeat;
+    --mask-4: conic-gradient(at calc(100% - var(--s) - 2*var(--r)) calc(100% - var(--s) - 2*var(--r)),#000 25%, #0000 25%,
+    #0000 50%,#000f 0);
+
+    border-radius: var(--r);
+
+    mask: 
+        var(--mask-1),
+        var(--mask-2), 
+        var(--mask-3), 
+        var(--mask-4);
+    /* mask:
+      right calc(var(--s) + var(--r)) top var(--_m),
+      right calc(var(--s) + var(--r)) var(--_m),
+      radial-gradient(var(--s) at 100% 0,#0000 99%,#000 101%) 
+       calc(-1*var(--r)) var(--r) no-repeat,
+      conic-gradient(at calc(100% - var(--s) - 2*var(--r)) calc(var(--s) + 2*var(--r)),
+       #0000 25%,#000 0); 
+    *
+}
+*/
+
+

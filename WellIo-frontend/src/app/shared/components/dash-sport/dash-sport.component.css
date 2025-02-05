@@ -1,0 +1,52 @@
+/* ==================================================================================================================
+ * ===== Sport Component - Styling for Medium-Large Screens =========================================================
+ * ==================================================================================================================
+*/
+.sport-container {
+    @apply  h-32 [grid-auto-rows:_auto];
+}
+
+
+/* ----- Sport: Statistics ------------------------------------------------------------------------------------------ */
+.sport-container .info-container.exercise-stats { @apply  col-span-6 row-span-2; }
+
+.sport-container .info-content.stats-list { @apply max-w-[50rem] grid-cols-3 grid-rows-2 gap-3; }
+
+
+.sport-container .stats-list .stats {
+    @apply  w-full h-32 p-3 relative z-10
+            rounded-xl shadow-glass
+            flex flex-col justify-end items-end;
+    
+    --side-text: 'Times this Week';
+}
+.sport-container .stats-list .stats .title { 
+    @apply  p-3 
+            absolute top-0 left-0 
+            text-xl italic tracking-tight; 
+}
+.sport-container .stats-list .stats .value { 
+    @apply  relative text-[5rem] leading-3 font-bold tracking-wider
+            after:content-[var(--side-text)] after:inline-block after:w-min after:pl-2
+            after:leading-4
+            after:text-xs after:font-light after:tracking-normal after:text-wrap; 
+
+}
+
+
+/* ==================================================================================================================
+ * ===== Sport Component - Styling for Small Screens ================================================================
+ * ==================================================================================================================
+*/
+
+/* ----- Sport: Containers ------------------------------------------------------------------------------------------ */
+.sport-container .info-container.exercise-stats
+{ @apply max-md:col-span-1; }
+
+
+/* ----- Sport: Statistics ------------------------------------------------------------------------------------------ */
+.sport-container .info-content.stats-list { 
+    @apply max-md:grid-rows-3 max-md:grid-cols-2; 
+}
+
+.sport-container .stats-list .stats .value { @apply max-md:text-6xl; }

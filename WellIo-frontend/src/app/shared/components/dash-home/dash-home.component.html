@@ -1,10 +1,99 @@
-<div class="home-container flex flex-col justify-center items-center gap-6">
-    <div class="row w-full h-1/2 flex flex-row justify-center items-center gap-6">
-        <div class="w-full h-48 bg-green-500 bg-transparent  rounded-xl glass-panel"></div>
-        <div class="w-full h-48 bg-green-500 bg-transparent  rounded-xl glass-panel"></div>
-    </div>
-    <div class="row w-full h-1/2 flex flex-row justify-center items-center gap-6">
-        <div class="w-full h-48 bg-green-500 bg-transparent rounded-xl glass-panel col-span-2"></div>
-    </div>
+<div class="grid-container home-container">
+    <header class="header">
+        <div class="content welcome-content">
+            <div class="welcome-message">
+                <h2 class="title">Hello, Nome Cognome</h2>
+                <h4 class="subtitle">Today is Thursday, 30 January 2025</h4>
+            </div>
+        </div>
+        <div class="content mood-content">
+            <div class="mood-question-container">
+                <div class="mood-question">
+                    <span class="spacer"></span>How are you feeling today?
+                </div>
+                <div class="today-mood"></div>
+            </div>
+            <ul class="mood-list">
+                <li class="mood mood-happy"></li>
+                <li class="mood mood-fine"></li>
+                <li class="mood mood-normal"></li>
+                <li class="mood mood-sad"></li>
+                <li class="mood mood-dispear"></li>
+            </ul>
+        </div>
+    </header>
 
+    <div class="content-container">
+        <div class="content sports-content ">
+            <div class="panel-title glass-top-title-bg">Exercise Stats</div>
+            <div class="stats-container sports-stats">
+                <div class="graphics">
+                    <div class="donut-chart chart first-chart"></div>
+                    <div class="donut-chart chart second-chart"></div>
+                    <div class="donut-chart chart third-chart"></div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="content nutrition-content">
+            <div class="panel-title glass-top-title-bg">Nutritional Stats</div>
+            <div class="stats-container nutrition-stats">
+                <div class="stats calories calories-stats">
+                    <div class="bar-chart horizontal-bar-chart"></div>
+                    <div class="values">
+                        <p class="to-reach">3428 kcal</p>
+                        <p class="reached">3143</p>
+                    </div>
+                </div>
+                <div class="stats proteins proteins-stats">
+                    <div class="bar-chart horizontal-bar-chart"></div>
+                    <div class="values">
+                        <p class="to-reach">123 g</p>
+                        <p class="reached">30</p>
+                    </div>
+                </div>
+                <div class="stats fibers fibers-stats">
+                    <div class="bar-chart horizontal-bar-chart"></div>
+                    <div class="values">
+                        <p class="to-reach">20 g</p>
+                        <p class="reached">6</p>
+                    </div>
+                </div>
+                <div class="stats carbs carbs-stats">
+                    <div class="bar-chart horizontal-bar-chart"></div>
+                    <div class="values">
+                        <p class="to-reach">138 g</p>
+                        <p class="reached">73</p>
+                    </div>
+                </div>
+                <div class="stats fats fats-stats">
+                    <div class="bar-chart horizontal-bar-chart"></div>
+                    <div class="values">
+                        <p class="to-reach">98 g</p>
+                        <p class="reached">32</p>
+                    </div>
+                </div>
+                <div class="legend-container">
+                    <div class="legend-box">
+                        <div class="legend-icon proteins"></div>
+                        <p class="legend-label">Proteins</p>
+                    </div>                                      
+                    <div class="legend-box">
+                        <div class="legend-icon carbs"></div>
+                        <p class="legend-label">Carbs</p>
+                    </div>                    
+                    <div class="legend-box">
+                        <div class="legend-icon fats"></div>
+                        <p class="legend-label">Fats</p>
+                    </div>
+                    <div class="legend-box">
+                        <div class="legend-icon fibers"></div>
+                        <p class="legend-label">Fibers</p>
+                    </div>  
+                </div>
+            </div>
+        </div>
+        <!-- <div class="content notes-content"></div> -->
+    </div>
 </div>
+
