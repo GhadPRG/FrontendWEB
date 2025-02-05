@@ -28,9 +28,12 @@
             <div class="panel-title glass-top-title-bg">Exercise Stats</div>
             <div class="stats-container sports-stats">
                 <div class="graphics">
-                    <div class="donut-chart chart first-chart"></div>
-                    <div class="donut-chart chart second-chart"></div>
-                    <div class="donut-chart chart third-chart"></div>
+                    <div class="donut-chart chart first-chart"
+                    [style.--fill-percent]="this.sportService.exerciseStatisticsWeeklyPerType().upper_body"></div>
+                    <div class="donut-chart chart second-chart"
+                    [style.--fill-percent]="this.sportService.exerciseStatisticsWeeklyPerType().lower_body"></div>
+                    <div class="donut-chart chart third-chart"
+                    [style.--fill-percent]="this.sportService.exerciseStatisticsWeeklyPerType().core"></div>
                 </div>
             </div>
             
@@ -39,38 +42,43 @@
             <div class="panel-title glass-top-title-bg">Nutritional Stats</div>
             <div class="stats-container nutrition-stats">
                 <div class="stats calories calories-stats">
-                    <div class="bar-chart horizontal-bar-chart"></div>
+                    <div class="bar-chart horizontal-bar-chart"
+                    [style.--fill-percent]="this.nutritionService.percentage().kcalories"></div>
                     <div class="values">
-                        <p class="to-reach">3428 kcal</p>
-                        <p class="reached">3143</p>
+                        <p class="to-reach">{{ this.nutritionService.dailyTarget().kcalories | number: '1.0-0' }} kcal</p>
+                        <p class="reached">{{ this.nutritionService.consumed().kcalories | number: '1.0-0' }}</p>
                     </div>
                 </div>
                 <div class="stats proteins proteins-stats">
-                    <div class="bar-chart horizontal-bar-chart"></div>
+                    <div class="bar-chart horizontal-bar-chart"
+                    [style.--fill-percent]="this.nutritionService.percentage().proteins"></div>
                     <div class="values">
-                        <p class="to-reach">123 g</p>
-                        <p class="reached">30</p>
+                        <p class="to-reach">{{ this.nutritionService.dailyTarget().proteins | number: '1.0-0' }} g</p>
+                        <p class="reached">{{ this.nutritionService.consumed().proteins | number: '1.0-0' }}</p>
                     </div>
                 </div>
                 <div class="stats fibers fibers-stats">
-                    <div class="bar-chart horizontal-bar-chart"></div>
+                    <div class="bar-chart horizontal-bar-chart"
+                    [style.--fill-percent]="this.nutritionService.percentage().fibers"></div>
                     <div class="values">
-                        <p class="to-reach">20 g</p>
-                        <p class="reached">6</p>
+                        <p class="to-reach">{{ this.nutritionService.dailyTarget().fibers | number: '1.0-0' }} g</p>
+                        <p class="reached">{{ this.nutritionService.consumed().fibers | number: '1.0-0' }}</p>
                     </div>
                 </div>
                 <div class="stats carbs carbs-stats">
-                    <div class="bar-chart horizontal-bar-chart"></div>
+                    <div class="bar-chart horizontal-bar-chart"
+                    [style.--fill-percent]="this.nutritionService.percentage().carbs"></div>
                     <div class="values">
-                        <p class="to-reach">138 g</p>
-                        <p class="reached">73</p>
+                        <p class="to-reach">{{ this.nutritionService.dailyTarget().carbs | number: '1.0-0' }} g</p>
+                        <p class="reached">{{ this.nutritionService.consumed().carbs | number: '1.0-0' }}</p>
                     </div>
                 </div>
                 <div class="stats fats fats-stats">
-                    <div class="bar-chart horizontal-bar-chart"></div>
+                    <div class="bar-chart horizontal-bar-chart"
+                    [style.--fill-percent]="this.nutritionService.percentage().fats"></div>
                     <div class="values">
-                        <p class="to-reach">98 g</p>
-                        <p class="reached">32</p>
+                        <p class="to-reach">{{ this.nutritionService.dailyTarget().fats | number: '1.0-0' }} g</p>
+                        <p class="reached">{{ this.nutritionService.consumed().fats | number: '1.0-0' }}</p>
                     </div>
                 </div>
                 <div class="legend-container">

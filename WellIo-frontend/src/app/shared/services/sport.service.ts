@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { ExerciseInterface } from '../utils/types/sport.interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -18,6 +18,22 @@ export class SportService {
 
   // Data
   readonly muscleGroups = ['Back','Chest', 'Shoudlers', 'Legs', 'Core', 'Arms'];
+
+  exerciseWeeklyDonePerType = signal<Record<string, number>>(
+    Object.fromEntries(this.muscleGroups.map(key => [key, 0])) as Record<string, number>
+  );
+
+  exerciseStatisticsWeeklyPerType = computed(() => {
+    const exValues = this.exerciseWeeklyDonePerType();
+    const total = Object.values(exValues).reduce((acc, val) => acc + val, 0);
+  
+    if (total === 0) return { upper_body: 0, lower_body: 0, core: 0, };
+  
+    return { 
+      upper_body: ((exValues['Back'] + exValues['Shoudlers'] + exValues['Arms'])/ total) * 100, 
+      lower_body: (exValues['Legs']/ total) * 100, 
+      core: ((exValues['Core'] + exValues['Chest'])/ total) * 100, };
+  });
 
 
   constructor(private http: HttpClient) {}
@@ -116,14 +132,18 @@ export class SportService {
     }, {} as { [key: string]: ExerciseInterface[] });
 
     // Postwork to prepare Dictionary
-    this.muscleGroups.forEach((currentGroup) => { if(!dict[currentGroup]) { dict[currentGroup] = [] }; })
+    this.muscleGroups.forEach((currentGroup) => { if(!dict[currentGroup]) { dict[currentGroup] = [] }; });
+
+    // Updating Statistics
+    this.exerciseWeeklyDonePerType.set(
+      Object.fromEntries(this.muscleGroups.map(key => [key, dict[key].length])) as Record<string, number>
+    );
 
     return dict;
   }
 
   mapToTodayExerices(exerciseDict: { [key: string]: ExerciseInterface[] }): { [key: string]: ExerciseInterface[] } {
-    const today = new Date().toISOString().split("T")[0]; // formato "YYYY-MM-DD"
-    console.log('today', today)
+    const today = new Date().toISOString().split("T")[0]; // "YYYY-MM-DD" Format
 
     const filteredExercises: { [key: string]: ExerciseInterface[] } = {};
 
