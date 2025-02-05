@@ -44,12 +44,12 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
       dishes: []
     },
     {
-      type: 'Break',
+      type: 'Snack',
       dishes: []
     }
   ];
   currentMealDishses: MealInterfarce = {} as MealInterfarce;
-  mealTypes = ['Breakfast', 'Lunch', 'Dinner', 'Break'];
+  mealTypes = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
 
   currentDish: DishInterface = this.getEmptyBaseDish();
   gramsEquivalent: number = 0;
