@@ -68,32 +68,19 @@
     <div class="info-container meal-summary">
         <div class="panel-title glass-top-title-bg">Your Today Meals Recap</div>
         <ul class="info-content meals-list">
-            <li class="meal-box">
-                <button #mealTypeBtn class="meal-item" value="Breakfast">
-                    <div>Breakfast</div>
-                </button>
-            </li>
-            <li class="meal-box">
-                <button #mealTypeBtn class="meal-item" value="Lunch">
-                    <div>Lunch</div>
-                </button>
-            </li>
-            <li class="meal-box">
-                <button #mealTypeBtn class="meal-item" value="Dinner">
-                    <div>Dinner</div>
-                </button>
-            </li>
-            <li class="meal-box">
-                <button #mealTypeBtn class="meal-item" value="Snack">
-                    <div>Snack</div>
-                </button>
-            </li>
+            @for(mealType of this.nutritionService.mealTypes; track mealType) {
+                <li class="meal-box">
+                    <button #mealTypeBtn class="meal-item" [value]="mealType">
+                        <div>{{ mealType }}</div>
+                    </button>
+                </li>
+            }
         </ul>
 
         <div class="info-content meal-description">
             <ul class="dish-list">
                 <button class="new-dish-btn" (click)="selectCurrentMealAsMealDish()"><i class="bx bx-plus bx-md"></i></button>
-                @for(dish of this.currentMealDishses.dishes; track $index) {
+                @for(dish of getCurrentDishes(); track $index) {
                     <li class="dish">
                         <span class="dish-name">{{ dish.dishInfo.name }}</span>
                         <span class="dish-quantity">{{ dish.quantity }} {{ dish.unit}}</span>
@@ -141,22 +128,12 @@
         <div #dishOptionsDisplayer class="info-content form-container dish-info-form">
             <form [formGroup]="form_dishForm" class="dish-info" (ngSubmit)="onRegisterDish()">
                 <div class="meal-choice-list">
+                @for (mealType of this.nutritionService.mealTypes; track mealType) {
                     <div class="meal-choice">
-                        <input class="peer" formControlName="meal_choice" type="radio" id="Breakfast" name="meal_choice" value="Breakfast" required>
-                        <label class="after:bg-white/25 after:hover:bg-white/50 peer-checked:after:bg-skin-fill-medium/50" for="Breakfast">Breakfast</label>
+                        <input class="peer" formControlName="meal_choice" type="radio" [id]="mealType" name="meal_choice" [value]="mealType" required>
+                        <label class="after:bg-white/25 after:hover:bg-white/50 peer-checked:after:bg-skin-fill-medium/50" [for]="mealType">{{ mealType }}</label>
                     </div>
-                    <div class="meal-choice">
-                        <input class="peer" formControlName="meal_choice" type="radio" id="Lunch" name="meal_choice" value="Lunch" required>
-                        <label class="after:bg-white/25 after:hover:bg-white/50 peer-checked:after:bg-skin-fill-medium/50" for="Lunch">Lunch</label>
-                    </div>
-                    <div class="meal-choice">
-                        <input class="peer" formControlName="meal_choice" type="radio" id="Dinner" name="meal_choice" value="Dinner" required>
-                        <label class="after:bg-white/25 after:hover:bg-white/50 peer-checked:after:bg-skin-fill-medium/50" for="Dinner">Dinner</label>
-                    </div>
-                    <div class="meal-choice">
-                        <input class="peer" formControlName="meal_choice" type="radio" id="Snack" name="meal_choice" value="Snack" required>
-                        <label class="after:bg-white/25 after:hover:bg-white/50 peer-checked:after:bg-skin-fill-medium/50" for="Snack">Snack</label>
-                    </div>
+                }
                 </div>
                 <div class="quantity-container">
                     <input class="dish-quantity" formControlName="quantity" min="0" type="number" name="quantity" id="quantity" [(value)]="this.currentDish.quantity">

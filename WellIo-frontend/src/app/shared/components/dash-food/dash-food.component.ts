@@ -33,7 +33,6 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
   currentMeals: { [key: string]: MealInterface } = {};
   currentMealDishses = signal<string>('');
 
-
   currentDish: DishInterface = this.getEmptyBaseDish();
   gramsEquivalent: number = 0;
 
@@ -61,6 +60,8 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
       next: (response) => {
         this.currentMeals = this.nutritionService.mapMealsToMealsDict(
                             this.nutritionService.mealsUnflattener(response));
+
+          console.log(this.currentMeals);
       }
     })
 
@@ -101,6 +102,13 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
 
   selectCurrentMealAsMealDish(): void {
     this.form_dishForm.get('meal_choice')?.setValue(this.currentMealDishses());
+  }
+
+  getCurrentDishes(): DishInterface[] {
+    console.log('Prova Piatti',this.currentMealDishses());
+    if (!this.currentMealDishses()) return [];
+
+    return this.currentMeals[this.currentMealDishses()].dishes;
   }
 
 
