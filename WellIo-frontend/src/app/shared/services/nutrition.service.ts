@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { max, Observable } from 'rxjs';
-import { DishInterface, MacrosInterface, MealInterfarce } from '../utils/types/nutrition.interfaces';
+import { DishInterface, FlattenDish, MacrosInterface, MealInterface } from '../utils/types/nutrition.interfaces';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -16,7 +16,10 @@ export class NutritionService {
   private appKey = '11200806d60896b176ad76b08e53d83b'; // App Key - Bruno Caruso
 
   // Internal Url
-  private serverUrl: string = "http://localhost:..."
+  private serverUrl: string = "http://localhost:8080/api/meal"
+
+  // Data
+  readonly mealTypes = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
 
   dailyTarget = signal<MacrosInterface>({
     kcalories: 0, carbs: 0, fats: 0, proteins: 0, fibers: 0,
@@ -61,26 +64,26 @@ export class NutritionService {
     return this.http.post<any>(`${this.apiUrlGetFoodInfo}`, { query }, { headers });
   }
 
-  getTodayMeals(): Observable<MealInterfarce[]> {
-    return this.http.get<MealInterfarce[]>(`${this.serverUrl}/`);
+  getTodayMeals(): Observable<FlattenDish[]> {
+    return this.http.get<FlattenDish[]>(`${this.serverUrl}`);
   }
 
   registerNewDish(dish: DishInterface): void {//Observable<any> {
-    // // let request: Observable<any> = this.http.post(`${this.serverUrl}/`, dish);
+    // let request: Observable<any> = this.http.post(`${this.serverUrl}/`, this.dishFlattener(dish));
 
-    // // request.subscribe({
-    // //   next: (response) => {
-    // //     this.consumed.update(current => ({
-    // //       kcalories: current.kcalories + dish.dishInfo.kcalories,
-    // //       carbs: current.carbs + dish.dishInfo.carbs, 
-    // //       fats: current.fats + dish.dishInfo.fats, 
-    // //       proteins: current.proteins + dish.dishInfo.proteins, 
-    // //       fibers: current.fibers + dish.dishInfo.fibers,
-    // //     }));
-    // //   }
-    // // });
+    // request.subscribe({
+    //   next: (response) => {
+    //     this.consumed.update(current => ({
+    //       kcalories: current.kcalories + (dish.dishInfo.kcalories * dish.quantity),
+    //       carbs: current.carbs + (dish.dishInfo.carbs * dish.quantity), 
+    //       fats: current.fats + (dish.dishInfo.fats * dish.quantity), 
+    //       proteins: current.proteins + (dish.dishInfo.proteins * dish.quantity), 
+    //       fibers: current.fibers + (dish.dishInfo.fibers * dish.quantity),
+    //     }));
+    //   }
+    // });
   
-    // // return request;
+    // return request;
 
     this.consumed.update(current => ({
       kcalories: current.kcalories + (dish.dishInfo.kcalories * dish.quantity),
@@ -117,4 +120,79 @@ export class NutritionService {
 
   // Utility functions
   clamp(min: number, value: number, max: number) { return Math.max(min, Math.min(value, max)); }
+
+  mapMealsToMealsDict(meals: MealInterface[]): { [key: string]: MealInterface } {
+    let dict: { [key: string]: MealInterface } = meals.reduce((acc, meal) => {
+      const key = meal.type;
+
+      if (!acc[key]) { acc[key] = {} as MealInterface; }
+
+      acc[key] = meal;
+      return acc;
+
+    }, {} as { [key: string]: MealInterface });
+
+    // Postwork to prepare Dictionary
+    this.mealTypes.forEach((currentType) => { if(!dict[currentType]) { dict[currentType] = {} as MealInterface }; })
+
+    return dict;
+  }
+
+  dishFlattener(dish: DishInterface): FlattenDish {
+    let flatDish: FlattenDish = {
+      kcal: (dish.dishInfo.kcalories * dish.quantity),
+      unit: dish.unit,
+      fibers: (dish.dishInfo.fibers * dish.quantity),
+      quantity: dish.quantity,
+      carbs: (dish.dishInfo.carbs * dish.quantity),
+      fats: (dish.dishInfo.fats * dish.quantity),
+      proteins: (dish.dishInfo.proteins * dish.quantity),
+      name: dish.dishInfo.name,
+      meal_id: dish.meal.id ?? 0,
+    };
+
+    if (dish.meal.date) flatDish.mealData = dish.meal.date;
+    if (dish.meal.type) flatDish.mealType = dish.meal.type;
+
+    return flatDish;
+  }
+
+  mealsUnflattener(dishes: FlattenDish[]): MealInterface[] {
+    const mealsMap = new Map<string, MealInterface>();
+
+    dishes.forEach(dish => {
+      if (!dish.mealType) return; // To remove ?
+
+      // Populating eals' Map
+      if (!mealsMap.has(dish.mealType)) {
+          mealsMap.set(dish.mealType, {
+              id: dish.meal_id,
+              type: dish.mealType,
+              dishes: [],
+          });
+      }
+
+      // Current Dish inside Meal
+      const meal = mealsMap.get(dish.mealType)!;
+      meal.dishes.push({
+        unit: dish.unit,
+        quantity: dish.quantity,
+        meal: meal,
+        dishInfo: {
+          name: dish.name,
+          kcalories: dish.kcal,
+          proteins: dish.proteins,
+          fats: dish.fats,
+          carbs: dish.carbs,
+          fibers: dish.fibers,
+        }
+      });
+    });
+
+    return Array.from(mealsMap.values());
+  }
+
+
+
+
 }

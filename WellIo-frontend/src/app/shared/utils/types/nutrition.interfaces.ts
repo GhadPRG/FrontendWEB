@@ -1,6 +1,6 @@
 import { UserInterface } from "./user.interfaces";
 
-export interface MealInterfarce {
+export interface MealInterface {
     id?: number,
     user?: UserInterface,
     date?: string,
@@ -11,7 +11,7 @@ export interface MealInterfarce {
 
 export interface DishInterface {
     id?: number,
-    meal: MealInterfarce,
+    meal: MealInterface,
     dishInfo: DishInfoInterface,
     quantity: number,
     unit: string,
@@ -33,4 +33,19 @@ export interface MacrosInterface {
     fats: number,
     carbs: number,
     fibers: number,
+}
+
+// Flatten Dish Interface 
+export interface FlattenDish {
+    mealData?: string,
+    kcal: number,
+    unit: string,
+    fibers: number, 
+    quantity: number,
+    carbs: number,
+    fats: number,
+    proteins: number,
+    mealType?: string,
+    name: string,
+    meal_id: number,
 }

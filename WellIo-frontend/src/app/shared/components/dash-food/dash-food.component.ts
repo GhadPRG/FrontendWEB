@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, signal, ViewChild, ViewChildren } from '@angular/core';
 
 import { DashboardService } from '../../services/dashboard.service';
 import { NutritionService } from '../../services/nutrition.service';
-import { DishInterface, MacrosInterface, MealInterfarce } from '../../utils/types/nutrition.interfaces';
+import { DishInterface, FlattenDish, MealInterface } from '../../utils/types/nutrition.interfaces';
 
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -30,26 +30,9 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
 
 
   // Data
-  currentMeals: MealInterfarce[] = [
-    {
-      type: 'Breakfast',
-      dishes: []
-    },
-    {
-      type: 'Lunch',
-      dishes: []
-    },
-    {
-      type: 'Dinner',
-      dishes: []
-    },
-    {
-      type: 'Snack',
-      dishes: []
-    }
-  ];
-  currentMealDishses: MealInterfarce = {} as MealInterfarce;
-  mealTypes = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
+  currentMeals: { [key: string]: MealInterface } = {};
+  currentMealDishses = signal<string>('');
+
 
   currentDish: DishInterface = this.getEmptyBaseDish();
   gramsEquivalent: number = 0;
@@ -60,7 +43,7 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
   commonFoodArray: any[] = [];
 
   constructor(
-    private dashSerive: DashboardService,
+    private dashServive: DashboardService,
     public nutritionService: NutritionService,
     private fb: FormBuilder
   ) 
@@ -70,10 +53,16 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void { 
     // Arriving on the Page
-    this.dashSerive.setHeaderText("Nutrition"); 
+    this.dashServive.setHeaderText("Nutrition"); 
 
     // Requesting Macros if not set
     this.nutritionService.setMacroValues();
+    this.nutritionService.getTodayMeals().subscribe({
+      next: (response) => {
+        this.currentMeals = this.nutritionService.mapMealsToMealsDict(
+                            this.nutritionService.mealsUnflattener(response));
+      }
+    })
 
   }
 
@@ -99,12 +88,11 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
   }
 
   requestDishesByType(mealType: string): void {
-    this.currentMealDishses = this.currentMeals.find((meal) => meal.type === mealType) ?? {} as MealInterfarce;
-    console.log(this.currentMealDishses)
-
     // Removing Selection
     this.mealTypeBtnsRef.forEach(btnRef => {
       const btn = btnRef.nativeElement;
+
+      this.currentMealDishses.set(mealType);
 
       if (btn.value !== mealType) { btn.classList.remove('selected'); }
       else { btn.classList.add('selected'); }
@@ -112,7 +100,7 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
   }
 
   selectCurrentMealAsMealDish(): void {
-    this.form_dishForm.get('meal_choice')?.setValue(this.currentMealDishses.type ?? '');
+    this.form_dishForm.get('meal_choice')?.setValue(this.currentMealDishses());
   }
 
 
@@ -157,6 +145,14 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
   onRegisterDish(): void {
     if(!this.form_dishForm.valid) return;
 
+    const quantity = this.form_dishForm.getRawValue().quantity;
+    if (quantity === 0) return; 
+
+    // Setting Current Dish Attributes
+    this.currentDish.meal = this.currentMeals[this.form_dishForm.getRawValue().meal_choice];
+    this.currentDish.quantity = quantity;
+
+
     // this.nutritionService.registerNewDish(this.currentDish).subscribe({
     //   next: (response) => {
     //     let indexMeal = this.mealTypes.indexOf(this.currentDish.meal.type);
@@ -164,22 +160,12 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
     //     this.currentMeals[indexMeal].dishes.push(this.currentDish);
     //   }
     // });
+
     
-    const quantity = this.form_dishForm.getRawValue().quantity;
-    if (quantity === 0) return; 
-
-    // Setting Current Dish Attributes
-    const mealIndex = this.mealTypes.indexOf(this.form_dishForm.getRawValue().meal_choice);
-    this.currentDish.meal = this.currentMeals[mealIndex];
-
-    this.currentDish.quantity = quantity;
     console.log(this.currentDish);
 
     this.nutritionService.registerNewDish(this.currentDish);
-
-    let indexMeal = this.mealTypes.indexOf(this.currentDish.meal.type);
-
-    this.currentMeals[indexMeal].dishes.push(this.currentDish);
+    this.currentMeals[this.currentDish.meal.type].dishes.push(this.currentDish);
 
     // Resetting Values
     setTimeout(() => {
@@ -195,7 +181,7 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
 
   getEmptyBaseDish(): DishInterface {
     return {
-      meal: {} as MealInterfarce,
+      meal: {} as MealInterface,
       dishInfo: {
         name: '',
         kcalories: 0,
@@ -251,7 +237,7 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
     this.gramsEquivalent = totalGramsEquivalent;
 
     return {
-          meal: {} as MealInterfarce,
+          meal: {} as MealInterface,
           dishInfo: {
               id: 0,
               name: foodName,
