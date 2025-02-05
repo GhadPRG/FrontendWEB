@@ -11,7 +11,7 @@ export interface MealInterface {
 
 export interface DishInterface {
     id?: number,
-    meal: MealInterface,
+    meal?: MealInterface,
     dishInfo: DishInfoInterface,
     quantity: number,
     unit: string,
@@ -34,6 +34,8 @@ export interface MacrosInterface {
     carbs: number,
     fibers: number,
 }
+
+export type MealDictionary = { [key: string]: MealInterface };
 
 // Flatten Dish Interface 
 export interface FlattenDish {
