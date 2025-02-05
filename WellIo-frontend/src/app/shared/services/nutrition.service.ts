@@ -68,34 +68,25 @@ export class NutritionService {
     return this.http.get<FlattenDish[]>(`${this.serverUrl}`);
   }
 
-  registerNewDish(dish: DishInterface): void {//Observable<any> {
-    // let request: Observable<any> = this.http.post(`${this.serverUrl}/`, this.dishFlattener(dish));
+  registerNewDish(dish: DishInterface): Observable<any> {
+    let request: Observable<any> = this.http.post(`${this.serverUrl}/`, this.dishFlattener(dish));
 
-    // request.subscribe({
-    //   next: (response) => {
-    //     this.consumed.update(current => ({
-    //       kcalories: current.kcalories + (dish.dishInfo.kcalories * dish.quantity),
-    //       carbs: current.carbs + (dish.dishInfo.carbs * dish.quantity), 
-    //       fats: current.fats + (dish.dishInfo.fats * dish.quantity), 
-    //       proteins: current.proteins + (dish.dishInfo.proteins * dish.quantity), 
-    //       fibers: current.fibers + (dish.dishInfo.fibers * dish.quantity),
-    //     }));
-    //   }
-    // });
+    request.subscribe({
+      next: (response) => {
+        this.consumed.update(current => ({
+          kcalories: current.kcalories + (dish.dishInfo.kcalories * dish.quantity),
+          carbs: current.carbs + (dish.dishInfo.carbs * dish.quantity), 
+          fats: current.fats + (dish.dishInfo.fats * dish.quantity), 
+          proteins: current.proteins + (dish.dishInfo.proteins * dish.quantity), 
+          fibers: current.fibers + (dish.dishInfo.fibers * dish.quantity),
+        }));
+      }
+    });
   
-    // return request;
-
-    this.consumed.update(current => ({
-      kcalories: current.kcalories + (dish.dishInfo.kcalories * dish.quantity),
-      carbs: current.carbs + (dish.dishInfo.carbs * dish.quantity), 
-      fats: current.fats + (dish.dishInfo.fats * dish.quantity), 
-      proteins: current.proteins + (dish.dishInfo.proteins * dish.quantity), 
-      fibers: current.fibers + (dish.dishInfo.fibers * dish.quantity),
-    }));
+    return request;
   }
 
   // Internal Calcutations 
-
   setMacroValues(): void {
     //const dailyKcals = inject(UserService).getCurrentUserInfo().daily_kcalories;
     const dailyKcals = 2000;
@@ -148,11 +139,9 @@ export class NutritionService {
       fats: (dish.dishInfo.fats * dish.quantity),
       proteins: (dish.dishInfo.proteins * dish.quantity),
       name: dish.dishInfo.name,
-      meal_id: dish.meal.id ?? 0,
+      meal_id: dish.meal.id ?? -1,
+      mealType: dish.meal.type
     };
-
-    if (dish.meal.date) flatDish.mealData = dish.meal.date;
-    if (dish.meal.type) flatDish.mealType = dish.meal.type;
 
     return flatDish;
   }

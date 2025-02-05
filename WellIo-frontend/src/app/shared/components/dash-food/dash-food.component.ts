@@ -153,27 +153,21 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
     this.currentDish.quantity = quantity;
 
 
-    // this.nutritionService.registerNewDish(this.currentDish).subscribe({
-    //   next: (response) => {
-    //     let indexMeal = this.mealTypes.indexOf(this.currentDish.meal.type);
+    this.nutritionService.registerNewDish(this.currentDish).subscribe({
+      next: (response) => {
+        console.log(this.currentDish);
 
-    //     this.currentMeals[indexMeal].dishes.push(this.currentDish);
-    //   }
-    // });
+        this.nutritionService.registerNewDish(this.currentDish);
+        this.currentMeals[this.currentDish.meal.type].dishes.push(this.currentDish);
 
-    
-    console.log(this.currentDish);
-
-    this.nutritionService.registerNewDish(this.currentDish);
-    this.currentMeals[this.currentDish.meal.type].dishes.push(this.currentDish);
-
-    // Resetting Values
-    setTimeout(() => {
-      this.form_dishForm.get('meal_choice')?.setValue('');
-      this.form_dishForm.get('quantity')?.setValue(1);
-      this.form_foodQuery.get('foodQuery')?.setValue('');
+        // Resetting Values
+        setTimeout(() => {
+          this.form_dishForm.get('meal_choice')?.setValue('');
+          this.form_dishForm.get('quantity')?.setValue(1);
+          this.form_foodQuery.get('foodQuery')?.setValue('');
+        });
+      }
     });
-
   }
 
   // Utility Functions
