@@ -17,7 +17,7 @@ import {
 })
 export class ApiService {
   private baseUrl = "http://localhost:8080/api"
-  private token: string | null = null
+  private token: string | null = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODc2NzIzOCwiZXhwIjoxNzM4ODUzNjM4fQ.5bqjKZceZhBALsq-voAH8iFfOy-Tz7HfzJS3J1TENzY"
 
   constructor(private http: HttpClient) {}
 

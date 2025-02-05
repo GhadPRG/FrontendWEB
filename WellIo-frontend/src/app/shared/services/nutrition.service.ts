@@ -65,28 +65,36 @@ export class NutritionService {
   }
 
   getTodayMeals(): Observable<FlattenDish[]> {
-    return this.http.get<FlattenDish[]>(`${this.serverUrl}`);
+    let token="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODc2NzIzOCwiZXhwIjoxNzM4ODUzNjM4fQ.5bqjKZceZhBALsq-voAH8iFfOy-Tz7HfzJS3J1TENzY";
+    let headers=new HttpHeaders();
+    console.log("SONO QUA PAPPAPERO");
+    headers = headers.set("Authorization", `Bearer ${token}`)
+    return this.http.get<FlattenDish[]>(`${this.serverUrl}`,{headers:headers});
   }
 
   registerNewDish(dish: DishInterface): Observable<any> {
-    let request: Observable<any> = this.http.post(`${this.serverUrl}/`, this.dishFlattener(dish));
+    let token="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODc2NzIzOCwiZXhwIjoxNzM4ODUzNjM4fQ.5bqjKZceZhBALsq-voAH8iFfOy-Tz7HfzJS3J1TENzY";
+    let headers=new HttpHeaders();
+    console.log("SONO QUA PAPPAPERO");
+    headers = headers.set("Authorization", `Bearer ${token}`)
+    let request: Observable<any> = this.http.post(`${this.serverUrl}`, this.dishFlattener(dish),{headers:headers});
 
     request.subscribe({
       next: (response) => {
         this.consumed.update(current => ({
           kcalories: current.kcalories + (dish.dishInfo.kcalories * dish.quantity),
-          carbs: current.carbs + (dish.dishInfo.carbs * dish.quantity), 
-          fats: current.fats + (dish.dishInfo.fats * dish.quantity), 
-          proteins: current.proteins + (dish.dishInfo.proteins * dish.quantity), 
+          carbs: current.carbs + (dish.dishInfo.carbs * dish.quantity),
+          fats: current.fats + (dish.dishInfo.fats * dish.quantity),
+          proteins: current.proteins + (dish.dishInfo.proteins * dish.quantity),
           fibers: current.fibers + (dish.dishInfo.fibers * dish.quantity),
         }));
       }
     });
-  
+
     return request;
   }
 
-  // Internal Calcutations 
+  // Internal Calcutations
   setMacroValues(): void {
     //const dailyKcals = inject(UserService).getCurrentUserInfo().daily_kcalories;
     const dailyKcals = 2000;
@@ -104,8 +112,8 @@ export class NutritionService {
     let proteinsGPerDay = proteinsKcal / proteinPowerFactor;
     const fibersGPerDay = 26;
 
-    this.dailyTarget.update(current => ({ 
-      kcalories: dailyKcals, carbs: carbsGPerDay, fats: fatsGPerDay, proteins: proteinsGPerDay, fibers: fibersGPerDay 
+    this.dailyTarget.update(current => ({
+      kcalories: dailyKcals, carbs: carbsGPerDay, fats: fatsGPerDay, proteins: proteinsGPerDay, fibers: fibersGPerDay
     }));
   }
 

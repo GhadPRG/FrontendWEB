@@ -48,11 +48,11 @@
                 <div class="legend-box">
                     <div class="legend-icon proteins"></div>
                     <p class="legend-label">Proteins</p>
-                </div>                                      
+                </div>
                 <div class="legend-box">
                     <div class="legend-icon carbs"></div>
                     <p class="legend-label">Carbs</p>
-                </div>                    
+                </div>
                 <div class="legend-box">
                     <div class="legend-icon fats"></div>
                     <p class="legend-label">Fats</p>
@@ -60,7 +60,7 @@
                 <div class="legend-box">
                     <div class="legend-icon fibers"></div>
                     <p class="legend-label">Fibers</p>
-                </div>  
+                </div>
             </li>
         </ul>
     </div>
@@ -93,12 +93,12 @@
         <div class="info-content meal-description">
             <ul class="dish-list">
                 <button class="new-dish-btn" (click)="selectCurrentMealAsMealDish()"><i class="bx bx-plus bx-md"></i></button>
-                @for(dish of this.currentMealDishses.dishes; track $index) {
-                    <li class="dish">
-                        <span class="dish-name">{{ dish.dishInfo.name }}</span>
-                        <span class="dish-quantity">{{ dish.quantity }} {{ dish.unit}}</span>
-                    </li>
-                }  
+<!--                @for(dish of this.currentMealDishses.dishes; track $index) {-->
+<!--                    <li class="dish">-->
+<!--                        <span class="dish-name">{{ dish.dishInfo.name }}</span>-->
+<!--                        <span class="dish-quantity">{{ dish.quantity }} {{ dish.unit}}</span>-->
+<!--                    </li>-->
+<!--                }-->
             </ul>
         </div>
 
@@ -115,7 +115,7 @@
         </div>
         <div #foodResponseDisplayer class="info-content food-response-container closed">
 
-            @if (this.commonFoodArray.length !== 0) 
+            @if (this.commonFoodArray.length !== 0)
             { <div class="food-title">Common Food</div> }
             @for(food of this.commonFoodArray; track $index) {
                 <div class="food-item" (click)="getFoodInfo(food.food_name)">
@@ -124,8 +124,8 @@
                     </div>
                 </div>
             }
-        
-            @if (this.brandedFoodArray.length !== 0) 
+
+            @if (this.brandedFoodArray.length !== 0)
             { <div class="food-title">Branded Food</div> }
             @for(food of this.brandedFoodArray; track $index) {
                 <div class="food-item" (click)="getFoodInfo(food.food_name)">
@@ -159,8 +159,8 @@
                     </div>
                 </div>
                 <div class="quantity-container">
-                    <input class="dish-quantity" formControlName="quantity" min="0" type="number" name="quantity" id="quantity" [(value)]="this.currentDish.quantity">
-                    <p class="dish-unit">{{ this.currentDish.unit }}</p>
+<!--                    <input class="dish-quantity" formControlName="quantity" min="0" type="number" name="quantity" id="quantity" [(value)]="this.currentDish.quantity">-->
+<!--                    <p class="dish-unit">{{ this.currentDish.unit }}</p>-->
 
                     <button class="register-dish-btn" type="submit" value="Register Dish">Add this Dish <i class="bx bx-plus bx-sm"></i></button>
                 </div>
