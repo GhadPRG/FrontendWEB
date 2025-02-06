@@ -1,4 +1,4 @@
-<div class="relative">
+<div class="relative text-skin-base-light">
   <input
     [id]="label"
     type="text"
@@ -10,12 +10,12 @@
   />
 
   <div *ngIf="isOpen"
-       class="absolute z-50 mt-1 p-2 sm:p-3 bg-skin-fill-lightest dark:bg-skin-fill-darker border border-input rounded-md shadow-lg w-full sm:w-[200px]"
+       class="absolute z-50 mt-1 p-2 sm:p-3 bg-skin-fill-lighter border border-input rounded-md shadow-lg w-full sm:w-[200px]"
        (clickOutside)="onClickOutside()">
     <div class="flex justify-between mb-2 sm:mb-3">
       <div class="flex flex-col items-center">
         <button (click)="incrementHours()"
-                class="p-1 hover:bg-skin-fill-light rounded-md text-foreground transition-colors">
+                class="p-1 hover:bg-skin-fill-medium rounded-md text-foreground transition-colors">
           ▲
         </button>
         <input type="text"
@@ -23,14 +23,14 @@
                class="w-8 sm:w-10 text-center bg-transparent text-foreground border-none text-sm sm:text-base"
                readonly />
         <button (click)="decrementHours()"
-                class="p-1 hover:bg-skin-fill-light rounded-md text-foreground transition-colors">
+                class="p-1 hover:bg-skin-fill-medium rounded-md text-foreground transition-colors">
           ▼
         </button>
       </div>
       <div class="text-foreground text-lg sm:text-xl flex items-center">:</div>
       <div class="flex flex-col items-center">
         <button (click)="incrementMinutes()"
-                class="p-1 hover:bg-skin-fill-light rounded-md text-foreground transition-colors">
+                class="p-1 hover:bg-skin-fill-medium rounded-md text-foreground transition-colors">
           ▲
         </button>
         <input type="text"
@@ -38,14 +38,14 @@
                class="w-8 sm:w-10 text-center bg-transparent text-foreground border-none text-sm sm:text-base"
                readonly />
         <button (click)="decrementMinutes()"
-                class="p-1 hover:bg-skin-fill-light rounded-md text-foreground transition-colors">
+                class="p-1 hover:bg-skin-fill-medium rounded-md text-foreground transition-colors">
           ▼
         </button>
       </div>
     </div>
     <div class="flex justify-end space-x-2">
       <button (click)="cancel()"
-              class="px-2 sm:px-3 py-1 rounded-md hover:bg-skin-fill-light text-foreground transition-colors text-xs sm:text-sm">
+              class="px-2 sm:px-3 py-1 rounded-md hover:bg-skin-fill-medium text-foreground transition-colors text-xs sm:text-sm">
         Annulla
       </button>
       <button (click)="confirm()"
