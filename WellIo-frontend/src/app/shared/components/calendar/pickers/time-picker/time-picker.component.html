@@ -1,5 +1,4 @@
 <div class="relative">
-  <label [for]="label" class="block text-xs sm:text-sm font-medium text-foreground dark:text-foreground-dark mb-1">{{ label }}</label>
   <input
     [id]="label"
     type="text"
@@ -7,53 +6,52 @@
     [placeholder]="placeholder"
     (click)="togglePicker()"
     readonly
-    class="w-full px-2 sm:px-3 py-1.5 sm:py-2 bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark rounded-md border border-input dark:border-input-dark focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark focus:border-transparent cursor-pointer text-sm"
+    class="w-full px-2 sm:px-3 py-1.5 sm:py-2 bg-background text-foreground rounded-md border border-input focus:outline-none focus:ring-2 focus:ring-skin-accent-light focus:border-transparent cursor-pointer text-sm"
   />
 
   <div *ngIf="isOpen"
-       class="absolute z-50 mt-1 p-2 sm:p-3 bg-background dark:bg-background-dark border border-input dark:border-input-dark rounded-md shadow-lg w-full sm:w-[200px]"
+       class="absolute z-50 mt-1 p-2 sm:p-3 bg-skin-fill-lightest dark:bg-skin-fill-darker border border-input rounded-md shadow-lg w-full sm:w-[200px]"
        (clickOutside)="onClickOutside()">
     <div class="flex justify-between mb-2 sm:mb-3">
       <div class="flex flex-col items-center">
         <button (click)="incrementHours()"
-                class="p-1 hover:bg-accent dark:hover:bg-accent-dark rounded-md text-foreground dark:text-foreground-dark transition-colors">
+                class="p-1 hover:bg-skin-fill-light rounded-md text-foreground transition-colors">
           ▲
         </button>
         <input type="text"
                [value]="padZero(hours)"
-               class="w-8 sm:w-10 text-center bg-transparent text-foreground dark:text-foreground-dark border-none text-sm sm:text-base"
+               class="w-8 sm:w-10 text-center bg-transparent text-foreground border-none text-sm sm:text-base"
                readonly />
         <button (click)="decrementHours()"
-                class="p-1 hover:bg-accent dark:hover:bg-accent-dark rounded-md text-foreground dark:text-foreground-dark transition-colors">
+                class="p-1 hover:bg-skin-fill-light rounded-md text-foreground transition-colors">
           ▼
         </button>
       </div>
-      <div class="text-foreground dark:text-foreground-dark text-lg sm:text-xl flex items-center">:</div>
+      <div class="text-foreground text-lg sm:text-xl flex items-center">:</div>
       <div class="flex flex-col items-center">
         <button (click)="incrementMinutes()"
-                class="p-1 hover:bg-accent dark:hover:bg-accent-dark rounded-md text-foreground dark:text-foreground-dark transition-colors">
+                class="p-1 hover:bg-skin-fill-light rounded-md text-foreground transition-colors">
           ▲
         </button>
         <input type="text"
                [value]="padZero(minutes)"
-               class="w-8 sm:w-10 text-center bg-transparent text-foreground dark:text-foreground-dark border-none text-sm sm:text-base"
+               class="w-8 sm:w-10 text-center bg-transparent text-foreground border-none text-sm sm:text-base"
                readonly />
         <button (click)="decrementMinutes()"
-                class="p-1 hover:bg-accent dark:hover:bg-accent-dark rounded-md text-foreground dark:text-foreground-dark transition-colors">
+                class="p-1 hover:bg-skin-fill-light rounded-md text-foreground transition-colors">
           ▼
         </button>
       </div>
     </div>
     <div class="flex justify-end space-x-2">
       <button (click)="cancel()"
-              class="px-2 sm:px-3 py-1 rounded-md hover:bg-accent dark:hover:bg-accent-dark text-foreground dark:text-foreground-dark transition-colors text-xs sm:text-sm">
+              class="px-2 sm:px-3 py-1 rounded-md hover:bg-skin-fill-light text-foreground transition-colors text-xs sm:text-sm">
         Annulla
       </button>
       <button (click)="confirm()"
-              class="px-2 sm:px-3 py-1 rounded-md bg-primary dark:bg-primary-dark hover:bg-primary/90 dark:hover:bg-primary-dark/90 text-primary-foreground dark:text-primary-foreground-dark transition-colors text-xs sm:text-sm">
+              class="px-2 sm:px-3 py-1 rounded-md bg-skin-fill-dark hover:bg-skin-fill-medium text-skin-base-dark transition-colors text-xs sm:text-sm">
         OK
       </button>
     </div>
   </div>
 </div>
-

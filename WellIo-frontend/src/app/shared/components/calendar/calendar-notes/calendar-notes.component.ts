@@ -9,6 +9,7 @@ import {TagFilterComponent} from '../tag-filter/tag-filter.component';
 import {DateTime} from 'luxon';
 import {CalendarEvent, Category, Note, Tag} from '../../../utils/types/calendar.interface';
 import {EventNoteService} from '../../../services/event-note.service';
+import {DashboardService} from '../../../services/dashboard.service';
 
 @Component({
   selector: 'app-calendar-notes',
@@ -45,9 +46,11 @@ export class CalendarNotesComponent implements OnInit {
   selectedTag: Tag | null = null
   selectedDay: DateTime | null = null
 
-  constructor(private eventNoteService: EventNoteService) {}
+  constructor(private eventNoteService: EventNoteService,
+              private dashService: DashboardService) {}
 
   ngOnInit() {
+    this.dashService.setHeaderText('');
     this.updateCalendar()
     this.loadData()
   }
