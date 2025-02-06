@@ -3,6 +3,7 @@ import { DashboardService } from '../../../services/dashboard.service';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {NgClass} from '@angular/common';
 import {ThemeService} from '../../../services/theme.service';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar-dashboard',
@@ -29,6 +30,9 @@ export class DashSidebarComponent implements OnInit, AfterViewInit {
     this.themeService.toggleDarkMode()
   }
 
+  doLogout(): void {
+    this.authService.logout();
+  }
   // public sideNavigationLinks = [
   //   {
   //     path: '/dashboard',
@@ -58,7 +62,8 @@ export class DashSidebarComponent implements OnInit, AfterViewInit {
   // ]
 
   constructor(private dashService: DashboardService,
-              private themeService: ThemeService) {}
+              private themeService: ThemeService,
+              private authService: AuthService,) {}
 
   // SideBar Code & Functions
   ngAfterViewInit(): void {

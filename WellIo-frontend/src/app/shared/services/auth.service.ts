@@ -52,20 +52,4 @@ export class AuthService {
     this.router.navigate(["/login"])
   }
 
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem("token")
-  }
-
-  refreshToken(): Observable<LoginResponse> {
-    return this.apiService.refreshToken().pipe(
-      tap((response) => {
-        if (response && response.token) {
-          localStorage.setItem("token", response.token)
-          localStorage.setItem("currentUser", JSON.stringify(response))
-          this.currentUserSubject.next(response)
-          this.apiService.setToken(response.token)
-        }
-      }),
-    )
-  }
 }

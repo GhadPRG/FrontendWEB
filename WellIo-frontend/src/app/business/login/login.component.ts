@@ -1,5 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {AuthService} from '../../shared/services/auth.service';
 import {Router} from '@angular/router';
@@ -30,28 +38,33 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   createForm(): FormGroup {
-    return this.fb.group(
-      {
-        username: ["", [Validators.required]],
-        password: ["", [Validators.required, Validators.minLength(8)]],
-        confirmPassword: [""],
-        firstname: [""],
-        lastname: [""],
-        email: ["", [Validators.email]],
-        gender: [""],
-        birthDate: [""],
-        height: [null, [Validators.min(0)]],
-        weight: [null, [Validators.min(0)]],
-      },
-      { validator: this.passwordMatchValidator },
-    )
+    return this.fb.group({
+      username: ["", [Validators.required]],
+      password: ["", [Validators.required, Validators.minLength(8)]],
+      confirmPassword: [""],
+      firstname: [""],
+      lastname: [""],
+      email: ["", [Validators.email]],
+      gender: [""],
+      birthDate: [""],
+      height: [null, [Validators.min(0)]],
+      weight: [null, [Validators.min(0)]],
+    })
   }
 
-  passwordMatchValidator(g: FormGroup) {
-    return g.get("password")?.value === g.get("confirmPassword")?.value ? null : { mismatch: true }
+  passwordMatchValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const password = control.get("password")
+      const confirmPassword = control.get("confirmPassword")
+
+      if (password && confirmPassword && password.value !== confirmPassword.value) {
+        return { passwordMismatch: true }
+      }
+      return null
+    }
   }
 
-  togglePasswordVisibility() {
+  togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword
   }
 
@@ -59,6 +72,10 @@ export class LoginComponent implements OnInit {
     this.isLogin = !this.isLogin
     this.authForm.reset()
     if (this.isLogin) {
+      this.authForm.clearValidators()
+      this.authForm.get("username")?.setValidators([Validators.required])
+      this.authForm.get("password")?.setValidators([Validators.required, Validators.minLength(8)])
+      this.authForm.get("confirmPassword")?.clearValidators()
       this.authForm.get("firstname")?.clearValidators()
       this.authForm.get("lastname")?.clearValidators()
       this.authForm.get("email")?.clearValidators()
@@ -66,8 +83,11 @@ export class LoginComponent implements OnInit {
       this.authForm.get("birthDate")?.clearValidators()
       this.authForm.get("height")?.clearValidators()
       this.authForm.get("weight")?.clearValidators()
-      this.authForm.get("confirmPassword")?.clearValidators()
     } else {
+      this.authForm.setValidators(this.passwordMatchValidator())
+      this.authForm.get("username")?.setValidators([Validators.required])
+      this.authForm.get("password")?.setValidators([Validators.required, Validators.minLength(8)])
+      this.authForm.get("confirmPassword")?.setValidators([Validators.required])
       this.authForm.get("firstname")?.setValidators([Validators.required])
       this.authForm.get("lastname")?.setValidators([Validators.required])
       this.authForm.get("email")?.setValidators([Validators.required, Validators.email])
@@ -75,11 +95,8 @@ export class LoginComponent implements OnInit {
       this.authForm.get("birthDate")?.setValidators([Validators.required])
       this.authForm.get("height")?.setValidators([Validators.required, Validators.min(0)])
       this.authForm.get("weight")?.setValidators([Validators.required, Validators.min(0)])
-      this.authForm.get("confirmPassword")?.setValidators([Validators.required])
     }
-    Object.keys(this.authForm.controls).forEach((key) => {
-      this.authForm.get(key)?.updateValueAndValidity()
-    })
+    this.authForm.updateValueAndValidity()
   }
 
   onSubmit(): void {
@@ -99,7 +116,18 @@ export class LoginComponent implements OnInit {
           },
         )
       } else {
-        this.authService.register(this.authForm.value).subscribe(
+        const registerRequest = {
+          username: this.authForm.get("username")?.value,
+          password: this.authForm.get("password")?.value,
+          firstname: this.authForm.get("firstname")?.value,
+          lastname: this.authForm.get("lastname")?.value,
+          email: this.authForm.get("email")?.value,
+          gender: this.authForm.get("gender")?.value,
+          birthDate: this.authForm.get("birthDate")?.value,
+          height: this.authForm.get("height")?.value,
+          weight: this.authForm.get("weight")?.value,
+        }
+        this.authService.register(registerRequest).subscribe(
           () => {
             console.log("Registration successful")
             this.isLogin = true

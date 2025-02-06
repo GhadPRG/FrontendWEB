@@ -43,10 +43,6 @@ export class ApiService {
     return this.http.post<void>(`${this.baseUrl}/auth/register`, registerRequest)
   }
 
-  refreshToken(): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.baseUrl}/auth/refresh`, {}, { headers: this.getHeaders() })
-  }
-
   // Events CRUD
   getEvents(): Observable<EventDTO[]> {
     return this.http.get<EventDTO[]>(`${this.baseUrl}/calendar`, { headers: this.getHeaders() })
