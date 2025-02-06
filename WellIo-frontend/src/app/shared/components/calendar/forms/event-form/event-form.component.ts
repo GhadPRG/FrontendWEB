@@ -4,7 +4,7 @@ import { NgForOf, NgIf } from "@angular/common"
 import { DatePickerComponent } from "../../pickers/date-picker/date-picker.component"
 import { TimePickerComponent } from "../../pickers/time-picker/time-picker.component"
 import { ConfirmDeleteModalComponent } from "../confirm-delete-modal/confirm-delete-modal.component"
-import type { CalendarEvent, Category, Tag } from "../../../../utils/types/calendar.interface"
+import type { CalendarEvent, Tag } from "../../../../utils/types/calendar.interface"
 import { EventNoteService } from "../../../../services/event-note.service"
 import { DateTime } from "luxon"
 
@@ -18,7 +18,6 @@ import { DateTime } from "luxon"
 export class EventFormComponent implements OnInit, OnChanges {
   @Input() isOpen = false
   @Input() event: CalendarEvent | null = null
-  @Input() categories: Category[] = []
   @Input() tags: Tag[] = []
   @Output() closeModal = new EventEmitter<void>()
   @Output() saveEvent = new EventEmitter<CalendarEvent>()
@@ -47,7 +46,6 @@ export class EventFormComponent implements OnInit, OnChanges {
         startTime: this.event.start.toFormat("HH:mm"),
         end: this.event.end || this.event.start.plus({ hours: 1 }),
         endTime: (this.event.end || this.event.start.plus({ hours: 1 })).toFormat("HH:mm"),
-        categoryId: this.event.categoryId,
         tags: this.event.tags,
       })
     } else {
@@ -72,7 +70,6 @@ export class EventFormComponent implements OnInit, OnChanges {
       startTime: [now.toFormat("HH:mm"), Validators.required],
       end: [oneHourLater],
       endTime: [oneHourLater.toFormat("HH:mm")],
-      categoryId: [null],
       tags: [[]],
     })
   }
@@ -86,7 +83,6 @@ export class EventFormComponent implements OnInit, OnChanges {
         description: formValue.description,
         start: this.combineDateTime(formValue.start, formValue.startTime),
         end: this.combineDateTime(formValue.end, formValue.endTime),
-        categoryId: formValue.categoryId,
         tags: formValue.tags,
       }
 
