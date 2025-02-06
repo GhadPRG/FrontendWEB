@@ -8,6 +8,7 @@ import {
   TagDTO
 } from '../utils/types/calendar.interface';
 import {LoginRequest, LoginResponse, RegisterRequest} from '../utils/types/auth.interface';
+import {UserInfoInterface} from '../utils/types/user.interfaces';
 
 
 @Injectable({
@@ -87,4 +88,7 @@ export class ApiService {
     return this.http.get<CategoryDTO[]>(`${this.baseUrl}/categories`, { headers: this.getHeaders() })
   }
 
+  getUserInfo(): Observable<UserInfoInterface> {
+    return this.http.get<UserInfoInterface>(`${this.baseUrl}/api/user`, { headers: this.getHeaders() })
+  }
 }

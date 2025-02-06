@@ -6,10 +6,10 @@
         </button>
     </div>
     <div class="account-info-box">
-        <a class="account-icon">JD</a>
+        <a class="account-icon">{{ getCapitals() }}</a>
         <div class="account-text-info">
-            <p class="user-name">John Doe</p>
-            <p class="user-mail">johndoe.at.gmail.com</p>
+            <p class="user-name">{{getFullName()}}</p>
+            <p class="user-mail">{{ userInfo.email }}</p>
         </div>
 
     </div>

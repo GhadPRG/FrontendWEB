@@ -4,6 +4,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import {NgClass} from '@angular/common';
 import {ThemeService} from '../../../services/theme.service';
 import {AuthService} from '../../../services/auth.service';
+import {UserService} from '../../../services/user.service';
+import {UserInfoInterface} from '../../../utils/types/user.interfaces';
 
 @Component({
   selector: 'app-sidebar-dashboard',
@@ -13,7 +15,7 @@ import {AuthService} from '../../../services/auth.service';
   styleUrl: './dash-sidebar.component.css'
 })
 export class DashSidebarComponent implements OnInit, AfterViewInit {
-
+  userInfo: UserInfoInterface;
   // SideBar Elements
   @ViewChildren('dropDownButtonForSubMenu') dropDownBtnsRefs!: QueryList<ElementRef>;
   @ViewChild('toggleSidebarButton') toggleSidebarBtnRef!: ElementRef;
@@ -24,6 +26,7 @@ export class DashSidebarComponent implements OnInit, AfterViewInit {
     this.themeService.isDarkMode$.subscribe((isDark) => {
       this.isDarkMode = isDark
     })
+    this.refreshUserData();
   }
 
   toggleDarkMode() {
@@ -32,6 +35,14 @@ export class DashSidebarComponent implements OnInit, AfterViewInit {
 
   doLogout(): void {
     this.authService.logout();
+  }
+
+  getFullName(): string {
+    return this.userService.getUserFullName();
+  }
+
+  getCapitals(): string {
+    return this.userService.getUserInitials()
   }
   // public sideNavigationLinks = [
   //   {
@@ -63,7 +74,16 @@ export class DashSidebarComponent implements OnInit, AfterViewInit {
 
   constructor(private dashService: DashboardService,
               private themeService: ThemeService,
-              private authService: AuthService,) {}
+              private authService: AuthService,
+              private userService: UserService) {
+    this.userInfo = this.userService.getUserInfo();
+  }
+
+  refreshUserData(): void {
+    this.userService.refreshUserInfo();
+    // Aggiorna i dati locali dopo il refresh
+    this.userInfo = this.userService.getUserInfo();
+  }
 
   // SideBar Code & Functions
   ngAfterViewInit(): void {
