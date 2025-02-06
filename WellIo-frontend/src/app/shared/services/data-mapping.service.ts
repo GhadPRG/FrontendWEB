@@ -13,19 +13,19 @@ import type {
   NoteDTO,
   TagDTO,
   CategoryDTO,
-} from "../utils/types/calendar.interface";
+} from "../utils/types/calendar.interface"
 
 @Injectable({
   providedIn: "root",
 })
 export class DataMappingService {
-  private useMockData = true;
+  private useMockData = true
 
   constructor(
     private apiService: ApiService,
     private mockDataService: MockDataService,
   ) {
-    this.useMockData = this.mockDataService.useMockData;
+    this.useMockData = this.mockDataService.useMockData
   }
 
   getEvents(): Observable<CalendarEvent[]> {
@@ -42,11 +42,23 @@ export class DataMappingService {
     return this.apiService.getNotes().pipe(map((notes) => notes.map(this.convertNoteDTOToNote)))
   }
 
-  getTags(categoryId: number): Observable<Tag[]> {
+  getTags(): Observable<Tag[]> {
     if (this.useMockData) {
       return of(this.mockDataService.getTags())
     }
-    return this.apiService.getTags(categoryId).pipe(map((tags) => tags.map(this.convertTagDTOToTag)))
+    return this.getCategories().pipe(
+      map((categories) => {
+        return categories.reduce((allTags: Tag[], category) => {
+          const categoryTags =
+            category.tags?.map((tag) => ({
+              ...tag,
+              categoryId: category.id,
+              color: category.color || tag.color,
+            })) || []
+          return [...allTags, ...categoryTags]
+        }, [])
+      }),
+    )
   }
 
   getCategories(): Observable<Category[]> {
@@ -105,17 +117,15 @@ export class DataMappingService {
   }
 
   private convertEventDTOToCalendarEvent(dto: EventDTO): CalendarEvent {
-    console.log("DTO QUA:", dto.title, dto.start, dto.end);
-
     return {
       id: dto.id!,
       categoryId: dto.categoryId,
       title: dto.title,
       description: dto.description,
-      start: DateTime.fromISO(dto.start), // Usa dto.start invece di dto.startDate
-      end: dto.end ? DateTime.fromISO(dto.end) : DateTime.fromISO(dto.start), // Usa dto.end invece di dto.endDate
+      start: DateTime.fromISO(dto.start),
+      end: dto.end ? DateTime.fromISO(dto.end) : DateTime.fromISO(dto.start),
       tags: dto.tags ? dto.tags : [],
-    };
+    }
   }
 
   private convertCalendarEventToEventDTO(event: CalendarEvent): EventDTO {
@@ -150,13 +160,13 @@ export class DataMappingService {
     }
   }
 
-  private convertTagDTOToTag(dto: TagDTO): Tag {
+  private convertTagDTOToTag(dto: TagDTO, categoryId: number, categoryColor: string): Tag {
     return {
       id: dto.id!,
-      categoryId: dto.categoryId,
+      categoryId: categoryId,
       name: dto.name,
       description: dto.description,
-      color: dto.color || "#0000ff",
+      color: categoryColor,
     }
   }
 
@@ -166,6 +176,7 @@ export class DataMappingService {
       name: dto.name,
       description: dto.description || "",
       color: dto.color || "",
+      tags: dto.tags ? dto.tags.map((tagDto) => this.convertTagDTOToTag(tagDto, dto.id!, dto.color || "")) : [],
     }
   }
 }

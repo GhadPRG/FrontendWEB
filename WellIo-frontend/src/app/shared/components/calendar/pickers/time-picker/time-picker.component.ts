@@ -21,83 +21,99 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
   ]
 })
 export class TimePickerComponent implements ControlValueAccessor {
-  @Input() label: string = 'Time';
-  @Input() placeholder: string = 'Select time';
-  @Output() timeChange = new EventEmitter<string>();
+  @Input() label = "Time"
+  @Input() placeholder = "Select time"
+  @Output() timeChange = new EventEmitter<string>()
 
-  hours: number = 0;
-  minutes: number = 0;
-  isOpen: boolean = false;
+  hours = 0
+  minutes = 0
+  isOpen = false
 
-  private onChange: (value: string) => void = () => {};
-  private onTouched: () => void = () => {};
+  private onChange: (value: string) => void = () => {}
+  private onTouched: () => void = () => {}
 
   writeValue(value: string): void {
     if (value) {
-      const [hours, minutes] = value.split(':').map(Number);
-      this.hours = hours;
-      this.minutes = minutes;
+      const [hours, minutes] = value.split(":").map(Number)
+      this.hours = hours
+      this.minutes = minutes
     }
   }
 
   registerOnChange(fn: (value: string) => void): void {
-    this.onChange = fn;
+    this.onChange = fn
   }
 
   registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
+    this.onTouched = fn
   }
 
-  togglePicker(): void {
-    this.isOpen = !this.isOpen;
+  togglePicker(event?: MouseEvent): void {
+    if (event) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    this.isOpen = !this.isOpen
     if (this.isOpen) {
-      this.onTouched();
+      this.onTouched()
     }
   }
 
-  incrementHours(): void {
-    this.hours = (this.hours + 1) % 24;
-    this.updateTime();
+  incrementHours(event: MouseEvent): void {
+    event.preventDefault()
+    event.stopPropagation()
+    this.hours = (this.hours + 1) % 24
+    this.updateTime()
   }
 
-  decrementHours(): void {
-    this.hours = (this.hours - 1 + 24) % 24;
-    this.updateTime();
+  decrementHours(event: MouseEvent): void {
+    event.preventDefault()
+    event.stopPropagation()
+    this.hours = (this.hours - 1 + 24) % 24
+    this.updateTime()
   }
 
-  incrementMinutes(): void {
-    this.minutes = (this.minutes + 1) % 60;
-    this.updateTime();
+  incrementMinutes(event: MouseEvent): void {
+    event.preventDefault()
+    event.stopPropagation()
+    this.minutes = (this.minutes + 1) % 60
+    this.updateTime()
   }
 
-  decrementMinutes(): void {
-    this.minutes = (this.minutes - 1 + 60) % 60;
-    this.updateTime();
+  decrementMinutes(event: MouseEvent): void {
+    event.preventDefault()
+    event.stopPropagation()
+    this.minutes = (this.minutes - 1 + 60) % 60
+    this.updateTime()
   }
 
   updateTime(): void {
-    const time = this.formatTime();
-    this.onChange(time);
-    this.timeChange.emit(time);
+    const time = this.formatTime()
+    this.onChange(time)
+    this.timeChange.emit(time)
   }
 
   formatTime(): string {
-    return `${this.padZero(this.hours)}:${this.padZero(this.minutes)}`;
+    return `${this.padZero(this.hours)}:${this.padZero(this.minutes)}`
   }
 
   padZero(num: number): string {
-    return num.toString().padStart(2, '0');
+    return num.toString().padStart(2, "0")
   }
 
-  confirm(): void {
-    this.isOpen = false;
+  confirm(event: MouseEvent): void {
+    event.preventDefault()
+    event.stopPropagation()
+    this.isOpen = false
   }
 
-  cancel(): void {
-    this.isOpen = false;
+  cancel(event: MouseEvent): void {
+    event.preventDefault()
+    event.stopPropagation()
+    this.isOpen = false
   }
 
   onClickOutside(): void {
-    this.isOpen = false;
+    this.isOpen = false
   }
 }

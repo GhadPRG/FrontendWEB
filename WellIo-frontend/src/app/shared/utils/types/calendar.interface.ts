@@ -1,13 +1,12 @@
-import type { DateTime } from "luxon";
-
+import type { DateTime } from "luxon"
 
 export interface CalendarEvent {
   id: number
   categoryId?: number
   title: string
   description?: string
-  start: DateTime //Formato ISO + ORA
-  end: DateTime //Formato ISO + ORA
+  start: DateTime
+  end: DateTime
   tags: number[]
 }
 
@@ -32,6 +31,7 @@ export interface Category {
   name: string
   description?: string
   color?: string
+  tags?: Tag[]
 }
 
 // Backend DTO interfaces
@@ -58,7 +58,6 @@ export interface TagDTO {
   categoryId: number
   name: string
   description?: string
-  color?: string
 }
 
 export interface CategoryDTO {
@@ -66,4 +65,6 @@ export interface CategoryDTO {
   name: string
   description?: string
   color?: string
+  tags?: TagDTO[]
 }
+

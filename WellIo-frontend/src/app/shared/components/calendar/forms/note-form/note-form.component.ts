@@ -1,25 +1,21 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {Note, Tag} from '../../../../utils/types/calendar.interface';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {EventNoteService} from '../../../../services/event-note.service';
-import {DateTime} from 'luxon';
-import {NgForOf, NgIf} from '@angular/common';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core"
+import type { Note, Tag } from "../../../../utils/types/calendar.interface"
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms"
+import { EventNoteService } from "../../../../services/event-note.service"
+import { DateTime } from "luxon"
+import { NgForOf, NgIf } from "@angular/common"
 
 @Component({
-  selector: 'app-note-form',
+  selector: "app-note-form",
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    NgIf,
-    NgForOf
-  ],
-  templateUrl: './note-form.component.html',
-  styleUrl: './note-form.component.css'
+  imports: [ReactiveFormsModule, NgIf, NgForOf],
+  templateUrl: "./note-form.component.html",
+  styleUrl: "./note-form.component.css",
 })
 export class NoteFormComponent implements OnInit, OnChanges {
   @Input() isOpen = false
   @Input() note: Note | null = null
-  @Input() tags: Tag[] = [] // Added input
+  @Input() tags: Tag[] = []
   @Output() closeModal = new EventEmitter<void>()
   @Output() saveNote = new EventEmitter<Note>()
 
@@ -33,9 +29,7 @@ export class NoteFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    // this.eventNoteService.tags$.subscribe((tags) => {
-    //   this.tags = tags
-    // })
+    // Initialization logic if needed
   }
 
   ngOnChanges() {
@@ -95,3 +89,4 @@ export class NoteFormComponent implements OnInit, OnChanges {
     return currentTags.includes(tagId)
   }
 }
+
