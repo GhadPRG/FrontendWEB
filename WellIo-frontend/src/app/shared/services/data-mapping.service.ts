@@ -19,7 +19,7 @@ import type {
   providedIn: "root",
 })
 export class DataMappingService {
-  private useMockData = true
+  private useMockData = false
 
   constructor(
     private apiService: ApiService,
@@ -125,15 +125,17 @@ export class DataMappingService {
   }
 
   private convertEventDTOToCalendarEvent(dto: EventDTO): CalendarEvent {
+    console.log("DTO QUA:", dto.title, dto.start, dto.end);
+
     return {
       id: dto.id!,
       categoryId: dto.categoryId,
       title: dto.title,
       description: dto.description,
-      start: DateTime.fromISO(dto.startDate),
-      end: dto.endDate ? DateTime.fromISO(dto.endDate) : DateTime.fromISO(dto.startDate),
-      tags: dto.tags,
-    }
+      start: DateTime.fromISO(dto.start), // Usa dto.start invece di dto.startDate
+      end: dto.end ? DateTime.fromISO(dto.end) : DateTime.fromISO(dto.start), // Usa dto.end invece di dto.endDate
+      tags: dto.tags ? dto.tags : [],
+    };
   }
 
   private convertCalendarEventToEventDTO(event: CalendarEvent): EventDTO {
@@ -142,8 +144,8 @@ export class DataMappingService {
       categoryId: event.categoryId,
       title: event.title,
       description: event.description,
-      startDate: event.start.toISO() ?? DateTime.now().toISO(),
-      endDate: event.end?.toISO() ?? DateTime.now().toISO(),
+      start: event.start.toISO() ?? DateTime.now().toISO(),
+      end: event.end?.toISO() ?? DateTime.now().toISO(),
       tags: event.tags,
     }
   }

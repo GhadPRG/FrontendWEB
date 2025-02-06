@@ -47,18 +47,32 @@ export class ApiService {
 
   // Events CRUD
   getEvents(userId: number): Observable<EventDTO[]> {
-    return this.http.get<EventDTO[]>(`${this.baseUrl}/events/user/${userId}`, { headers: this.getHeaders() })
+    //Qua creo l'evento
+    const tempToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODg0MDY5OSwiZXhwIjoxNzM4OTI3MDk5fQ.NuNkFLRUX_otunfy9DS_-AAfK9044MkVfg9Wl4JHBkQ';
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${tempToken}`
+    });
+    console.log("mannaia la madonna")
+    return this.http.get<EventDTO[]>(`${this.baseUrl}/calendar`, { headers: headers })
   }
 
   createEvent(event: EventDTO): Observable<EventDTO> {
-    return this.http.post<EventDTO>(`${this.baseUrl}/events`, event, { headers: this.getHeaders() })
+    //Qua creo l'evento
+    const tempToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODg0MDY5OSwiZXhwIjoxNzM4OTI3MDk5fQ.NuNkFLRUX_otunfy9DS_-AAfK9044MkVfg9Wl4JHBkQ';
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${tempToken}`
+    });
+
+    return this.http.post<EventDTO>(`${this.baseUrl}/calendar`, event, { headers: headers })
   }
 
   updateEvent(event: EventDTO): Observable<EventDTO> {
+    //Qua inserisco l'evento da aggiornare.
     return this.http.put<EventDTO>(`${this.baseUrl}/events/${event.id}`, event, { headers: this.getHeaders() })
   }
 
   deleteEvent(id: number): Observable<void> {
+    //Qua elimino l'evento
     return this.http.delete<void>(`${this.baseUrl}/events/${id}`, { headers: this.getHeaders() })
   }
 
