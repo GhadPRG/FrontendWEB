@@ -27,7 +27,7 @@ export class DashSportComponent implements OnInit, AfterViewInit {
   currentMuscleGroupShown = signal<string>('');
 
   constructor(
-    private dashServive: DashboardService,
+    private dashService: DashboardService,
     public sportService: SportService,
     private fb: FormBuilder
   ) 
@@ -37,7 +37,7 @@ export class DashSportComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     // Arriving on the Page
-    this.dashServive.setHeaderText("Sport & Exercise");
+    this.dashService.setHeaderText("Sport & Exercise");
 
     // Request Exercise of This Week
     this.sportService.getWeekExercise().subscribe({

@@ -1,0 +1,27 @@
+/* ==================================================================================================================
+ * ===== Mood Component - Styling for Medium-Large Screens ==========================================================
+ * ==================================================================================================================
+*/
+.mood-tracker-container {
+    @apply  h-32 [grid-auto-rows:_auto];
+}
+
+/* ----- Mood : Calendar Tracker ----------------------------------------------------------------------------------- */
+.mood-tracker-container .info-container.mood-tracker-calendar { @apply  col-span-4 row-span-2 flex flex-col items-center space-y-3; }
+
+.info-container.mood-tracker-calendar .calendar-week-days-contaiener { 
+    @apply w-96 grid grid-cols-7 text-xl;
+}
+
+.calendar-week-days-contaiener .week-day {
+    @apply w-full text-center;
+}
+
+.info-container.mood-tracker-calendar .calendar-container {
+    @apply w-96 grid grid-cols-7 gap-3;
+}
+
+.calendar-container .calendar-cell { 
+    @apply w-full p-2 flex justify-center items-center text-xl cursor-pointer;
+}
+
