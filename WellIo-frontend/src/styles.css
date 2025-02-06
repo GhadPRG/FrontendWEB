@@ -160,3 +160,10 @@ body { @apply min-h-screen font-poppins; }
 .fats { @apply from-amber-300/75 to-amber-400/75; }
 .fibers { @apply from-yellow-800/75 to-yellow-900/75; }
 
+.mood-happy { @apply from-teal-500 to-teal-700; }
+.mood-fine { @apply from-green-500 to-green-700; }
+.mood-normal { @apply from-blue-500 to-blue-700; }
+.mood-sad { @apply from-orange-500 to-orange-700; }
+.mood-dispear { @apply from-red-500 to-red-700; }
+
+
