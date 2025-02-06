@@ -1,7 +1,7 @@
-<main class="glassmorphic rounded-lg shadow-lg container mx-auto p-2 text-foreground">
+<main class="glass-panel rounded-lg shadow-lg container mx-auto p-2 text-foreground">
   <div class="grid grid-cols-1 gap-2">
     <!-- Tag Filter -->
-    <section class="glassmorphic rounded-lg p-2">
+    <section class="glass-panel rounded-lg p-2">
       <app-tag-filter
         [tags]="tags"
         [categories]="categories"
@@ -12,7 +12,7 @@
     </section>
 
     <!-- Calendar section -->
-    <section class="glassmorphic rounded-lg p-2">
+    <section class="glass-panel rounded-lg p-2">
       <article>
         <header class="flex justify-between items-center mb-2">
           <h2 class="text-sm font-semibold text-foreground">{{ currentMonth.toFormat('MMM yyyy') }}</h2>
