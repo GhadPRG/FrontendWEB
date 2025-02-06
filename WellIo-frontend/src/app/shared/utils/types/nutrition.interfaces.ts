@@ -47,7 +47,7 @@ export interface FlattenDish {
     carbs: number,
     fats: number,
     proteins: number,
-    mealType: string,
+    meal_type: string,
     name: string,
     meal_id: number,
 }

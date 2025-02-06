@@ -165,6 +165,7 @@ export class NutritionService {
 
   registerNewDish(dish: DishInterface): Observable<any> {
     let request: Observable<any> = this.http.post(`${this.serverUrl}/`, this.dishFlattener(dish));
+    console.log(this.dishFlattener(dish));
 
     request.subscribe({
       next: (response) => {
@@ -253,14 +254,21 @@ export class NutritionService {
       proteins: (dish.dishInfo.proteins * dish.quantity),
       name: dish.dishInfo.name,
       meal_id: (dish?.meal ?? { id: -1 }).id ?? -1,
-      mealType: (dish.meal ?? { type: ''}).type
+      meal_type: (dish.meal ?? { type: ''}).type
     };
 
     return flatDish;
   }
 
   defineAllMealType(dict: MealDictionary): MealDictionary {
-    this.mealTypes.forEach((currentType) => { if(!dict[currentType]) { dict[currentType] = {} as MealInterface }; });
+    this.mealTypes.forEach((currentType) => { 
+      if(!dict[currentType]) {
+        dict[currentType] = {
+          type: currentType,
+          dishes: []
+        } 
+      }; 
+    });
 
     return dict;
   }

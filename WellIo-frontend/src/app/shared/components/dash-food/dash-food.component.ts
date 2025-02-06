@@ -54,6 +54,9 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
     // Arriving on the Page
     this.dashServive.setHeaderText("Nutrition"); 
 
+    // Setting up Meals Type
+    this.currentMeals = this.nutritionService.defineAllMealType(this.currentMeals);
+
     // Requesting Macros if not set
     this.nutritionService.setMacroValues();
     this.nutritionService.getTodayMeals().subscribe({
