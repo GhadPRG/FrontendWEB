@@ -1,0 +1,61 @@
+<div class="relative w-full">
+  <input
+    type="text"
+    [value]="selectedDate ? selectedDate.toFormat('dd/MM/yyyy') : ''"
+    (click)="togglePicker()"
+    readonly
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    class="w-full px-2 sm:px-3 py-1 sm:py-2 bg-background dark:bg-background-dark text-foreground dark:text-foreground-dark rounded-md border border-input dark:border-input-dark focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark focus:border-transparent cursor-pointer text-sm sm:text-base"
+  />
+
+  <div *ngIf="isOpen"
+       class="absolute z-50 mt-1 p-2 sm:p-3 bg-background dark:bg-background-dark border border-input dark:border-input-dark rounded-md shadow-lg w-[280px]"
+       (clickOutside)="onClickOutside()">
+    <header class="flex justify-between items-center mb-2 sm:mb-3">
+      <button (click)="prevMonth()"
+              class="p-1 hover:bg-accent dark:hover:bg-accent-dark rounded-md text-foreground dark:text-foreground-dark transition-colors">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <h3 class="text-foreground dark:text-foreground-dark font-medium text-sm sm:text-base">{{ currentMonth.toFormat('MMMM yyyy') }}</h3>
+      <button (click)="nextMonth()"
+              class="p-1 hover:bg-accent dark:hover:bg-accent-dark rounded-md text-foreground dark:text-foreground-dark transition-colors">
+        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="grid grid-cols-7 gap-1 text-center mb-1 sm:mb-2">
+      <div *ngFor="let day of daysOfWeek" class="text-[10px] sm:text-xs text-muted-foreground dark:text-muted-foreground-dark">
+        {{ day }}
+      </div>
+    </div>
+
+    <div class="grid grid-cols-7 gap-1">
+      <button *ngFor="let date of calendarDays"
+              [class.text-muted-foreground]="!isCurrentMonth(date)"
+              [class.bg-primary]="isSelected(date)"
+              [class.text-primary-foreground]="isSelected(date)"
+              [class.font-bold]="isToday(date)"
+              (click)="selectDate(date)"
+              class="aspect-square flex items-center justify-center text-[10px] sm:text-xs rounded-md hover:bg-accent dark:hover:bg-accent-dark transition-colors text-foreground dark:text-foreground-dark">
+        {{ date.toFormat('d') }}
+      </button>
+    </div>
+
+    <footer class="flex justify-end space-x-2 mt-2 sm:mt-3">
+      <button (click)="cancel()"
+              class="px-2 sm:px-3 py-1 rounded-md hover:bg-accent dark:hover:bg-accent-dark text-foreground dark:text-foreground-dark transition-colors text-xs sm:text-sm">
+        Annulla
+      </button>
+      <button (click)="confirm()"
+              class="px-2 sm:px-3 py-1 rounded-md bg-primary dark:bg-primary-dark hover:bg-primary/90 dark:hover:bg-primary-dark/90 text-primary-foreground dark:text-primary-foreground-dark transition-colors text-xs sm:text-sm">
+        OK
+      </button>
+    </footer>
+  </div>
+</div>
+

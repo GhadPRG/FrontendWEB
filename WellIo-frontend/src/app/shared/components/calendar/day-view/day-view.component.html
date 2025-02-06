@@ -1,0 +1,66 @@
+<div *ngIf="isOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+  <div class="bg-background dark:bg-background-dark rounded-lg shadow-xl w-full max-w-4xl h-[90vh] flex flex-col">
+    <!-- Header -->
+    <div class="flex items-center justify-between p-3 sm:p-4 border-b border-border dark:border-border-dark">
+      <h2 class="text-lg sm:text-xl font-semibold text-foreground dark:text-foreground-dark">
+        {{ date.toFormat('EEEE') }}
+        <span class="text-muted-foreground dark:text-muted-foreground-dark ml-2 text-sm sm:text-base">
+          {{ date.toFormat('d MMMM yyyy') }}
+        </span>
+      </h2>
+      <button (click)="close()"
+              class="p-2 hover:bg-accent dark:hover:bg-accent-dark rounded-full text-foreground dark:text-foreground-dark">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Calendar Grid -->
+    <div class="flex-1 overflow-y-auto relative">
+      <div class="relative min-h-[1440px]"> <!-- 24 hours * 60px per hour -->
+        <!-- Time Column -->
+        <div class="absolute left-0 top-0 w-12 sm:w-16 h-full border-r border-border dark:border-border-dark bg-background dark:bg-background-dark z-10">
+          <div *ngFor="let hour of hours"
+               class="absolute w-full"
+               [style.top.px]="hour * 60">
+            <span class="text-xs text-muted-foreground dark:text-muted-foreground-dark pr-1 sm:pr-2 relative -top-2 float-right">
+              {{ hour.toString().padStart(2, '0') }}:00
+            </span>
+          </div>
+        </div>
+
+        <!-- Grid Lines -->
+        <div class="ml-12 sm:ml-16 relative h-full">
+          <div *ngFor="let hour of hours"
+               class="absolute w-full border-t border-border dark:border-border-dark"
+               [style.top.px]="hour * 60"
+               (click)="createEventAtTime(hour)">
+          </div>
+        </div>
+
+        <!-- Events -->
+        <div class="absolute inset-0 ml-12 sm:ml-16 mr-2 sm:mr-4">
+          <div *ngFor="let event of getEventsForDay(); let i = index"
+               class="absolute rounded-md p-1 sm:p-2 overflow-hidden cursor-pointer transition-all hover:opacity-90"
+               [style.top.px]="getEventTopPosition(event)"
+               [style.height.px]="getEventHeight(event)"
+               [style.left]="getEventLeft(event, i)"
+               [style.width]="getEventWidth(event, i)"
+               [style.background-color]="getEventColor(event)"
+               (click)="editEvent(event)">
+            <div class="font-medium text-white truncate text-xs sm:text-sm">{{ event.title }}</div>
+            <div class="text-xs text-white/90 hidden sm:block">{{ getEventTimeLabel(event) }}</div>
+            <div *ngIf="isEventContinuingFromPreviousDay(event)" class="text-xs text-white/90 mt-1 hidden sm:block">
+              ↑ Continua dal giorno precedente
+            </div>
+            <div *ngIf="isEventContinuingToNextDay(event)" class="text-xs text-white/90 mt-1 hidden sm:block">
+              ↓ Continua al giorno successivo
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
