@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, QueryList, signal, ViewCh
 
 import { DashboardService } from '../../services/dashboard.service';
 import { SportService } from '../../services/sport.service';
-import { ExerciseInterface } from '../../utils/types/sport.interfaces';
+import { ExerciseInterface, SportDictionary } from '../../utils/types/sport.interfaces';
 
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
@@ -22,8 +22,8 @@ export class DashSportComponent implements OnInit, AfterViewInit {
   @ViewChildren('muscleGroupBtn') muscleGroupBtnsRef!: QueryList<ElementRef>;  // Muscle Groups
 
   // Data
-  exerciseDict: { [key: string]: ExerciseInterface[] } = {};
-  todayExerciseDict: { [key: string]: ExerciseInterface[] } = {};
+  exerciseDict: SportDictionary = {};
+  todayExerciseDict: SportDictionary = {};
   currentMuscleGroupShown = signal<string>('');
 
   constructor(
@@ -38,6 +38,10 @@ export class DashSportComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     // Arriving on the Page
     this.dashService.setHeaderText("Sport & Exercise");
+
+    // Setting up Sports Type
+    this.exerciseDict = this.sportService.defineAllSportType(this.exerciseDict);
+    this.todayExerciseDict = this.sportService.defineAllSportType(this.todayExerciseDict);
 
     // Request Exercise of This Week
     this.sportService.getWeekExercise().subscribe({
@@ -104,7 +108,7 @@ export class DashSportComponent implements OnInit, AfterViewInit {
           exerciseInfo: {
             name: response.name ?? this.form_registerExercise.get('name')?.value,
             target_muscle_group: this.form_registerExercise.get('muscleGroup_choice')?.value,
-            met: response.met ?? 1,
+            met: response.exercises[0].met ?? 1, // Default Value
           },
           date: new Date().toISOString().split("T")[0],
           sets: this.form_registerExercise.get('sets')?.value,

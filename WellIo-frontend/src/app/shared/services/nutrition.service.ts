@@ -238,7 +238,7 @@ export class NutritionService {
     }, {} as { [key: string]: MealInterface });
 
     // Postwork to prepare Dictionary
-    this.mealTypes.forEach((currentType) => { if(!dict[currentType]) { dict[currentType] = {} as MealInterface }; });
+    dict = this.defineAllMealType(dict);
 
     return dict;
   }

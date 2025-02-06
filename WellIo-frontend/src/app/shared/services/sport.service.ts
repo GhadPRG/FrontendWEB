@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { ExerciseInterface } from '../utils/types/sport.interfaces';
+import { ExerciseInterface, SportDictionary } from '../utils/types/sport.interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -41,59 +41,59 @@ export class SportService {
 
 
   getWeekExercise(): Observable<ExerciseInterface[]> {
-    let temp = new BehaviorSubject<ExerciseInterface[]>([
-      {
-        exerciseInfo: {
-          name: 'Esercizio 1',
-          target_muscle_group: 'Back',
-          met: 2
-        },
-        date: '2025-02-05',
-        sets: 2,
-        reps: 10,
-        weight_used: 0,
-        time_passed: 12
-      },
-      {
-        exerciseInfo: {
-          name: 'Esercizio 2',
-          target_muscle_group: 'Back',
-          met: 2
-        },
-        date: '2025-02-04',
-        sets: 2,
-        reps: 10,
-        weight_used: 0,
-        time_passed: 12
-      },
-      {
-        exerciseInfo: {
-          name: 'Esercizio 1 in Chest',
-          target_muscle_group: 'Chest',
-          met: 2
-        },
-        date: '2025-02-05',
-        sets: 2,
-        reps: 10,
-        weight_used: 0,
-        time_passed: 12
-      },
-      {
-        exerciseInfo: {
-          name: 'Esercizio 3',
-          target_muscle_group: 'Chest',
-          met: 2
-        },
-        date: '2025-02-04',
-        sets: 2,
-        reps: 10,
-        weight_used: 0,
-        time_passed: 12
-      },
-    ]);
+    // let temp = new BehaviorSubject<ExerciseInterface[]>([
+    //   {
+    //     exerciseInfo: {
+    //       name: 'Esercizio 1',
+    //       target_muscle_group: 'Back',
+    //       met: 2
+    //     },
+    //     date: '2025-02-05',
+    //     sets: 2,
+    //     reps: 10,
+    //     weight_used: 0,
+    //     time_passed: 12
+    //   },
+    //   {
+    //     exerciseInfo: {
+    //       name: 'Esercizio 2',
+    //       target_muscle_group: 'Back',
+    //       met: 2
+    //     },
+    //     date: '2025-02-04',
+    //     sets: 2,
+    //     reps: 10,
+    //     weight_used: 0,
+    //     time_passed: 12
+    //   },
+    //   {
+    //     exerciseInfo: {
+    //       name: 'Esercizio 1 in Chest',
+    //       target_muscle_group: 'Chest',
+    //       met: 2
+    //     },
+    //     date: '2025-02-05',
+    //     sets: 2,
+    //     reps: 10,
+    //     weight_used: 0,
+    //     time_passed: 12
+    //   },
+    //   {
+    //     exerciseInfo: {
+    //       name: 'Esercizio 3',
+    //       target_muscle_group: 'Chest',
+    //       met: 2
+    //     },
+    //     date: '2025-02-04',
+    //     sets: 2,
+    //     reps: 10,
+    //     weight_used: 0,
+    //     time_passed: 12
+    //   },
+    // ]);
 
-    return temp;
-    // return this.http.get<ExerciseInterface[]>(`${this.serverUrl}/`);
+    // return temp;
+    return this.http.get<ExerciseInterface[]>(`${this.serverUrl}/`);
   }
 
   getExerciseInfo(exerciseName: string): Observable<any> {
@@ -102,25 +102,17 @@ export class SportService {
           'x-app-key': this.appKey
         });
     
-    return this.http.post(`${this.apiUrlSearchExercise}?query=${exerciseName}`, {query: exerciseName }, { headers });
+    return this.http.post(`${this.apiUrlSearchExercise}`, { query: exerciseName }, { headers });
   }
 
-  registerNewExercise(exercise: ExerciseInterface): void {//Observable<any> {
-  // let request: Observable<any> = this.http.post(`${this.serverUrl}/`, exercise);
-
-    // request.subscribe({
-    //   next: (response) => {
-    //     
-    //   }
-    // });
-  
-    // return request;
+  registerNewExercise(exercise: ExerciseInterface): Observable<any> {
+    return this.http.post(`${this.serverUrl}/`, exercise);
   }
 
 
 
   // Utility Funcitons
-  mapExericesToExerciseDictionary(exercises: ExerciseInterface[]): { [key: string]: ExerciseInterface[] } {
+  mapExericesToExerciseDictionary(exercises: ExerciseInterface[]): SportDictionary {
     let dict: { [key: string]: ExerciseInterface[] } = exercises.reduce((acc, exercise) => {
       const key = exercise.exerciseInfo.target_muscle_group;
 
@@ -132,12 +124,20 @@ export class SportService {
     }, {} as { [key: string]: ExerciseInterface[] });
 
     // Postwork to prepare Dictionary
-    this.muscleGroups.forEach((currentGroup) => { if(!dict[currentGroup]) { dict[currentGroup] = [] }; });
+    dict = this.defineAllSportType(dict);
 
     // Updating Statistics
     this.exerciseWeeklyDonePerType.set(
       Object.fromEntries(this.muscleGroups.map(key => [key, dict[key].length])) as Record<string, number>
     );
+
+    return dict;
+  }
+
+  defineAllSportType(dict: SportDictionary): SportDictionary {
+    this.muscleGroups.forEach((currentGroup) => {
+      if(!dict[currentGroup]) { dict[currentGroup] = [] };
+    });
 
     return dict;
   }
