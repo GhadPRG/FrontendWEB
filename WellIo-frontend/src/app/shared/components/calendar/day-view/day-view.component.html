@@ -1,5 +1,5 @@
-<div *ngIf="isOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-  <div class="bg-background dark:bg-skin-darkest rounded-lg shadow-lg w-full max-w-4xl h-[90vh] flex flex-col">
+<div *ngIf="isOpen" class="fixed inset-0 z-50 flex text-skin-base-light items-center justify-center glass-panel p-4">
+  <div class="shadow-glass rounded-lg shadow-lg w-full max-w-4xl h-[90vh] flex flex-col">
     <!-- Header -->
     <div class="flex items-center justify-between p-3 sm:p-4 border-b border-border">
       <h2 class="text-lg sm:text-xl font-semibold text-foreground">
@@ -9,7 +9,7 @@
         </span>
       </h2>
       <button (click)="close()"
-              class="p-2 hover:bg-skin-fill-light dark:hover:bg-skin-fill-dark rounded-full text-foreground">
+              class="p-2 hover:bg-skin-fill-light rounded-full text-foreground">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
@@ -20,7 +20,7 @@
     <div class="flex-1 overflow-y-auto relative">
       <div class="relative min-h-[1440px]"> <!-- 24 hours * 60px per hour -->
         <!-- Time Column -->
-        <div class="absolute left-0 top-0 w-12 sm:w-16 h-full border-r border-border bg-background dark:bg-skin-darkest z-10">
+        <div class="absolute left-0 top-0 w-12 sm:w-16 h-full border-r border-border bg-background z-10">
           <div *ngFor="let hour of hours"
                class="absolute w-full"
                [style.top.px]="hour * 60">
