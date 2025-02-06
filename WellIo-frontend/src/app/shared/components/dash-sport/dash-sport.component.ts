@@ -53,7 +53,7 @@ export class DashSportComponent implements OnInit, AfterViewInit {
 
         console.log(this.exerciseDict);
       }
-    })
+    });
   }
 
   initiateForms(): void {

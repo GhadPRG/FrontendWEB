@@ -11,14 +11,14 @@
                 <div class="mood-question">
                     <span class="spacer"></span>How are you feeling today?
                 </div>
-                <div class="today-mood"></div>
+                <div class="today-mood"
+                [class]="'mood-' + this.currMoodSelected().toLocaleLowerCase()"></div>
             </div>
             <ul class="mood-list">
-                <li class="mood mood-happy"></li>
-                <li class="mood mood-fine"></li>
-                <li class="mood mood-normal"></li>
-                <li class="mood mood-sad"></li>
-                <li class="mood mood-dispear"></li>
+                @for (moodType of this.moodService.moodTypes; track $index) {
+                    <li [class]="'mood mood-' + moodType.toLocaleLowerCase()"
+                    (click)="addMoodByType(moodType)"></li>
+                }
             </ul>
         </div>
     </header>
@@ -27,13 +27,31 @@
         <div class="content sports-content ">
             <div class="panel-title glass-top-title-bg">Exercise Stats</div>
             <div class="stats-container sports-stats">
-                <div class="graphics">
-                    <div class="donut-chart chart first-chart"
-                    [style.--fill-percent]="this.sportService.exerciseStatisticsWeeklyPerType().upper_body"></div>
-                    <div class="donut-chart chart second-chart"
-                    [style.--fill-percent]="this.sportService.exerciseStatisticsWeeklyPerType().lower_body"></div>
-                    <div class="donut-chart chart third-chart"
-                    [style.--fill-percent]="this.sportService.exerciseStatisticsWeeklyPerType().core"></div>
+                <div class="graphics-container">
+                    <div class="graphics-anchor">
+                    <div class="graphics">
+                        <div class="donut-chart chart upper-body"
+                        [style.--fill-percent]="this.sportService.exerciseStatisticsWeeklyPerType().upper_body"></div>
+                        <div class="donut-chart chart lower-body"
+                        [style.--fill-percent]="this.sportService.exerciseStatisticsWeeklyPerType().lower_body"></div>
+                        <div class="donut-chart chart core"
+                        [style.--fill-percent]="this.sportService.exerciseStatisticsWeeklyPerType().core"></div>
+                    </div>
+                </div>
+                </div>
+                <div class="legend-container">
+                    <div class="legend-box">
+                        <div class="legend-icon upper-body"></div>
+                        <p class="legend-label">Upper Body</p>
+                    </div>                                      
+                    <div class="legend-box">
+                        <div class="legend-icon lower-body"></div>
+                        <p class="legend-label">Lower Body</p>
+                    </div> 
+                    <div class="legend-box">
+                        <div class="legend-icon core"></div>
+                        <p class="legend-label">Core</p>
+                    </div>                          
                 </div>
             </div>
             

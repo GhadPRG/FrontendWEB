@@ -30,7 +30,11 @@
 
 .mood-content .mood-question-container { @apply flex justify-center items-center; }
 .mood-content .mood-question-container .mood-question { @apply pr-6 flex-1 text-wrap; }
-.mood-content .mood-question-container .today-mood { @apply w-20 h-20 rounded-lg shadow-glass bg-white/15; }
+.mood-content .mood-question-container .today-mood { 
+    @apply  w-20 h-20 
+            rounded-lg shadow-glass bg-gradient-to-br bg-white/15
+            transition-all duration-300; 
+}
 
 .mood-content .mood-list { @apply flex justify-center items-center space-x-3; }
 .mood-content .mood-list .mood { 
@@ -64,7 +68,7 @@
             grid grid-rows-3 grid-cols-4 justify-self-center; 
 }
 
-
+.content.nutrition-content, .content.sports-content { @apply h-[28rem]; }
 /* ==================================================================================================================
  * ===== Nutrition Stats - Styling for Medium-Large Screens =========================================================
  * ==================================================================================================================
@@ -73,12 +77,6 @@
     @apply  w-11/12 max-w-[28rem] p-6 gap-3 
             grid grid-rows-3 grid-cols-4 justify-self-center; 
 }
-
-/* .nutrition-content .nutrition-stats .stats { 
-    @apply  w-[5.5rem] h-48 p-3 pb-2 relative z-10
-            row-span-2 col-span-1
-            rounded-[2.25rem] shadow-glass;
-} */
 
 .nutrition-content .nutrition-stats .stats { 
     @apply  w-full h-full p-3 pb-2 relative z-10
@@ -101,8 +99,8 @@
 .nutrition-content .nutrition-stats .stats.calories-stats .values .to-reach { @apply pb-1; }
 .nutrition-content .nutrition-stats .stats.calories-stats .values .reached { @apply text-3xl font-bold; }
 
-/* ----- Nutrition Stats: Legend Boxes ------------------------------------------------------------------------------ */
-.nutrition-content .nutrition-stats .legend-container {
+/* ----- Nutrition & Stats: Legend Boxes ---------------------------------------------------------------------------- */
+.content .stats-container .legend-container {
     @apply  w-full h-full row-span-1 col-span-4 mt-5 pt-5 relative
             grid grid-rows-1 grid-cols-4
             before:block before:w-2/3 before:h-1
@@ -110,14 +108,15 @@
             before:rounded-full before:shadow-glass;
 }
 
-.nutrition-content .nutrition-stats .legend-container .legend-box {
+.content .stats-container .legend-container .legend-box {
     @apply  flex flex-col justify-center items-center space-y-1;
 }
-.nutrition-content .nutrition-stats .legend-container .legend-box .legend-icon {
+.content .stats-container .legend-container .legend-box .legend-icon {
     @apply  w-8 h-8 rounded-lg shadow-glass bg-gradient-to-br;
 }
-.nutrition-content .nutrition-stats .legend-container .legend-box .legend-label { @apply text-sm font-semibold; }
+.content .stats-container .legend-container .legend-box .legend-label { @apply text-sm font-semibold; }
 
+.sports-content .sports-stats .legend-container { @apply grid-cols-3; }
 
 /* ==================================================================================================================
  * ===== Exercise Stats - Styling for Medium-Large Screens ==========================================================
@@ -126,23 +125,31 @@
 .content-container .sports-content .sports-stats { @apply  p-6 grid grid-rows-3 grid-cols-4 gap-3 justify-self-center; }
 .content-container .sports-content .sports-stats .graphics { @apply w-48 h-48 relative row-span-2 col-span-2; }
 
+.sports-content .sports-stats .graphics-container { 
+    @apply w-full h-full row-span-2 col-span-4 flex items-center justify-center;
+}
+.sports-content .sports-stats .graphics-container .graphics-anchor { @apply relative; }
+
 .sports-content .sports-stats .graphics .chart {
     @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
 }
  
+.sports-content .sports-stats .upper-body { @apply from-blue-300/75  to-blue-400/75; }
+.sports-content .sports-stats .lower-body { @apply from-green-500/75 to-green-600/75; }
+.sports-content .sports-stats .core { @apply from-red-300/75 to-red-400/75; }
 
-.sports-stats .graphics .chart.first-chart { 
-    @apply w-48 h-48 from-blue-300/75  to-blue-400/75;;
+.sports-stats .graphics .chart.upper-body { 
+    @apply w-48 h-48;
 
     --inner-ring-percent: 60%;
 }
-.sports-stats .graphics .chart.second-chart { 
-    @apply w-36 h-36 from-green-500/75 to-green-600/75;
+.sports-stats .graphics .chart.lower-body { 
+    @apply w-36 h-36;
 
     --inner-ring-percent: 55%;
 }
-.sports-stats .graphics .chart.third-chart {
-    @apply w-24 h-24 from-red-300/75 to-red-400/75;
+.sports-stats .graphics .chart.core {
+    @apply w-24 h-24;
 }
 
 
@@ -157,9 +164,12 @@
 
 .header .content.mood-content { @apply max-md:hidden; }
 
+.home-container .content-container 
+{ @apply max-md:grid-cols-1; }
 
-
-
+.sports-content .sports-stats .graphics .chart {
+    /* @apply max-md:translate-x-[calc(-50%_+_2.75rem)]; */
+}
 
 
 

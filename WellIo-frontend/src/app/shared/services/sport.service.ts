@@ -95,6 +95,41 @@ export class SportService {
     // ]);
 
     // return temp;
+    // let temp = new BehaviorSubject<ExerciseFlatten[]>([
+    //   {
+    //     name: 'miao',
+    //     muscleGroup: 'Legs',
+    //     reps: 0,
+    //     sets: 0,
+    //     met: 0,
+    //     weight: 0
+    //   },
+    //   {
+    //     name: 'miao',
+    //     muscleGroup: 'Legs',
+    //     reps: 0,
+    //     sets: 0,
+    //     met: 0,
+    //     weight: 0
+    //   },
+    //   {
+    //     name: 'Miaoo',
+    //     muscleGroup: 'Chest',
+    //     reps: 0,
+    //     sets: 0,
+    //     met: 0,
+    //     weight: 0
+    //   },
+    //   {
+    //     name: 'miao',
+    //     muscleGroup: 'Back',
+    //     reps: 0,
+    //     sets: 0,
+    //     met: 0,
+    //     weight: 0
+    //   }
+    // ]);
+    // return temp;
     return this.http.get<ExerciseFlatten[]>(`${this.serverUrl}`);
   }
 
@@ -108,6 +143,7 @@ export class SportService {
   }
 
   registerNewExercise(exercise: ExerciseInterface): Observable<any> {
+    console.log(this.flattenExercise(exercise));
     return this.http.post(`${this.serverUrl}`, this.flattenExercise(exercise));
   }
 
