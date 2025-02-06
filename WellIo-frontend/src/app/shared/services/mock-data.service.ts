@@ -7,6 +7,8 @@ import {CalendarEvent, Category, Note, Tag} from '../utils/types/calendar.interf
   providedIn: "root",
 })
 export class MockDataService {
+  useMockData: boolean = true;
+
   private events: CalendarEvent[] = [
     {
       id: 1,

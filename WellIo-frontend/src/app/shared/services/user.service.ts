@@ -2,33 +2,40 @@ import { Injectable } from '@angular/core';
 import { UserInfoInterface } from '../utils/types/user.interfaces';
 import {ApiService} from './api.service';
 import {BehaviorSubject} from 'rxjs';
+import {MockDataService} from './mock-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  mockData: boolean = true;
   private userInfoSubject: BehaviorSubject<UserInfoInterface>
+  private defaultUserInfo: UserInfoInterface = {
+    firstName: "Caricamento...",
+    lastName: "Caricamento...",
+    email: "caricamento@esempio.com",
+    birthDate: "1900-01-01",
+    gender: "Non specificato",
+    height: 0,
+    weight: 0,
+    dailyCalories: 0,
+  }
 
-  constructor(private apiService: ApiService) {
-    const defaultUserInfo: UserInfoInterface = {
-      firstName: "Caricamento...",
-      lastName: "Caricamento...",
-      email: "caricamento@esempio.com",
-      birthDate: "1900-01-01",
-      gender: "Non specificato",
-      height: 0,
-      weight: 0,
-      dailyCalories: 0,
-    }
-    this.userInfoSubject = new BehaviorSubject<UserInfoInterface>(defaultUserInfo)
+  constructor(private apiService: ApiService, private mockDataService: MockDataService) {
+    this.userInfoSubject = new BehaviorSubject<UserInfoInterface>(this.defaultUserInfo)
+    this.mockData = this.mockDataService.useMockData;
     this.loadUserInfo()
   }
 
   private loadUserInfo(): void {
-    this.apiService.getUserInfo().subscribe({
-      next: (userInfo) => this.userInfoSubject.next(userInfo),
-      error: (error) => console.error("Errore nel caricamento delle informazioni utente:", error),
-    })
+    if (this.mockData) {
+      this.userInfoSubject.next(this.defaultUserInfo)
+    } else {
+      this.apiService.getUserInfo().subscribe({
+        next: (userInfo) => this.userInfoSubject.next(userInfo),
+        error: (error) => console.error("Errore nel caricamento delle informazioni utente:", error),
+      })
+    }
   }
 
   getUserInfo(): UserInfoInterface {

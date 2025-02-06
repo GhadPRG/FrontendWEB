@@ -19,12 +19,14 @@ import type {
   providedIn: "root",
 })
 export class DataMappingService {
-  private useMockData = false
+  private useMockData = true;
 
   constructor(
     private apiService: ApiService,
     private mockDataService: MockDataService,
-  ) {}
+  ) {
+    this.useMockData = this.mockDataService.useMockData;
+  }
 
   getEvents(): Observable<CalendarEvent[]> {
     if (this.useMockData) {
