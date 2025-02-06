@@ -19,7 +19,7 @@ export class DashSideCalendarComponent implements AfterViewInit {
   @ViewChild('toggleSideCalendarButton') toggleSidebarBtnRef!: ElementRef;
   @ViewChild('sideCalendar') sidebarRef!: ElementRef;
 
-  isSideCalendarOpen = false;
+  isSideCalendarOpen = true;
 
   constructor(private dashService: DashboardService) {}
 
@@ -31,6 +31,7 @@ export class DashSideCalendarComponent implements AfterViewInit {
   }
 
   toggleSideCalendar(): void {
+    this.isSideCalendarOpen = !this.isSideCalendarOpen;
     // Close Side-Calendar - Flip Toggle Button Icon
     this.sidebarRef.nativeElement.classList.toggle('closed');
     this.toggleSidebarBtnRef.nativeElement.children[0].classList.toggle('bx-rotate-180');
