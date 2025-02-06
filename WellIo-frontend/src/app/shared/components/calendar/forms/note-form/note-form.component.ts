@@ -3,14 +3,15 @@ import {Note, Tag} from '../../../../utils/types/calendar.interface';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {EventNoteService} from '../../../../services/event-note.service';
 import {DateTime} from 'luxon';
-import {NgIf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-note-form',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    NgForOf
   ],
   templateUrl: './note-form.component.html',
   styleUrl: './note-form.component.css'
