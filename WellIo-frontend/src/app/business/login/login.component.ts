@@ -40,15 +40,15 @@ export class LoginComponent implements OnInit {
   createForm(): FormGroup {
     return this.fb.group({
       username: ["", [Validators.required]],
-      password: ["", [Validators.required, Validators.minLength(8)]],
+      password: ["", [Validators.required, Validators.minLength(1)]],
       confirmPassword: [""],
       firstname: [""],
       lastname: [""],
       email: ["", [Validators.email]],
       gender: [""],
       birthDate: [""],
-      height: [null, [Validators.min(0)]],
-      weight: [null, [Validators.min(0)]],
+      height: [null, [Validators.min(140)]],
+      weight: [null, [Validators.min(20)]],
     })
   }
 

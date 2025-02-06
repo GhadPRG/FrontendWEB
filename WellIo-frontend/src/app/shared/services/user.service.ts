@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserInfoInterface } from '../utils/types/user.interfaces';
 import {ApiService} from './api.service';
-import {BehaviorSubject, Observable, tap} from 'rxjs';
+import {BehaviorSubject, catchError, Observable, tap} from 'rxjs';
 import {MockDataService} from './mock-data.service';
 import {map} from 'rxjs/operators';
 
@@ -30,14 +30,18 @@ export class UserService {
 
   private loadUserInfo(): void {
     if (this.mockData) {
-      this.userInfoSubject.next(this.defaultUserInfo)
+      this.userInfoSubject.next(this.mockDataService.getMockUserInfo())
     } else {
       this.apiService
         .getUserInfo()
-        .pipe(tap((userInfo) => this.userInfoSubject.next(userInfo)))
-        .subscribe({
-          error: (error) => console.error("Errore nel caricamento delle informazioni utente:", error),
-        })
+        .pipe(
+          tap((userInfo) => this.userInfoSubject.next(userInfo)),
+          catchError((error) => {
+            console.error("Errore nel caricamento delle informazioni utente:", error)
+            return []
+          }),
+        )
+        .subscribe()
     }
   }
 
