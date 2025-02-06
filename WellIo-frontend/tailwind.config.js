@@ -66,8 +66,7 @@ module.exports = {
       addComponents({
         '.glass-panel' : {
           'background': 'linear-gradient(225deg, rgba(255 255 255 / 0.3), rgba(255 255 255 / 0.1)), rgba(255 255 255 / .2)',
-          // 'background': 'radial-gradient(ellipse at right top, rgba(255 255 255 / 0.3) 0%, rgba(var(--color-fill-light) / 0.1) 25%, rgba(var(--color-fill-dark) / .2) 62%, rgba(255 255 255 / .0) 100%), rgba(255 255 255 / .15)',
-          
+
           '-webkit-backdrop-filter': 'blur(8px)',
           'backdrop-filter': 'blur(8px)',
           'filter': 'saturate(150%)',

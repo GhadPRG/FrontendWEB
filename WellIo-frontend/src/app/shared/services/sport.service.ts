@@ -1,7 +1,9 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { ExerciseInterface, SportDictionary } from '../utils/types/sport.interfaces';
+import { ExerciseFlatten, ExerciseInterface, SportDictionary } from '../utils/types/sport.interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FlattenDish } from '../utils/types/nutrition.interfaces';
+import { DateTime } from 'luxon';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class SportService {
   private appKey = '11200806d60896b176ad76b08e53d83b'; // App Key - Bruno Caruso
   
   // Internal Url
-  private serverUrl: string = "http://localhost:..."
+  private serverUrl: string = 'http://localhost:8080/api/exercises';
 
   // Data
   readonly muscleGroups = ['Back','Chest', 'Shoudlers', 'Legs', 'Core', 'Arms'];
@@ -40,7 +42,7 @@ export class SportService {
 
 
 
-  getWeekExercise(): Observable<ExerciseInterface[]> {
+  getWeekExercise(): Observable<ExerciseFlatten[]> {
     // let temp = new BehaviorSubject<ExerciseInterface[]>([
     //   {
     //     exerciseInfo: {
@@ -93,7 +95,7 @@ export class SportService {
     // ]);
 
     // return temp;
-    return this.http.get<ExerciseInterface[]>(`${this.serverUrl}/`);
+    return this.http.get<ExerciseFlatten[]>(`${this.serverUrl}`);
   }
 
   getExerciseInfo(exerciseName: string): Observable<any> {
@@ -106,7 +108,7 @@ export class SportService {
   }
 
   registerNewExercise(exercise: ExerciseInterface): Observable<any> {
-    return this.http.post(`${this.serverUrl}/`, exercise);
+    return this.http.post(`${this.serverUrl}`, this.flattenExercise(exercise));
   }
 
 
@@ -155,4 +157,33 @@ export class SportService {
 
     return filteredExercises;
   }
+
+  flattenExercise(exercise: ExerciseInterface): ExerciseFlatten {
+    return {
+      name: exercise.exerciseInfo.name,
+      notes: '',
+      muscleGroup: exercise.exerciseInfo.target_muscle_group,
+      reps: exercise.reps,
+      sets: exercise.sets,
+      met: exercise.exerciseInfo.met,
+      weight: exercise.weight_used,
+    };
+  }
+
+  unflattenExercises(exercises: ExerciseFlatten[]): ExerciseInterface[] {
+    return exercises.map(exercise => ({
+      date: exercise.date ?? new Date().toISOString(),
+      sets: exercise.sets,
+      reps: exercise.reps,
+      weight_used: exercise.weight,
+      exerciseInfo: {
+          id: exercise.id,
+          name: exercise.name,
+          target_muscle_group: exercise.muscleGroup,
+          met: exercise.met
+      }
+  }));
+
+  }
+
 }

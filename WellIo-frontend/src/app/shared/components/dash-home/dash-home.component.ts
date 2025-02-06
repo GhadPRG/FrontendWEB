@@ -25,9 +25,10 @@ export class DashHomeComponent implements OnInit {
 
     // Start Services
     this.nutritionService.getTodayMeals();
-    this.sportService.getWeekExercise().subscribe({
-      next: (response) => this.sportService.mapExericesToExerciseDictionary(response)
-    });
+    // this.sportService.getWeekExercise().subscribe({
+    //   next: (response) => this.sportService.mapExericesToExerciseDictionary(
+    //                       this.sportService.unflattenExercises(response))
+    // });
   }
   
 }

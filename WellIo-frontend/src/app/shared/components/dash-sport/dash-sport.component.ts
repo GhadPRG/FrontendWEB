@@ -46,7 +46,9 @@ export class DashSportComponent implements OnInit, AfterViewInit {
     // Request Exercise of This Week
     this.sportService.getWeekExercise().subscribe({
       next: (response) => {
-        this.exerciseDict = this.sportService.mapExericesToExerciseDictionary(response);
+        const unflattenResponse = this.sportService.unflattenExercises(response);
+
+        this.exerciseDict = this.sportService.mapExericesToExerciseDictionary(unflattenResponse);
         this.todayExerciseDict = this.sportService.mapToTodayExerices(this.exerciseDict); 
 
         console.log(this.exerciseDict);
@@ -60,7 +62,6 @@ export class DashSportComponent implements OnInit, AfterViewInit {
       muscleGroup_choice: new FormControl(''),
       sets: [0, Validators.required],
       reps: [0, Validators.required],
-      time_passed: [0, Validators.required],
       weight_used: [0, Validators.required],
     });
   }
@@ -97,9 +98,8 @@ export class DashSportComponent implements OnInit, AfterViewInit {
 
     const sets = this.form_registerExercise.get('sets')?.value;
     const reps = this.form_registerExercise.get('reps')?.value;
-    const time = this.form_registerExercise.get('time_passed')?.value;
 
-    if (sets == 0 || reps == 0 || time == 0) return;
+    if (sets == 0 || reps == 0 ) return;
 
     this.sportService.getExerciseInfo(this.form_registerExercise.get('name')?.value).subscribe({
       next: (response) => {
@@ -114,7 +114,6 @@ export class DashSportComponent implements OnInit, AfterViewInit {
           sets: this.form_registerExercise.get('sets')?.value,
           reps: this.form_registerExercise.get('reps')?.value,
           weight_used: this.form_registerExercise.get('weight_used')?.value,
-          time_passed: this.form_registerExercise.get('time_passed')?.value,
         };
     
         console.log(currentExercise);
@@ -130,7 +129,6 @@ export class DashSportComponent implements OnInit, AfterViewInit {
           this.form_registerExercise.get('muscleGroup_choice')?.setValue('');
           this.form_registerExercise.get('sets')?.setValue(0);
           this.form_registerExercise.get('reps')?.setValue(0);
-          this.form_registerExercise.get('time_passed')?.setValue(0);
           this.form_registerExercise.get('weight_used')?.setValue(0);
         });
       }

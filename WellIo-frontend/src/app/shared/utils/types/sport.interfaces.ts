@@ -15,8 +15,19 @@ export interface ExerciseInterface {
     sets: number,
     reps: number,
     weight_used: number,
-    time_passed: number,
 }
 
 export type SportDictionary = { [key: string]: ExerciseInterface[] };
+
+export interface ExerciseFlatten {
+    id?: number,
+    notes?: string,
+    name: string, 
+    muscleGroup: string, 
+    reps: number,
+    sets: number,
+    met: number,
+    weight: number,
+    date?: string,
+}
 
