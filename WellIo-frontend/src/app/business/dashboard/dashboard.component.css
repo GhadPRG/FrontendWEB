@@ -6,8 +6,9 @@
     @apply  w-full h-full
             /* bg-skin-fill-dark bg-gradient-to-b from-skin-fill-lighter/85 to-skin-fill-light/85 */
             grid grid-cols-[auto_1fr_auto];
-    
-    background-image: url('/images/Blue-Gradient.jpg');
+
+    @apply bg-gradient-to-br from-[var(--bg-grad-1)] to-[var(--bg-grad-2)];
+    /* background-image: url('/images/Blue-Gradient.jpg'); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -30,7 +31,7 @@
  * ===== Dashboard - Styling for Small Screens ======================================================================
  * ==================================================================================================================
 */
-.dashboard-container { 
+.dashboard-container {
     @apply  max-md:grid-cols-[1fr];
 }
 .dashboard-container .main-container {
