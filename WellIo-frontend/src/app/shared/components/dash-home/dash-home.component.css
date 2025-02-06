@@ -41,12 +41,6 @@
             hover:scale-125;
 }
 
-.mood-content .mood-list .mood.mood-happy { @apply from-teal-500 to-teal-700; }
-.mood-content .mood-list .mood.mood-fine { @apply from-green-500 to-green-700; }
-.mood-content .mood-list .mood.mood-normal { @apply from-blue-500 to-blue-700; }
-.mood-content .mood-list .mood.mood-sad { @apply from-orange-500 to-orange-700; }
-.mood-content .mood-list .mood.mood-dispear { @apply from-red-500 to-red-700; }
-
 
 /* ==================================================================================================================
  * ===== Content Blocks - Styling for Medium-Large Screens ==========================================================

@@ -1,33 +1,63 @@
 <div class="grid-container mood-tracker-container">
     <div class="info-container mood-tracker-calendar">
         <div class="panel-title glass-top-title-bg">Monthly Recap of Your Mood</div>
+        <div class="info-content mood-content">
+            <div class="calendar-container">
+                <div class="calendar-week-days-contaiener">
+                    @for (weekDay of this.weekDays(); track $index) {
+                        <div class="week-day"> {{ weekDay }}</div>
+                    }
+                </div>
+                <div class="calendar-grid-container">
+                    @for (dayOfMonth of this.daysOfMonth(); track $index) {
+                        <div class="calendar-cell"
+                        [class.active]="activeDay()?.toISODate() === dayOfMonth.toISODate()"
+                        [class.not-current-month]="dayOfMonth.month !== firstDayOfActiveMonth().month"
+                        [class]="'mood-' + this.moodService.getMoodType(this.moodService.getAverageMood(moodDict, (dayOfMonth?.toISODate() ?? ''))).toLocaleLowerCase()"
+                        
+                        (click)="activeDay.set(dayOfMonth)">{{ dayOfMonth.day }}</div>
+                    }
+                </div>
+            </div>
+            
+            <div class="mood-info-container">
+                <div class="mood-day-info">
+                    @if (activeDay(); as activeDay) {
+                        <div class="title"> {{ activeDay.toLocaleString(DATE_MED) }}</div>
+                    } @else {
+                        <div class="title">Please select a Date to Show Infos</div>
+                    }
+                </div>
+                <div>
+                    @if (activeDay() && (activeDayMoods().length === 0)) { <!-- Controlla qui -->
+                        <div>No Mood Registered</div>
+                    }
+                    @if (activeDay() && (activeDayMoods().length > 0)) {
+                        
+                        <div class="average-mood-container">
+                            <div class="average-mood"
+                            [class]="'mood-' + this.moodService.getMoodType(this.moodService.getAverageMood(moodDict, (activeDay()?.toISODate() ?? ''))).toLocaleLowerCase()"></div>
+                            <div class="mood-name"> {{ this.moodService.getMoodType(this.moodService.getAverageMood(moodDict, (activeDay()?.toISODate() ?? ''))) }}</div>
+                        </div>
 
-        <div class="calendar-week-days-contaiener">
-            @for (weekDay of this.weekDays(); track $index) {
-                <div class="week-day"> {{ weekDay }}</div>
-            }
-        </div>
-        <div class="calendar-container">
-            @for (dayOfMonth of this.daysOfMonth(); track $index) {
-                <div class="calendar-cell" (click)="activeDay.set(dayOfMonth)">{{ dayOfMonth.day }}</div>
-            }
-        </div>
-        
-        <div class="mood-day-info">
-            @if (activeDay(); as activeDay) {
-                <div> {{ activeDay.toLocaleString(DATE_MED) }}</div>
-            } @else {
-                <div>Select a Date</div>
-            }
-        </div>
+                        <p class="mood-list-title">Moods Throughout the Day</p>
+                        <ul class="mood-list">
+                            @for (moodEntry of activeDayMoods(); track $index) {
+                                <li class="mood-item"
+                                [class]="'mood-' + this.moodService.getMoodType(moodEntry.moodLevel)"></li>
+                            }
+                        </ul>
 
-        <div>
-            @if (activeDay() && (activeDayMoods() === null)) { <!-- Controlla qui -->
-                <div>No Mood Registered</div>
-            }
-            @if (activeDay() && activeDayMoods()) {
-                <div>{{ activeDayMoods().moodLevel}}</div>
-            }
+                        <p class="tag-list-title">Tags</p>
+                        <ul class="tag-list">
+                            @for (moodEntry of activeDayMoods(); track $index) {
+                                <li class="tag-item"></li>
+                            }
+                        </ul>
+                        
+                    }
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -20,10 +20,10 @@ export interface CategoryInterface {
     id?: number,
     name: String,
     description?: string,
-    color: string,
-    tags: string,
+    color?: string,
+    tags?: string,
 }
 
-export type MoodFlatten = { moodLevel: number, tags?: [string, string][], notes: string }
+export type MoodFlatten = { moodLevel: number, tags?: TagInterface[], notes: string }
 
-export type MoodDict = { [date: string]: MoodFlatten }
+export type MoodDictionary = { [date: string]: MoodFlatten[] }

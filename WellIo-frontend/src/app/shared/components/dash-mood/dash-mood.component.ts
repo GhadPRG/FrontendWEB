@@ -5,7 +5,7 @@ import { MoodService } from '../../services/mood.service';
 
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DateTime, Info, Interval } from 'luxon';
-import { MoodDict, MoodFlatten } from '../../utils/types/mood.interfaces';
+import { MoodDictionary, MoodFlatten } from '../../utils/types/mood.interfaces';
 
 
 @Component({
@@ -35,21 +35,21 @@ export class DashMoodComponent implements OnInit {
   DATE_MED = DateTime.DATE_MED;
 
   activeDay: WritableSignal<DateTime | null> = signal(null);
-  activeDayMoods: Signal<MoodFlatten> = computed(() => {
+  activeDayMoods: Signal<MoodFlatten[]> = computed(() => {
     const activeDay = this.activeDay()
-    if (activeDay === null) return {} as MoodFlatten;
+    if (activeDay === null) return [];
 
     const activeDayISO = activeDay.toISODate();
-    if (!activeDayISO) return {} as MoodFlatten;
+    if (!activeDayISO) return [];
 
-    return this.moodDict[activeDayISO] ?? {} as MoodFlatten;
+    return this.moodDict[activeDayISO] ?? [];
   });
 
-  moodDict: MoodDict = {
-    '2025-02-05': {moodLevel: 1, notes: ''},
-    '2025-02-04': {moodLevel: 4, notes: 'Miao'},
-    '2025-02-03': {moodLevel: 3, notes: 'Miao tanto Miao'},
-    '2025-02-07': {moodLevel: 2, notes: ''},
+  moodDict: MoodDictionary = {
+    '2025-02-05': [{moodLevel: 1, notes: ''}],
+    '2025-02-04': [{moodLevel: 4, notes: 'Miao'}],
+    '2025-02-03': [{moodLevel: 3, notes: 'Miao tanto Miao'}, {moodLevel: 2, notes: 'Miao Miao x 2'}],
+    '2025-02-07': [{moodLevel: 2, notes: ''}],
   }
 
   constructor(
