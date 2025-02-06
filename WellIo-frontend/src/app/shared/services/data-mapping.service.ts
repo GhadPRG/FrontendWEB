@@ -26,18 +26,18 @@ export class DataMappingService {
     private mockDataService: MockDataService,
   ) {}
 
-  getEvents(userId: number): Observable<CalendarEvent[]> {
+  getEvents(): Observable<CalendarEvent[]> {
     if (this.useMockData) {
       return of(this.mockDataService.getEvents())
     }
-    return this.apiService.getEvents(userId).pipe(map((events) => events.map(this.convertEventDTOToCalendarEvent)))
+    return this.apiService.getEvents().pipe(map((events) => events.map(this.convertEventDTOToCalendarEvent)))
   }
 
-  getNotes(userId: number): Observable<Note[]> {
+  getNotes(): Observable<Note[]> {
     if (this.useMockData) {
       return of(this.mockDataService.getNotes())
     }
-    return this.apiService.getNotes(userId).pipe(map((notes) => notes.map(this.convertNoteDTOToNote)))
+    return this.apiService.getNotes().pipe(map((notes) => notes.map(this.convertNoteDTOToNote)))
   }
 
   getTags(categoryId: number): Observable<Tag[]> {
@@ -102,28 +102,6 @@ export class DataMappingService {
     return this.apiService.deleteNote(id)
   }
 
-  addTag(tag: Tag): Observable<Tag> {
-    if (this.useMockData) {
-      return of(this.mockDataService.addTag(tag))
-    }
-    return this.apiService.createTag(this.convertTagToTagDTO(tag)).pipe(map(this.convertTagDTOToTag))
-  }
-
-  updateTag(tag: Tag): Observable<Tag> {
-    if (this.useMockData) {
-      return of(this.mockDataService.updateTag(tag))
-    }
-    return this.apiService.updateTag(this.convertTagToTagDTO(tag)).pipe(map(this.convertTagDTOToTag))
-  }
-
-  deleteTag(id: number): Observable<void> {
-    if (this.useMockData) {
-      this.mockDataService.deleteTag(id)
-      return of(undefined)
-    }
-    return this.apiService.deleteTag(id)
-  }
-
   private convertEventDTOToCalendarEvent(dto: EventDTO): CalendarEvent {
     console.log("DTO QUA:", dto.title, dto.start, dto.end);
 
@@ -177,16 +155,6 @@ export class DataMappingService {
       name: dto.name,
       description: dto.description,
       color: dto.color || "#0000ff",
-    }
-  }
-
-  private convertTagToTagDTO(tag: Tag): TagDTO {
-    return {
-      id: tag.id,
-      categoryId: tag.categoryId,
-      name: tag.name,
-      description: tag.description,
-      color: tag.color,
     }
   }
 

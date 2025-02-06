@@ -24,10 +24,9 @@ export class EventNoteService {
 
   private loadInitialData() {
     // Assuming we have a way to get the current user's ID
-    const userId = 1 // This should be replaced with the actual user ID
 
-    this.dataMappingService.getEvents(userId).subscribe((events) => this.eventsSubject.next(events))
-    this.dataMappingService.getNotes(userId).subscribe((notes) => this.notesSubject.next(notes))
+    this.dataMappingService.getEvents().subscribe((events) => this.eventsSubject.next(events))
+    this.dataMappingService.getNotes().subscribe((notes) => this.notesSubject.next(notes))
     this.dataMappingService.getCategories().subscribe((categories) => {
       this.categoriesSubject.next(categories)
       categories.forEach((category) => {
@@ -64,22 +63,5 @@ export class EventNoteService {
     return this.dataMappingService.deleteNote(id)
   }
 
-  // Tags
-  addTag(tag: Tag): Observable<Tag> {
-    return this.dataMappingService.addTag(tag)
-  }
-
-  updateTag(tag: Tag): Observable<Tag> {
-    return this.dataMappingService.updateTag(tag)
-  }
-
-  deleteTag(id: number): Observable<void> {
-    return this.dataMappingService.deleteTag(id)
-  }
-
-  // Categories
-  getCategories(): Observable<Category[]> {
-    return this.dataMappingService.getCategories()
-  }
 }
 

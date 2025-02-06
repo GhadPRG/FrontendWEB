@@ -5,6 +5,8 @@ import { DashSettingsComponent } from './shared/components/dash-settings/dash-se
 import { DashFoodComponent } from './shared/components/dash-food/dash-food.component';
 import { DashSportComponent } from './shared/components/dash-sport/dash-sport.component';
 import { DashMoodComponent } from './shared/components/dash-mood/dash-mood.component';
+import {LoginComponent} from './business/login/login.component';
+import {authGuard} from './shared/utils/guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -15,6 +17,7 @@ export const routes: Routes = [
     {
         path: 'dashboard',
         component: DashboardComponent,
+      canActivate: [authGuard],
         children: [
             {
                 path: '',
@@ -47,4 +50,8 @@ export const routes: Routes = [
         path: 'welcome-page',
         loadComponent: () => import('./business/index/index.component').then((c) => c.IndexComponent)
     },
+  {
+    path: 'login',
+    component: LoginComponent,
+  }
 ];
