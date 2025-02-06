@@ -65,7 +65,7 @@ export class NutritionService {
 
   getTodayMeals(): Observable<MealDictionary> {
 
-    const tempToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODc2NzIzOCwiZXhwIjoxNzM4ODUzNjM4fQ.5bqjKZceZhBALsq-voAH8iFfOy-Tz7HfzJS3J1TENzY';
+    const tempToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODg0MDY5OSwiZXhwIjoxNzM4OTI3MDk5fQ.NuNkFLRUX_otunfy9DS_-AAfK9044MkVfg9Wl4JHBkQ';
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${tempToken}`
     });
@@ -164,10 +164,11 @@ export class NutritionService {
   }
 
   registerNewDish(dish: DishInterface): Observable<any> {
-    const tempToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODc2NzIzOCwiZXhwIjoxNzM4ODUzNjM4fQ.5bqjKZceZhBALsq-voAH8iFfOy-Tz7HfzJS3J1TENzY';
+    const tempToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODg0MDY5OSwiZXhwIjoxNzM4OTI3MDk5fQ.NuNkFLRUX_otunfy9DS_-AAfK9044MkVfg9Wl4JHBkQ';
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${tempToken}`
     });
+
     let request: Observable<any> = this.http.post(`${this.serverUrl}`, this.dishFlattener(dish), {headers});
     console.log(this.dishFlattener(dish));
 
