@@ -6,6 +6,7 @@ import {ThemeService} from '../../../services/theme.service';
 import {AuthService} from '../../../services/auth.service';
 import {UserService} from '../../../services/user.service';
 import {UserInfoInterface} from '../../../utils/types/user.interfaces';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-sidebar-dashboard',
@@ -15,7 +16,7 @@ import {UserInfoInterface} from '../../../utils/types/user.interfaces';
   styleUrl: './dash-sidebar.component.css'
 })
 export class DashSidebarComponent implements OnInit, AfterViewInit {
-  userInfo: UserInfoInterface;
+  userInfo$: Observable<UserInfoInterface>;
   // SideBar Elements
   @ViewChildren('dropDownButtonForSubMenu') dropDownBtnsRefs!: QueryList<ElementRef>;
   @ViewChild('toggleSidebarButton') toggleSidebarBtnRef!: ElementRef;
@@ -76,13 +77,13 @@ export class DashSidebarComponent implements OnInit, AfterViewInit {
               private themeService: ThemeService,
               private authService: AuthService,
               private userService: UserService) {
-    this.userInfo = this.userService.getUserInfo();
+    this.userInfo$ = this.userService.getUserInfo$();
   }
 
   refreshUserData(): void {
     this.userService.refreshUserInfo();
     // Aggiorna i dati locali dopo il refresh
-    this.userInfo = this.userService.getUserInfo();
+    this.userInfo$ = this.userService.getUserInfo$();
   }
 
   // SideBar Code & Functions

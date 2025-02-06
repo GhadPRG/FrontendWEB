@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { UserInfoInterface } from '../utils/types/user.interfaces';
 import {ApiService} from './api.service';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {MockDataService} from './mock-data.service';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +65,40 @@ export class UserService {
       age--
     }
     return age
+  }
+
+  // Metodi Observable
+  getUserInfo$(): Observable<UserInfoInterface> {
+    return this.userInfoSubject.asObservable()
+  }
+
+  getUserFullName$(): Observable<string> {
+    return this.userInfoSubject.pipe(map((user) => `${user.firstName} ${user.lastName}`))
+  }
+
+  getUserInitials$(): Observable<string> {
+    return this.userInfoSubject.pipe(
+      map((user) => {
+        const firstInitial = user.firstName ? user.firstName.charAt(0).toUpperCase() : ""
+        const lastInitial = user.lastName ? user.lastName.charAt(0).toUpperCase() : ""
+        return `${firstInitial}${lastInitial}`
+      }),
+    )
+  }
+
+  getUserAge$(): Observable<number> {
+    return this.userInfoSubject.pipe(
+      map((user) => {
+        const birthDate = new Date(user.birthDate)
+        const today = new Date()
+        let age = today.getFullYear() - birthDate.getFullYear()
+        const monthDifference = today.getMonth() - birthDate.getMonth()
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+          age--
+        }
+        return age
+      }),
+    )
   }
 
   refreshUserInfo(): void {

@@ -3,7 +3,7 @@
         <div class="content welcome-content">
             <div class="welcome-message">
                 <h2 class="title">Hello, Nome Cognome</h2>
-                <h4 class="subtitle">Today is Thursday, 30 January 2025</h4>
+                <h4 class="subtitle">Today is {{ getFormattedDate() }}</h4>
             </div>
         </div>
         <div class="content mood-content">
@@ -36,7 +36,7 @@
                     [style.--fill-percent]="this.sportService.exerciseStatisticsWeeklyPerType().core"></div>
                 </div>
             </div>
-            
+
         </div>
         <div class="content nutrition-content">
             <div class="panel-title glass-top-title-bg">Nutritional Stats</div>
@@ -85,11 +85,11 @@
                     <div class="legend-box">
                         <div class="legend-icon proteins"></div>
                         <p class="legend-label">Proteins</p>
-                    </div>                                      
+                    </div>
                     <div class="legend-box">
                         <div class="legend-icon carbs"></div>
                         <p class="legend-label">Carbs</p>
-                    </div>                    
+                    </div>
                     <div class="legend-box">
                         <div class="legend-icon fats"></div>
                         <p class="legend-label">Fats</p>
@@ -97,7 +97,7 @@
                     <div class="legend-box">
                         <div class="legend-icon fibers"></div>
                         <p class="legend-label">Fibers</p>
-                    </div>  
+                    </div>
                 </div>
             </div>
         </div>

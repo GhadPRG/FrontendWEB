@@ -16,7 +16,8 @@ import {UserInfoInterface} from '../utils/types/user.interfaces';
 })
 export class ApiService {
   private baseUrl = "http://localhost:8080/api"
-  private token: string | null = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODg0MDY5OSwiZXhwIjoxNzM4OTI3MDk5fQ.NuNkFLRUX_otunfy9DS_-AAfK9044MkVfg9Wl4JHBkQ"
+  // Temp-token "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODg0MDY5OSwiZXhwIjoxNzM4OTI3MDk5fQ.NuNkFLRUX_otunfy9DS_-AAfK9044MkVfg9Wl4JHBkQ"
+  private token: string | null = localStorage.getItem("token") ? localStorage.getItem("token") : null;
 
   constructor(private http: HttpClient) {}
 
@@ -37,11 +38,11 @@ export class ApiService {
   }
 
   login(loginRequest: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login`, loginRequest)
+    return this.http.post<LoginResponse>(`${this.baseUrl}/login`, loginRequest)
   }
 
   register(registerRequest: RegisterRequest): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/auth/register`, registerRequest)
+    return this.http.post<void>(`${this.baseUrl}/register`, registerRequest)
   }
 
   // Events CRUD
@@ -63,7 +64,7 @@ export class ApiService {
 
   // Notes CRUD
   getNotes(): Observable<NoteDTO[]> {
-    return this.http.get<NoteDTO[]>(`${this.baseUrl}/notes/user`, { headers: this.getHeaders() })
+    return this.http.get<NoteDTO[]>(`${this.baseUrl}/notes`, { headers: this.getHeaders() })
   }
 
   createNote(note: NoteDTO): Observable<NoteDTO> {
@@ -89,6 +90,6 @@ export class ApiService {
   }
 
   getUserInfo(): Observable<UserInfoInterface> {
-    return this.http.get<UserInfoInterface>(`${this.baseUrl}/api/user`, { headers: this.getHeaders() })
+    return this.http.get<UserInfoInterface>(`${this.baseUrl}/user`, { headers: this.getHeaders() })
   }
 }
