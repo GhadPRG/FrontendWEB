@@ -17,6 +17,9 @@ import {Observable} from 'rxjs';
 })
 export class DashSidebarComponent implements OnInit, AfterViewInit {
   userInfo$: Observable<UserInfoInterface>;
+  userFullName$: Observable<string>
+  userInitials$: Observable<string>
+  userEmail$: Observable<string>
   // SideBar Elements
   @ViewChildren('dropDownButtonForSubMenu') dropDownBtnsRefs!: QueryList<ElementRef>;
   @ViewChild('toggleSidebarButton') toggleSidebarBtnRef!: ElementRef;
@@ -38,13 +41,6 @@ export class DashSidebarComponent implements OnInit, AfterViewInit {
     this.authService.logout();
   }
 
-  getFullName(): string {
-    return this.userService.getUserFullName();
-  }
-
-  getCapitals(): string {
-    return this.userService.getUserInitials()
-  }
   // public sideNavigationLinks = [
   //   {
   //     path: '/dashboard',
@@ -78,6 +74,9 @@ export class DashSidebarComponent implements OnInit, AfterViewInit {
               private authService: AuthService,
               private userService: UserService) {
     this.userInfo$ = this.userService.getUserInfo$();
+    this.userFullName$ = this.userService.getUserFullName$();
+    this.userInitials$ = this.userService.getUserInitials$();
+    this.userEmail$ = this.userService.getUserEmail$();
   }
 
   refreshUserData(): void {

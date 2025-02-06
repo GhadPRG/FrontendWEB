@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserInfoInterface } from '../utils/types/user.interfaces';
 import {ApiService} from './api.service';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {MockDataService} from './mock-data.service';
 import {map} from 'rxjs/operators';
 
@@ -32,13 +32,16 @@ export class UserService {
     if (this.mockData) {
       this.userInfoSubject.next(this.defaultUserInfo)
     } else {
-      this.apiService.getUserInfo().subscribe({
-        next: (userInfo) => this.userInfoSubject.next(userInfo),
-        error: (error) => console.error("Errore nel caricamento delle informazioni utente:", error),
-      })
+      this.apiService
+        .getUserInfo()
+        .pipe(tap((userInfo) => this.userInfoSubject.next(userInfo)))
+        .subscribe({
+          error: (error) => console.error("Errore nel caricamento delle informazioni utente:", error),
+        })
     }
   }
 
+  // Metodi sincroni
   getUserInfo(): UserInfoInterface {
     return this.userInfoSubject.value
   }
@@ -73,17 +76,26 @@ export class UserService {
   }
 
   getUserFullName$(): Observable<string> {
-    return this.userInfoSubject.pipe(map((user) => `${user.firstName} ${user.lastName}`))
+    return this.getUserInfo$().pipe(map((user) => `${user.firstName} ${user.lastName}`))
   }
 
   getUserInitials$(): Observable<string> {
-    return this.userInfoSubject.pipe(
+    return this.getUserInfo$().pipe(
       map((user) => {
         const firstInitial = user.firstName ? user.firstName.charAt(0).toUpperCase() : ""
         const lastInitial = user.lastName ? user.lastName.charAt(0).toUpperCase() : ""
         return `${firstInitial}${lastInitial}`
       }),
     )
+  }
+
+  getUserEmail$(): Observable<string> {
+    return this.getUserInfo$().pipe(map((user) => user.email))
+  }
+
+  // Metodo per forzare l'aggiornamento dei dati
+  refreshUserInfo(): void {
+    this.loadUserInfo()
   }
 
   getUserAge$(): Observable<number> {
@@ -99,9 +111,5 @@ export class UserService {
         return age
       }),
     )
-  }
-
-  refreshUserInfo(): void {
-    this.loadUserInfo()
   }
 }
