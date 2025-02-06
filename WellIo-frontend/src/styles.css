@@ -109,10 +109,11 @@ body { @apply min-h-screen font-poppins; }
     @apply rounded-full shadow-glass;
 
     --inner-ring-percent: 50%;
-    --fill-percent: 0%;
+    --fill-percent: 0;
 
+    --fill: calc(var(--fill-percent) * 1%);
     --tw-gradient-from-position: 0;
-    --tw-gradient-to-position: var(--fill-percent);
+    --tw-gradient-to-position: var(--fill);
 
     mask: radial-gradient(circle at 50% 50%, transparent 0 var(--inner-ring-percent), black 0 75%, transparent 0);
     background: conic-gradient(var(--tw-gradient-stops), transparent 0 100%); 

@@ -17,3 +17,6 @@ export interface ExerciseInterface {
     weight_used: number,
     time_passed: number,
 }
+
+export type SportDictionary = { [key: string]: ExerciseInterface[] };
+

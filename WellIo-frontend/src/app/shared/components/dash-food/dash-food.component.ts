@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, QueryList, signal, ViewCh
 
 import { DashboardService } from '../../services/dashboard.service';
 import { NutritionService } from '../../services/nutrition.service';
-import { DishInterface, FlattenDish, MealInterface } from '../../utils/types/nutrition.interfaces';
+import { DishInterface, MealDictionary, MealInterface } from '../../utils/types/nutrition.interfaces';
 
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -30,9 +30,8 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
 
 
   // Data
-  currentMeals: { [key: string]: MealInterface } = {};
+  currentMeals: MealDictionary = {};
   currentMealDishses = signal<string>('');
-
 
   currentDish: DishInterface = this.getEmptyBaseDish();
   gramsEquivalent: number = 0;
@@ -55,12 +54,16 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
     // Arriving on the Page
     this.dashServive.setHeaderText("Nutrition"); 
 
+    // Setting up Meals Type
+    this.currentMeals = this.nutritionService.defineAllMealType(this.currentMeals);
+
     // Requesting Macros if not set
     this.nutritionService.setMacroValues();
     this.nutritionService.getTodayMeals().subscribe({
       next: (response) => {
-        this.currentMeals = this.nutritionService.mapMealsToMealsDict(
-                            this.nutritionService.mealsUnflattener(response));
+        this.currentMeals = this.nutritionService.defineAllMealType(response);
+
+        console.log(this.currentMeals);
       }
     })
 
@@ -101,6 +104,12 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
 
   selectCurrentMealAsMealDish(): void {
     this.form_dishForm.get('meal_choice')?.setValue(this.currentMealDishses());
+  }
+
+  getCurrentDishes(): DishInterface[] {
+    if (!this.currentMealDishses()) return [];
+
+    return this.currentMeals[this.currentMealDishses()].dishes;
   }
 
 
@@ -158,7 +167,8 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
         console.log(this.currentDish);
 
         this.nutritionService.registerNewDish(this.currentDish);
-        this.currentMeals[this.currentDish.meal.type].dishes.push(this.currentDish);
+        const currMealType = (this.currentDish?.meal ?? { type: ''}).type;
+        this.currentMeals[currMealType].dishes.push(this.currentDish);
 
         // Resetting Values
         setTimeout(() => {

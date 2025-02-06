@@ -1,0 +1,33 @@
+<div class="grid-container mood-tracker-container">
+    <div class="info-container mood-tracker-calendar">
+        <div class="panel-title glass-top-title-bg">Monthly Recap of Your Mood</div>
+
+        <div class="calendar-week-days-contaiener">
+            @for (weekDay of this.weekDays(); track $index) {
+                <div class="week-day"> {{ weekDay }}</div>
+            }
+        </div>
+        <div class="calendar-container">
+            @for (dayOfMonth of this.daysOfMonth(); track $index) {
+                <div class="calendar-cell" (click)="activeDay.set(dayOfMonth)">{{ dayOfMonth.day }}</div>
+            }
+        </div>
+        
+        <div class="mood-day-info">
+            @if (activeDay(); as activeDay) {
+                <div> {{ activeDay.toLocaleString(DATE_MED) }}</div>
+            } @else {
+                <div>Select a Date</div>
+            }
+        </div>
+
+        <div>
+            @if (activeDay() && (activeDayMoods() === null)) { <!-- Controlla qui -->
+                <div>No Mood Registered</div>
+            }
+            @if (activeDay() && activeDayMoods()) {
+                <div>{{ activeDayMoods().moodLevel}}</div>
+            }
+        </div>
+    </div>
+</div>

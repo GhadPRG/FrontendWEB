@@ -4,6 +4,7 @@ import { DashHomeComponent } from './shared/components/dash-home/dash-home.compo
 import { DashSettingsComponent } from './shared/components/dash-settings/dash-settings.component';
 import { DashFoodComponent } from './shared/components/dash-food/dash-food.component';
 import { DashSportComponent } from './shared/components/dash-sport/dash-sport.component';
+import { DashMoodComponent } from './shared/components/dash-mood/dash-mood.component';
 
 export const routes: Routes = [
     {
@@ -30,7 +31,12 @@ export const routes: Routes = [
             {
                 path: 'settings',
                 component: DashSettingsComponent
+            },
+            {
+                path: 'mood',
+                component: DashMoodComponent
             }
+
         ]
     },
     {

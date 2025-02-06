@@ -18,7 +18,7 @@
 }
 
 .nutrition-container .stats-list .stats .values { 
-    @apply  w-full h-full relative z-10
+    @apply  w-full h-full pr-3 relative z-10
             flex flex-row-reverse justify-start items-center;
 }
 .nutrition-container .stats-list .stats .values .to-reach { @apply text-sm tracking-tighter before:content-['/'] before:px-1; }
@@ -36,7 +36,7 @@
             before:pointer-events-none;
 }
 
-.nutrition-container .stats-list .stats.calories-stats .values { @apply h-min px-2 flex-col justify-end items-end; }
+.nutrition-container .stats-list .stats.calories-stats .values { @apply h-min flex-col justify-end items-end; }
 .nutrition-container .stats-list .stats.calories-stats .values .to-reach { @apply pr-2 text-base tracking-tight before:content-none; }
 .nutrition-container .stats-list .stats.calories-stats .values .reached { @apply text-6xl tracking-wider; }
 
