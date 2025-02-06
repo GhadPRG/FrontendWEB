@@ -67,18 +67,23 @@
                         <p class="info-field info-weight" id="weight">70</p>
                         <p class="info-field info-measure" id="height">kg</p>
                     </div>
-                </li>   
+                </li>
             </ul>
         </div>
 
         <div class="info-container themes-panel">
             <div class="panel-title glass-top-title-bg">Themes</div>
             <div class="info-content color-container">
-                <div class="color-block theme-blue selected"></div>
-                <div class="color-block theme-red"></div>
-                <div class="color-block theme-yellow"></div>
-                <div class="color-block theme-green"></div>
-                <div class="color-block theme-purple"></div>
+                <div (click)="setTheme('blue')" [ngClass]="{selected: selectedTheme==='blue'}"
+                  class="color-block theme-blue selected"></div>
+                <div (click)="setTheme('red')" [ngClass]="{selected: selectedTheme==='red'}"
+                  class="color-block theme-red"></div>
+                <div (click)="setTheme('amber')" [ngClass]="{selected: selectedTheme==='amber'}"
+                  class="color-block theme-amber"></div>
+                <div (click)="setTheme('green')" [ngClass]="{selected: selectedTheme==='green'}"
+                  class="color-block theme-green"></div>
+                <div (click)="setTheme('purple')" [ngClass]="{selected: selectedTheme==='purple'}"
+                  class="color-block theme-purple"></div>
             </div>
         </div>
 </div>
