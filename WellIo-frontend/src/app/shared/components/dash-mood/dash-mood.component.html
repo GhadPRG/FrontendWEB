@@ -15,7 +15,7 @@
                 </ul>
                 <div class="notes-container">
                     <p class="note-title">Want to leave a note?</p>
-                    <textarea class="notes-area" formControlName="note" min="0" type="text" name="note" id="note" [(value)]="this.currentMood.notes"></textarea>
+                    <textarea class="notes-area" formControlName="note" min="0" type="text" name="note" id="note"></textarea>
                     <button class="register-mood-btn" type="submit" value="Register Mood">Add This Mood<i class="bx bx-plus bx-sm"></i></button>
                 </div>
             </form>
@@ -37,7 +37,7 @@
                         <div class="calendar-cell"
                         [class.active]="activeDay()?.toISODate() === dayOfMonth.toISODate()"
                         [class.not-current-month]="dayOfMonth.month !== firstDayOfActiveMonth().month"
-                        [class]="'mood-' + this.moodService.getMoodType(this.moodService.getAverageMood(moodDict, (dayOfMonth?.toISODate() ?? ''))).toLocaleLowerCase()"
+                        [class]="'mood-' + this.moodService.getMoodType(this.moodService.getAverageMood(moodDict, (dayOfMonth?.toISODate() ?? 'miao'))).toLocaleLowerCase()"
                         
                         (click)="activeDay.set(dayOfMonth)">{{ dayOfMonth.day }}</div>
                     }

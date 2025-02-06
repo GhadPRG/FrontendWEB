@@ -49,12 +49,13 @@ export class DashMoodComponent implements OnInit {
   });
 
   // Data
-  moodDict: MoodDictionary = {
-    '2025-02-05': [{moodLevel: 1, tags:[ { category: { name: 'Gatto' }, name: 'Miao'}, { category: { name: 'Gatt' }, name: 'Miao'}, { category: { name: 'Gatto' }, name: 'MiaoMiao'}], notes: ''}],
-    '2025-02-04': [{moodLevel: 4, notes: 'Miao'}],
-    '2025-02-03': [{moodLevel: 3, notes: 'Miao tanto Miao'}, {moodLevel: 2, notes: 'Miao Miao x 2'}, {moodLevel: 3, notes: 'Miao tantsso Miao'}, {moodLevel: 3, notes: 'Miao tsanto Miao'}, {moodLevel: 3, notes: 'Miao tanto Miao'}],
-    '2025-02-07': [{moodLevel: 2, notes: ''}],
-  }
+  moodDict: MoodDictionary = {};
+  // {
+  //   '2025-02-05': [{moodLevel: 1, tags:[ { category: { name: 'Gatto' }, name: 'Miao'}, { category: { name: 'Gatt' }, name: 'Miao'}, { category: { name: 'Gatto' }, name: 'MiaoMiao'}], notes: ''}],
+  //   '2025-02-04': [{moodLevel: 4, notes: 'Miao'}],
+  //   '2025-02-03': [{moodLevel: 3, notes: 'Miao tanto Miao'}, {moodLevel: 2, notes: 'Miao Miao x 2'}, {moodLevel: 3, notes: 'Miao tantsso Miao'}, {moodLevel: 3, notes: 'Miao tsanto Miao'}, {moodLevel: 3, notes: 'Miao tanto Miao'}],
+  //   '2025-02-07': [{moodLevel: 2, notes: ''}],
+  // }
   currentMood: MoodInterface = this.getEmptyMoodBase();
 
   constructor(
@@ -71,6 +72,12 @@ export class DashMoodComponent implements OnInit {
       this.dashService.setHeaderText("Mood Tracker");
 
       // console.log(this.daysOfMonth());
+      // Requesting Mood
+      this.moodService.getMoods().subscribe({
+        next: (response) => {
+          this.moodDict = this.moodService.mapMoodArrayToDictionary(response);
+        }
+      })
     }
 
     initiateForms(): void {
@@ -81,7 +88,25 @@ export class DashMoodComponent implements OnInit {
     }
 
     onRegisterMood(): void {
+      if(!this.form_moodForm.valid) return;
 
+      this.currentMood = {
+        moodLevel: this.moodService.moodTypes.indexOf(this.form_moodForm.get('mood_choice')?.value) + 1,
+        moodDate: new Date().toISOString().split("T")[0],
+        notes: this.form_moodForm.get('note')?.value,
+        tags: [],
+      };
+      console.log(this.currentMood);
+
+      this.moodService.registerNewMood(this.currentMood);
+      
+      if (!this.moodDict[this.currentMood.moodDate]) { this.moodDict[this.currentMood.moodDate] = []; }
+      this.moodDict[this.currentMood.moodDate].push(this.currentMood as MoodFlatten);
+      console.log('Dict', this.moodDict);
+
+      setTimeout(() => {
+        this.form_moodForm.reset();
+      });
     }
 
     // Utility Funcions
@@ -90,6 +115,7 @@ export class DashMoodComponent implements OnInit {
         moodLevel: 0,
         moodDate: '',
         notes: '',
+        tags: [],
       };
     }
 

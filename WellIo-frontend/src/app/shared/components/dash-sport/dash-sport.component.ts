@@ -108,7 +108,7 @@ export class DashSportComponent implements OnInit, AfterViewInit {
           exerciseInfo: {
             name: response.name ?? this.form_registerExercise.get('name')?.value,
             target_muscle_group: this.form_registerExercise.get('muscleGroup_choice')?.value,
-            met: response.exercises[0].met ?? 1, // Default Value
+            met: (response.exercises.length > 0) ? response.exercises[0].met : 1, // Default Value
           },
           date: new Date().toISOString().split("T")[0],
           sets: this.form_registerExercise.get('sets')?.value,

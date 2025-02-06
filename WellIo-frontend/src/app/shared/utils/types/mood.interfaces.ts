@@ -6,7 +6,7 @@ export interface MoodInterface {
     moodLevel: number;
     moodDate: string;
     notes: string,
-    tags?: string,
+    tags?: TagInterface[],
 }
 
 export interface TagInterface {

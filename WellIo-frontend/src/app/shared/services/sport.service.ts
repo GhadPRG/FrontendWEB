@@ -115,7 +115,7 @@ export class SportService {
 
   // Utility Funcitons
   mapExericesToExerciseDictionary(exercises: ExerciseInterface[]): SportDictionary {
-    let dict: { [key: string]: ExerciseInterface[] } = exercises.reduce((acc, exercise) => {
+    let dict: SportDictionary = exercises.reduce((acc, exercise) => {
       const key = exercise.exerciseInfo.target_muscle_group;
 
       if (!acc[key]) { acc[key] = []; }
@@ -123,7 +123,7 @@ export class SportService {
       acc[key].push(exercise);
       return acc;
 
-    }, {} as { [key: string]: ExerciseInterface[] });
+    }, {} as SportDictionary);
 
     // Postwork to prepare Dictionary
     dict = this.defineAllSportType(dict);

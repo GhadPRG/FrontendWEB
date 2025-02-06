@@ -1,22 +1,27 @@
 import { Injectable } from '@angular/core';
-import { MoodDictionary, TagInterface } from '../utils/types/mood.interfaces';
+import { MoodDictionary, MoodFlatten, MoodInterface, TagInterface } from '../utils/types/mood.interfaces';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MoodService {
 
+  // Internal Url
+  private serverUrl: string = 'http://localhost:8080/api/mood';
   // Data
   readonly moodTypes = ['Dispear', 'Sad', 'Normal', 'Fine', 'Happy'];
 
   
-  constructor() { }
+  constructor(private http: HttpClient) {}
 
   // Utility Functions
   getMoodType(moodLevel: number): string {
-    if (moodLevel < 0 || moodLevel > 5) return 'Unknown';
+    if (moodLevel < 1 || moodLevel > 5) return 'Unknown';
 
-    return this.moodTypes[Math.round(moodLevel)];
+    return this.moodTypes[Math.round(moodLevel) - 1];
   }
 
   getAverageMood(moodDict: MoodDictionary, targetDate: string): number {
@@ -61,4 +66,55 @@ export class MoodService {
 
     return Array.from(notesSet);
   }
+
+  getMoods(): Observable<MoodInterface[]>{
+    const tempToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODg0MDY5OSwiZXhwIjoxNzM4OTI3MDk5fQ.NuNkFLRUX_otunfy9DS_-AAfK9044MkVfg9Wl4JHBkQ';
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${tempToken}`
+    });
+
+    let request = this.http.get<MoodInterface[]>(`${this.serverUrl}`, { headers });
+    request.subscribe({
+      next: (response) => console.log(response)
+    });
+
+    return request;
+  }
+
+  registerNewMood(mood: MoodInterface): void {
+    const tempToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODg0MDY5OSwiZXhwIjoxNzM4OTI3MDk5fQ.NuNkFLRUX_otunfy9DS_-AAfK9044MkVfg9Wl4JHBkQ';
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${tempToken}`
+    });
+
+    let request: Observable<any> = this.http.post(`${this.serverUrl}`, mood, { headers });
+    console.log(mood);
+    
+    request.subscribe({
+      next: (response) => console.log('Bravo, dovrebbe essere andato tutto bene'),
+      error: (error) => console.log('Ci hai provato', error)
+    })
+  }
+
+  mapMoodArrayToDictionary(moods: MoodInterface[]): MoodDictionary {
+    return moods.reduce((acc: MoodDictionary, mood: MoodInterface) => {
+        const dateKey = mood.moodDate;
+        
+        const moodFlatten: MoodFlatten = {
+            moodLevel: mood.moodLevel,
+            notes: mood.notes,
+            tags: mood.tags ? mood.tags : undefined
+        };
+        
+        // Se la data non è ancora presente, inizializziamo l'array
+        if (!acc[dateKey]) {
+            acc[dateKey] = [];
+        }
+        
+        // Aggiungiamo il mood all'array della data corrispondente
+        acc[dateKey].push(moodFlatten);
+        
+        return acc;
+    }, {} as MoodDictionary);
+}
 }
