@@ -4,7 +4,6 @@ import { NutritionService } from '../../services/nutrition.service';
 import { CommonModule } from '@angular/common';
 import { SportService } from '../../services/sport.service';
 import {UserService} from '../../services/user.service';
-import {UserInfoInterface} from '../../utils/types/user.interfaces';
 
 @Component({
   selector: 'app-dash-home',
@@ -15,7 +14,8 @@ import {UserInfoInterface} from '../../utils/types/user.interfaces';
 })
 export class DashHomeComponent implements OnInit {
   currentDate: Date = new Date() // Usiamo la data fornita
-  userInfo: UserInfoInterface;
+
+  userFullName!: string;
   constructor(
     private dashService: DashboardService,
     public nutritionService: NutritionService,
@@ -23,7 +23,7 @@ export class DashHomeComponent implements OnInit {
     private userService: UserService,
   )
   {
-    this.userInfo = this.userService.getUserInfo();
+    this.userService.getUserFullName$().subscribe(name => this.userFullName = name)
   }
 
   ngOnInit(): void {
@@ -35,12 +35,6 @@ export class DashHomeComponent implements OnInit {
     //   next: (response) => this.sportService.mapExericesToExerciseDictionary(
     //                       this.sportService.unflattenExercises(response))
     // });
-  }
-
-  refreshUserData(): void {
-    this.userService.refreshUserInfo();
-    // Aggiorna i dati locali dopo il refresh
-    this.userInfo = this.userService.getUserInfo();
   }
 
   getFormattedDate(): string {

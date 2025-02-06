@@ -17,9 +17,9 @@ import {Observable} from 'rxjs';
 })
 export class DashSidebarComponent implements OnInit, AfterViewInit {
   userInfo$: Observable<UserInfoInterface>;
-  userFullName$: Observable<string>
-  userInitials$: Observable<string>
-  userEmail$: Observable<string>
+  userFullName!: string
+  userInitials!: string
+  userEmail!: string
   // SideBar Elements
   @ViewChildren('dropDownButtonForSubMenu') dropDownBtnsRefs!: QueryList<ElementRef>;
   @ViewChild('toggleSidebarButton') toggleSidebarBtnRef!: ElementRef;
@@ -74,15 +74,15 @@ export class DashSidebarComponent implements OnInit, AfterViewInit {
               private authService: AuthService,
               private userService: UserService) {
     this.userInfo$ = this.userService.getUserInfo$();
-    this.userFullName$ = this.userService.getUserFullName$();
-    this.userInitials$ = this.userService.getUserInitials$();
-    this.userEmail$ = this.userService.getUserEmail$();
   }
 
   refreshUserData(): void {
     this.userService.refreshUserInfo();
     // Aggiorna i dati locali dopo il refresh
     this.userInfo$ = this.userService.getUserInfo$();
+    this.userService.getUserFullName$().subscribe(name => this.userFullName = name);
+    this.userService.getUserInitials$().subscribe(initials => this.userInitials = initials);
+    this.userService.getUserEmail$().subscribe(email => this.userEmail = email);
   }
 
   // SideBar Code & Functions
