@@ -1,12 +1,15 @@
 import { Injectable } from "@angular/core";
 import { DateTime } from "luxon";
 import {CalendarEvent, Category, Note, Tag} from '../utils/types/calendar.interface';
+import {UserInfoInterface} from '../utils/types/user.interfaces';
 
 
 @Injectable({
   providedIn: "root",
 })
 export class MockDataService {
+  useMockData: boolean = true;
+
   private events: CalendarEvent[] = [
     {
       id: 1,
@@ -106,25 +109,20 @@ export class MockDataService {
     this.notes = this.notes.filter((n) => n.id !== id)
   }
 
-  addTag(tag: Tag): Tag {
-    const newTag = { ...tag, id: this.generateId() }
-    this.tags.push(newTag)
-    return newTag
-  }
-
-  updateTag(tag: Tag): Tag {
-    const index = this.tags.findIndex((t) => t.id === tag.id)
-    if (index !== -1) {
-      this.tags[index] = tag
+  getMockUserInfo(): UserInfoInterface {
+    return {
+      firstName: "Mario",
+      lastName: "Rossi",
+      email: "mario.rossi@example.com",
+      birthDate: "1990-01-01",
+      gender: "Maschio",
+      height: 175,
+      weight: 70,
+      dailyCalories: 2000,
     }
-    return tag
   }
 
-  deleteTag(id: number): void {
-    this.tags = this.tags.filter((t) => t.id !== id)
-  }
-
-  private generateId(): number {
+    private generateId(): number {
     return Math.floor(Math.random() * 1000000)
   }
 }

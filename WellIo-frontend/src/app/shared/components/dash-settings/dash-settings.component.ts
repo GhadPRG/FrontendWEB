@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
 import {NgClass} from '@angular/common';
 import {ThemeService} from '../../services/theme.service';
+import {UserService} from '../../services/user.service';
+import {UserInfoInterface} from '../../utils/types/user.interfaces';
 
 @Component({
   selector: 'app-dash-settings',
@@ -14,9 +16,13 @@ import {ThemeService} from '../../services/theme.service';
 })
 export class DashSettingsComponent implements OnInit {
   selectedTheme: string = "blue";
+  userInfo: UserInfoInterface;
 
   constructor(private dashSerive: DashboardService,
-              private themeService: ThemeService) {}
+              private themeService: ThemeService,
+              private userService: UserService) {
+    this.userInfo = this.userService.getUserInfo();
+  }
 
   ngOnInit(): void {
     this.dashSerive.setHeaderText("Your Settings");
@@ -27,5 +33,9 @@ export class DashSettingsComponent implements OnInit {
 
   setTheme(theme: string): void {
     this.themeService.setThemeColor(theme);
+  }
+
+  getAge(): number {
+    return this.userService.getUserAge();
   }
 }

@@ -3,6 +3,10 @@ import { DashboardService } from '../../../services/dashboard.service';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {NgClass} from '@angular/common';
 import {ThemeService} from '../../../services/theme.service';
+import {AuthService} from '../../../services/auth.service';
+import {UserService} from '../../../services/user.service';
+import {UserInfoInterface} from '../../../utils/types/user.interfaces';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-sidebar-dashboard',
@@ -12,7 +16,10 @@ import {ThemeService} from '../../../services/theme.service';
   styleUrl: './dash-sidebar.component.css'
 })
 export class DashSidebarComponent implements OnInit, AfterViewInit {
-
+  userInfo$: Observable<UserInfoInterface>;
+  userFullName!: string
+  userInitials!: string
+  userEmail!: string
   // SideBar Elements
   @ViewChildren('dropDownButtonForSubMenu') dropDownBtnsRefs!: QueryList<ElementRef>;
   @ViewChild('toggleSidebarButton') toggleSidebarBtnRef!: ElementRef;
@@ -23,10 +30,15 @@ export class DashSidebarComponent implements OnInit, AfterViewInit {
     this.themeService.isDarkMode$.subscribe((isDark) => {
       this.isDarkMode = isDark
     })
+    this.refreshUserData();
   }
 
   toggleDarkMode() {
     this.themeService.toggleDarkMode()
+  }
+
+  doLogout(): void {
+    this.authService.logout();
   }
 
   // public sideNavigationLinks = [
@@ -58,7 +70,20 @@ export class DashSidebarComponent implements OnInit, AfterViewInit {
   // ]
 
   constructor(private dashService: DashboardService,
-              private themeService: ThemeService) {}
+              private themeService: ThemeService,
+              private authService: AuthService,
+              private userService: UserService) {
+    this.userInfo$ = this.userService.getUserInfo$();
+  }
+
+  refreshUserData(): void {
+    this.userService.refreshUserInfo();
+    // Aggiorna i dati locali dopo il refresh
+    this.userInfo$ = this.userService.getUserInfo$();
+    this.userService.getUserFullName$().subscribe(name => this.userFullName = name);
+    this.userService.getUserInitials$().subscribe(initials => this.userInitials = initials);
+    this.userService.getUserEmail$().subscribe(email => this.userEmail = email);
+  }
 
   // SideBar Code & Functions
   ngAfterViewInit(): void {

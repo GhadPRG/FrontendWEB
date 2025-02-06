@@ -19,25 +19,27 @@ import type {
   providedIn: "root",
 })
 export class DataMappingService {
-  private useMockData = true
+  private useMockData = true;
 
   constructor(
     private apiService: ApiService,
     private mockDataService: MockDataService,
-  ) {}
+  ) {
+    this.useMockData = this.mockDataService.useMockData;
+  }
 
-  getEvents(userId: number): Observable<CalendarEvent[]> {
+  getEvents(): Observable<CalendarEvent[]> {
     if (this.useMockData) {
       return of(this.mockDataService.getEvents())
     }
-    return this.apiService.getEvents(userId).pipe(map((events) => events.map(this.convertEventDTOToCalendarEvent)))
+    return this.apiService.getEvents().pipe(map((events) => events.map(this.convertEventDTOToCalendarEvent)))
   }
 
-  getNotes(userId: number): Observable<Note[]> {
+  getNotes(): Observable<Note[]> {
     if (this.useMockData) {
       return of(this.mockDataService.getNotes())
     }
-    return this.apiService.getNotes(userId).pipe(map((notes) => notes.map(this.convertNoteDTOToNote)))
+    return this.apiService.getNotes().pipe(map((notes) => notes.map(this.convertNoteDTOToNote)))
   }
 
   getTags(categoryId: number): Observable<Tag[]> {
@@ -102,38 +104,18 @@ export class DataMappingService {
     return this.apiService.deleteNote(id)
   }
 
-  addTag(tag: Tag): Observable<Tag> {
-    if (this.useMockData) {
-      return of(this.mockDataService.addTag(tag))
-    }
-    return this.apiService.createTag(this.convertTagToTagDTO(tag)).pipe(map(this.convertTagDTOToTag))
-  }
-
-  updateTag(tag: Tag): Observable<Tag> {
-    if (this.useMockData) {
-      return of(this.mockDataService.updateTag(tag))
-    }
-    return this.apiService.updateTag(this.convertTagToTagDTO(tag)).pipe(map(this.convertTagDTOToTag))
-  }
-
-  deleteTag(id: number): Observable<void> {
-    if (this.useMockData) {
-      this.mockDataService.deleteTag(id)
-      return of(undefined)
-    }
-    return this.apiService.deleteTag(id)
-  }
-
   private convertEventDTOToCalendarEvent(dto: EventDTO): CalendarEvent {
+    console.log("DTO QUA:", dto.title, dto.start, dto.end);
+
     return {
       id: dto.id!,
       categoryId: dto.categoryId,
       title: dto.title,
       description: dto.description,
-      start: DateTime.fromISO(dto.startDate),
-      end: dto.endDate ? DateTime.fromISO(dto.endDate) : DateTime.fromISO(dto.startDate),
-      tags: dto.tags,
-    }
+      start: DateTime.fromISO(dto.start), // Usa dto.start invece di dto.startDate
+      end: dto.end ? DateTime.fromISO(dto.end) : DateTime.fromISO(dto.start), // Usa dto.end invece di dto.endDate
+      tags: dto.tags ? dto.tags : [],
+    };
   }
 
   private convertCalendarEventToEventDTO(event: CalendarEvent): EventDTO {
@@ -142,8 +124,8 @@ export class DataMappingService {
       categoryId: event.categoryId,
       title: event.title,
       description: event.description,
-      startDate: event.start.toISO() ?? DateTime.now().toISO(),
-      endDate: event.end?.toISO() ?? DateTime.now().toISO(),
+      start: event.start.toISO() ?? DateTime.now().toISO(),
+      end: event.end?.toISO() ?? DateTime.now().toISO(),
       tags: event.tags,
     }
   }
@@ -175,16 +157,6 @@ export class DataMappingService {
       name: dto.name,
       description: dto.description,
       color: dto.color || "#0000ff",
-    }
-  }
-
-  private convertTagToTagDTO(tag: Tag): TagDTO {
-    return {
-      id: tag.id,
-      categoryId: tag.categoryId,
-      name: tag.name,
-      description: tag.description,
-      color: tag.color,
     }
   }
 

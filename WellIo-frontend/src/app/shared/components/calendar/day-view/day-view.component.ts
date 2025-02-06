@@ -45,7 +45,7 @@ export class DayViewComponent {
   }
 
   getEventColor(event: CalendarEvent): string {
-    if (event.tags.length > 0) {
+    if (event.tags?.length > 0) {
       const firstTagId = event.tags[0]
       const tag = this.tags.find((t) => t.id === firstTagId)
       return tag ? tag.color : "#3498db"

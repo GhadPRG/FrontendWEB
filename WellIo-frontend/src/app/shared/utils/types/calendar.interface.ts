@@ -6,8 +6,8 @@ export interface CalendarEvent {
   categoryId?: number
   title: string
   description?: string
-  start: DateTime
-  end: DateTime
+  start: DateTime //Formato ISO + ORA
+  end: DateTime //Formato ISO + ORA
   tags: number[]
 }
 
@@ -40,8 +40,8 @@ export interface EventDTO {
   categoryId?: number
   title: string
   description?: string
-  startDate: string
-  endDate?: string
+  start: string
+  end?: string
   tags: number[]
 }
 
@@ -67,20 +67,3 @@ export interface CategoryDTO {
   description?: string
   color?: string
 }
-
-// Auth interfaces
-export interface LoginRequest {
-  username: string
-  password: string
-}
-
-export interface LoginResponse {
-  token: string
-}
-
-export interface RegisterRequest {
-  username: string
-  email: string
-  password: string
-}
-

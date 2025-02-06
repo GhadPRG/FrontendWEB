@@ -6,31 +6,25 @@
                     <div class="title-container">
                         <p class="field-title">First Name</p>
                     </div>
-                    <p class="info-field info-first-name">John</p>
+                    <p class="info-field info-first-name">{{ userInfo.firstName}}</p>
                 </li>
                 <li class="info-box">
                     <div class="title-container">
                         <p class="field-title">Last Name</p>
                     </div>
-                    <p class="info-field info-last-name">Doe</p>
-                </li>
-                <li class="info-box">
-                    <div class="title-container">
-                        <p class="field-title">Username</p>
-                    </div>
-                    <p class="info-field info-username">johnDoe</p>
+                    <p class="info-field info-last-name">{{ userInfo.lastName }}</p>
                 </li>
                 <li class="info-box">
                     <div class="title-container">
                         <p class="field-title">Birth Date</p>
                     </div>
-                    <p class="info-field info-birth-date">2 May 2003</p>
+                    <p class="info-field info-birth-date">{{ userInfo.birthDate  }}</p>
                 </li>
                 <li class="info-box">
                     <div class="title-container">
                         <p class="field-title">Email Address</p>
                     </div>
-                    <p class="info-field info-email">{{"johndoe@gmail.com"}}</p>
+                    <p class="info-field info-email">{{ userInfo.email }}</p>
                 </li>
             </ul>
         </div>
@@ -42,20 +36,20 @@
                     <div class="title-container">
                         <p class="field-title">Age</p>
                     </div>
-                    <p class="info-field info-birth-date">21</p>
+                    <p class="info-field info-birth-date">{{ getAge() }}</p>
                 </li>
                 <li class="info-box">
                     <div class="title-container">
                         <p class="field-title">Gender</p>
                     </div>
-                    <p class="info-field info-gender">Male</p>
+                    <p class="info-field info-gender">{{ userInfo.gender }}</p>
                 </li>
                 <li class="info-box">
                     <div class="title-container">
                         <p for="height" class="field-title">Height</p>
                     </div>
                     <div class="field-container">
-                        <p class="info-field info-height" id="height">174</p>
+                        <p class="info-field info-height" id="height">{{ userInfo.height }}</p>
                         <p class="info-field info-measure" id="height">cm</p>
                     </div>
                 </li>
@@ -64,7 +58,7 @@
                         <p for="weight" class="field-title">Weight</p>
                     </div>
                     <div class="field-container">
-                        <p class="info-field info-weight" id="weight">70</p>
+                        <p class="info-field info-weight" id="weight">{{ userInfo.weight }}</p>
                         <p class="info-field info-measure" id="height">kg</p>
                     </div>
                 </li>
