@@ -1,4 +1,28 @@
 <div class="grid-container mood-tracker-container">
+    <div class="info-container mood-form-container">
+        <div class="panel-title glass-top-title-bg">How are you feeling today?</div>
+        <div class="form-container">
+            <form [formGroup]="form_moodForm" class="mood-info" (ngSubmit)="onRegisterMood()">
+            
+                <ul class="mood-choice-list">
+                    @for (moodType of this.moodService.moodTypes; track moodType) {
+                        <li class="mood-choice">
+                            <input class="peer" formControlName="mood_choice" type="radio" [id]="moodType" name="mood_choice" [value]="moodType" required>
+                            <label class="hover:scale-125 peer-checked:scale-125" [for]="moodType"
+                            [class]="'mood-'+ moodType.toLocaleLowerCase()">{{ moodType }}</label>
+                        </li>
+                    }
+                </ul>
+                <div class="notes-container">
+                    <p class="note-title">Want to leave a note?</p>
+                    <textarea class="notes-area" formControlName="note" min="0" type="text" name="note" id="note" [(value)]="this.currentMood.notes"></textarea>
+                    <button class="register-mood-btn" type="submit" value="Register Mood">Add This Mood<i class="bx bx-plus bx-sm"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
     <div class="info-container mood-tracker-calendar">
         <div class="panel-title glass-top-title-bg">Monthly Recap of Your Mood</div>
         <div class="info-content mood-content">
@@ -25,38 +49,47 @@
                     @if (activeDay(); as activeDay) {
                         <div class="title"> {{ activeDay.toLocaleString(DATE_MED) }}</div>
                     } @else {
-                        <div class="title">Please select a Date to Show Infos</div>
+                        <div class="title">Please select a Date</div>
                     }
                 </div>
-                <div>
-                    @if (activeDay() && (activeDayMoods().length === 0)) { <!-- Controlla qui -->
-                        <div>No Mood Registered</div>
-                    }
-                    @if (activeDay() && (activeDayMoods().length > 0)) {
-                        
-                        <div class="average-mood-container">
-                            <div class="average-mood"
-                            [class]="'mood-' + this.moodService.getMoodType(this.moodService.getAverageMood(moodDict, (activeDay()?.toISODate() ?? ''))).toLocaleLowerCase()"></div>
-                            <div class="mood-name"> {{ this.moodService.getMoodType(this.moodService.getAverageMood(moodDict, (activeDay()?.toISODate() ?? ''))) }}</div>
-                        </div>
+                @if (activeDay() && (activeDayMoods().length === 0)) { <!-- Controlla qui -->
+                    <div>No Mood Registered</div>
+                }
+                @if (activeDay() && (activeDayMoods().length > 0)) {
+                    
+                    <div class="average-mood-container">
+                        <div class="average-mood"
+                        [class]="'mood-' + this.moodService.getMoodType(this.moodService.getAverageMood(moodDict, (activeDay()?.toISODate() ?? ''))).toLocaleLowerCase()"></div>
+                        <div class="mood-name"> {{ this.moodService.getMoodType(this.moodService.getAverageMood(moodDict, (activeDay()?.toISODate() ?? ''))) }}</div>
+                    </div>
 
-                        <p class="mood-list-title">Moods Throughout the Day</p>
-                        <ul class="mood-list">
-                            @for (moodEntry of activeDayMoods(); track $index) {
-                                <li class="mood-item"
-                                [class]="'mood-' + this.moodService.getMoodType(moodEntry.moodLevel)"></li>
-                            }
-                        </ul>
+                    <p class="title mood-list-title">Moods Throughout the Day</p>
+                    <ul class="mood-list">
+                        @for (moodEntry of activeDayMoods(); track $index) {
+                            <li class="mood-item"
+                            [class]="'mood-' + this.moodService.getMoodType(moodEntry.moodLevel).toLocaleLowerCase()"></li>
+                        }
+                    </ul>
 
-                        <p class="tag-list-title">Tags</p>
+                    @if (this.moodService.getTagsStringsByDate(moodDict, (activeDay()?.toISODate() ?? '')).length !== 0) {
+                        <p class="title tag-list-title">Tags</p>
                         <ul class="tag-list">
-                            @for (moodEntry of activeDayMoods(); track $index) {
-                                <li class="tag-item"></li>
+                            @for (tag of this.moodService.getTagsStringsByDate(moodDict, (activeDay()?.toISODate() ?? '')); track $index) {
+                                <li class="tag-item">{{ tag }}</li>
                             }
                         </ul>
-                        
                     }
-                </div>
+
+                    @if (this.moodService.getNotesByDate(moodDict, (activeDay()?.toISODate() ?? '')).length !== 0) {
+                        <p class="title note-list-title">Notes of the Day</p>
+                        <ul class="note-list">
+                            @for (tag of this.moodService.getNotesByDate(moodDict, (activeDay()?.toISODate() ?? '')); track $index) {
+                                <li class="note-item">{{ tag }}</li>
+                            }
+                        </ul>
+                    }
+                }
+
             </div>
         </div>
     </div>

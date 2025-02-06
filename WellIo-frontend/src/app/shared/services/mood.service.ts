@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MoodDictionary } from '../utils/types/mood.interfaces';
+import { MoodDictionary, TagInterface } from '../utils/types/mood.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,8 @@ export class MoodService {
   // Data
   readonly moodTypes = ['Dispear', 'Sad', 'Normal', 'Fine', 'Happy'];
 
+  
+  constructor() { }
 
   // Utility Functions
   getMoodType(moodLevel: number): string {
@@ -26,6 +28,37 @@ export class MoodService {
     return totalMood / entries.length;
 }
 
-  
-  constructor() { }
+  getTagsStringsByDate(moodDict: MoodDictionary, targetDate: string): string[] {
+
+    const entries = moodDict[targetDate];
+    if (!entries || entries.length === 0) { return []; }
+
+    const tagSet = new Set<string>();
+
+    entries.forEach(entry => {
+        if (!entry.tags) return;
+
+        entry.tags.forEach(tag => {
+            tagSet.add(`${tag.category.name}: ${tag.name}`);
+        });
+    });
+
+    return Array.from(tagSet);
+  }
+
+  getNotesByDate(moodDict: MoodDictionary, targetDate: string): string[] {
+
+    const entries = moodDict[targetDate];
+    if (!entries || entries.length === 0) { return []; }
+
+    const notesSet = new Set<string>();
+
+    entries.forEach(entry => {
+        if (!entry.notes) return;
+        
+        notesSet.add(entry.notes);
+    });
+
+    return Array.from(notesSet);
+  }
 }

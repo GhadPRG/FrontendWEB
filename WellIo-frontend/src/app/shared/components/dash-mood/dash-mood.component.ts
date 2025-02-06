@@ -5,19 +5,22 @@ import { MoodService } from '../../services/mood.service';
 
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DateTime, Info, Interval } from 'luxon';
-import { MoodDictionary, MoodFlatten } from '../../utils/types/mood.interfaces';
+import { MoodDictionary, MoodFlatten, MoodInterface } from '../../utils/types/mood.interfaces';
 
 
 @Component({
   selector: 'app-dash-mood',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './dash-mood.component.html',
   styleUrl: './dash-mood.component.css'
 })
 export class DashMoodComponent implements OnInit {
 
-  // Data
+  // Forms
+  form_moodForm!: FormGroup;
+
+  // Data for Mood Calendar
   today : Signal<DateTime> = signal(DateTime.local());
   firstDayOfActiveMonth: WritableSignal<DateTime> = signal(
     this.today().startOf('month')
@@ -45,12 +48,14 @@ export class DashMoodComponent implements OnInit {
     return this.moodDict[activeDayISO] ?? [];
   });
 
+  // Data
   moodDict: MoodDictionary = {
-    '2025-02-05': [{moodLevel: 1, notes: ''}],
+    '2025-02-05': [{moodLevel: 1, tags:[ { category: { name: 'Gatto' }, name: 'Miao'}, { category: { name: 'Gatt' }, name: 'Miao'}, { category: { name: 'Gatto' }, name: 'MiaoMiao'}], notes: ''}],
     '2025-02-04': [{moodLevel: 4, notes: 'Miao'}],
-    '2025-02-03': [{moodLevel: 3, notes: 'Miao tanto Miao'}, {moodLevel: 2, notes: 'Miao Miao x 2'}],
+    '2025-02-03': [{moodLevel: 3, notes: 'Miao tanto Miao'}, {moodLevel: 2, notes: 'Miao Miao x 2'}, {moodLevel: 3, notes: 'Miao tantsso Miao'}, {moodLevel: 3, notes: 'Miao tsanto Miao'}, {moodLevel: 3, notes: 'Miao tanto Miao'}],
     '2025-02-07': [{moodLevel: 2, notes: ''}],
   }
+  currentMood: MoodInterface = this.getEmptyMoodBase();
 
   constructor(
       private dashService: DashboardService,
@@ -58,6 +63,7 @@ export class DashMoodComponent implements OnInit {
       private fb: FormBuilder
     ) 
     {
+      this.initiateForms();
     }
   
     ngOnInit(): void {
@@ -65,6 +71,26 @@ export class DashMoodComponent implements OnInit {
       this.dashService.setHeaderText("Mood Tracker");
 
       // console.log(this.daysOfMonth());
+    }
+
+    initiateForms(): void {
+      this.form_moodForm = this.fb.group({
+        mood_choice: new FormControl(''),
+        note: new FormControl(''),
+      });
+    }
+
+    onRegisterMood(): void {
+
+    }
+
+    // Utility Funcions
+    getEmptyMoodBase(): MoodInterface {
+      return {
+        moodLevel: 0,
+        moodDate: '',
+        notes: '',
+      };
     }
 
 }
