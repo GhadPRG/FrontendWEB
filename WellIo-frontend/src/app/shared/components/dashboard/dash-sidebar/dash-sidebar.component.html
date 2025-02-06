@@ -71,12 +71,12 @@
                 </a>
             </li>
             <div class="links-divider"></div>
-            <li class="sidebar-link">
-                <a class="link">
-                    <i class="bx bxs-moon bx-sm"></i> <!-- bxs-sun -->
-                    <span>Dark Theme</span>
-                </a>
-            </li>
+          <li class="sidebar-link">
+            <a class="link" (click)="toggleDarkMode()">
+              <i class="bx" [ngClass]="isDarkMode ? 'bxs-moon' : 'bxs-sun'"></i>
+              <span>{{ isDarkMode ? 'Light' : 'Dark' }} Theme</span>
+            </a>
+          </li>
             <li class="sidebar-link">
                 <a routerLink="/dashboard/settings" class="link">
                     <i class="bx bxs-cog bx-sm"></i>

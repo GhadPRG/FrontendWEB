@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DayViewComponent} from '../day-view/day-view.component';
 import {NgClass, NgForOf, NgIf} from '@angular/common';
-import {TagFormComponent} from '../forms/tag-form/tag-form.component';
 import {NoteFormComponent} from '../forms/note-form/note-form.component';
 import {EventFormComponent} from '../forms/event-form/event-form.component';
 import {NotesGridComponent} from '../notes-grid/notes-grid.component';
@@ -9,6 +8,7 @@ import {TagFilterComponent} from '../tag-filter/tag-filter.component';
 import {DateTime} from 'luxon';
 import {CalendarEvent, Category, Note, Tag} from '../../../utils/types/calendar.interface';
 import {EventNoteService} from '../../../services/event-note.service';
+import {DashboardService} from '../../../services/dashboard.service';
 
 @Component({
   selector: 'app-calendar-notes',
@@ -16,7 +16,6 @@ import {EventNoteService} from '../../../services/event-note.service';
   imports: [
     DayViewComponent,
     NgIf,
-    TagFormComponent,
     NoteFormComponent,
     EventFormComponent,
     NotesGridComponent,
@@ -39,15 +38,15 @@ export class CalendarNotesComponent implements OnInit {
 
   isEventFormOpen = false
   isNoteFormOpen = false
-  isTagFormOpen = false
   selectedEvent: CalendarEvent | null = null
   selectedNote: Note | null = null
-  selectedTag: Tag | null = null
   selectedDay: DateTime | null = null
 
-  constructor(private eventNoteService: EventNoteService) {}
+  constructor(private eventNoteService: EventNoteService,
+              private dashService: DashboardService) {}
 
   ngOnInit() {
+    this.dashService.setHeaderText('');
     this.updateCalendar()
     this.loadData()
   }
@@ -173,28 +172,6 @@ export class CalendarNotesComponent implements OnInit {
     this.closeNoteForm()
   }
 
-  openTagForm(tag?: Tag) {
-    this.selectedTag = tag || null
-    this.isTagFormOpen = true
-  }
-
-  closeTagForm() {
-    this.isTagFormOpen = false
-    this.selectedTag = null
-  }
-
-  saveTag(tag: Tag) {
-    if (tag.id) {
-      this.eventNoteService.updateTag(tag).subscribe(() => {
-        this.loadData()
-      })
-    } else {
-      this.eventNoteService.addTag(tag).subscribe(() => {
-        this.loadData()
-      })
-    }
-    this.closeTagForm()
-  }
 
   deleteItem(item: CalendarEvent | Note) {
     if ("start" in item) {

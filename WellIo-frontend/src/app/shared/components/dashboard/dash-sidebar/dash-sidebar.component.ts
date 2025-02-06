@@ -1,21 +1,33 @@
-import { AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import { DashboardService } from '../../../services/dashboard.service';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import {NgClass} from '@angular/common';
+import {ThemeService} from '../../../services/theme.service';
 
 @Component({
   selector: 'app-sidebar-dashboard',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, NgClass],
   templateUrl: './dash-sidebar.component.html',
   styleUrl: './dash-sidebar.component.css'
 })
-export class DashSidebarComponent implements AfterViewInit {
-  
+export class DashSidebarComponent implements OnInit, AfterViewInit {
+
   // SideBar Elements
   @ViewChildren('dropDownButtonForSubMenu') dropDownBtnsRefs!: QueryList<ElementRef>;
   @ViewChild('toggleSidebarButton') toggleSidebarBtnRef!: ElementRef;
   @ViewChild('sidebar') sidebarRef!: ElementRef;
+  isDarkMode: boolean = false;
 
+  ngOnInit(): void {
+    this.themeService.isDarkMode$.subscribe((isDark) => {
+      this.isDarkMode = isDark
+    })
+  }
+
+  toggleDarkMode() {
+    this.themeService.toggleDarkMode()
+  }
 
   // public sideNavigationLinks = [
   //   {
@@ -45,7 +57,8 @@ export class DashSidebarComponent implements AfterViewInit {
   //   },
   // ]
 
-  constructor(private dashService: DashboardService) {}
+  constructor(private dashService: DashboardService,
+              private themeService: ThemeService) {}
 
   // SideBar Code & Functions
   ngAfterViewInit(): void {
@@ -56,7 +69,7 @@ export class DashSidebarComponent implements AfterViewInit {
         this.toggleSubMenu(btnRef.nativeElement);
       });
     });
-    
+
     // Add Closing Functionality
     this.toggleSidebarBtnRef.nativeElement.addEventListener('click', () => this.toggleSidebar());
   }
@@ -67,14 +80,14 @@ export class DashSidebarComponent implements AfterViewInit {
     if (!btn.nextSibling.classList.contains('shown')) {
       this.closeAllSubMenus();
     }
-    
+
     // Open SubMenu - Flip Drop-Down Icon
     btn.nextSibling.classList.toggle('shown');
     btn.children[btn.children.length - 1].classList.toggle('bx-rotate-180');
     this.dashService.setIsSideBarMenuOpened(btn.nextSibling.classList.contains('shown'));
 
     // If Trying to Open SubMenu while Sidebar closed, then Open Sidebar
-    if (this.sidebarRef.nativeElement.classList.contains('closed')) { 
+    if (this.sidebarRef.nativeElement.classList.contains('closed')) {
       this.sidebarRef.nativeElement.classList.toggle('closed');
       this.toggleSidebarBtnRef.nativeElement.children[0].classList.toggle('bx-rotate-180');
     }
@@ -94,7 +107,7 @@ export class DashSidebarComponent implements AfterViewInit {
     const subMenusOpened = this.sidebarRef.nativeElement.getElementsByClassName('shown');
     Array.from<any>(subMenusOpened).forEach(ul => {
       ul.classList.remove('shown');
-      
+
       let btn = ul.previousElementSibling;
       btn.children[btn.children.length - 1].classList.remove('bx-rotate-180');
     });

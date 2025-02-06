@@ -1,15 +1,15 @@
 <div *ngIf="isOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-  <div class="bg-background dark:bg-background-dark rounded-lg shadow-xl w-full max-w-4xl h-[90vh] flex flex-col">
+  <div class="bg-background dark:bg-skin-darkest rounded-lg shadow-lg w-full max-w-4xl h-[90vh] flex flex-col">
     <!-- Header -->
-    <div class="flex items-center justify-between p-3 sm:p-4 border-b border-border dark:border-border-dark">
-      <h2 class="text-lg sm:text-xl font-semibold text-foreground dark:text-foreground-dark">
+    <div class="flex items-center justify-between p-3 sm:p-4 border-b border-border">
+      <h2 class="text-lg sm:text-xl font-semibold text-foreground">
         {{ date.toFormat('EEEE') }}
-        <span class="text-muted-foreground dark:text-muted-foreground-dark ml-2 text-sm sm:text-base">
+        <span class="text-muted-foreground ml-2 text-sm sm:text-base">
           {{ date.toFormat('d MMMM yyyy') }}
         </span>
       </h2>
       <button (click)="close()"
-              class="p-2 hover:bg-accent dark:hover:bg-accent-dark rounded-full text-foreground dark:text-foreground-dark">
+              class="p-2 hover:bg-skin-fill-light dark:hover:bg-skin-fill-dark rounded-full text-foreground">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
@@ -20,11 +20,11 @@
     <div class="flex-1 overflow-y-auto relative">
       <div class="relative min-h-[1440px]"> <!-- 24 hours * 60px per hour -->
         <!-- Time Column -->
-        <div class="absolute left-0 top-0 w-12 sm:w-16 h-full border-r border-border dark:border-border-dark bg-background dark:bg-background-dark z-10">
+        <div class="absolute left-0 top-0 w-12 sm:w-16 h-full border-r border-border bg-background dark:bg-skin-darkest z-10">
           <div *ngFor="let hour of hours"
                class="absolute w-full"
                [style.top.px]="hour * 60">
-            <span class="text-xs text-muted-foreground dark:text-muted-foreground-dark pr-1 sm:pr-2 relative -top-2 float-right">
+            <span class="text-xs text-muted-foreground pr-1 sm:pr-2 relative -top-2 float-right">
               {{ hour.toString().padStart(2, '0') }}:00
             </span>
           </div>
@@ -33,7 +33,7 @@
         <!-- Grid Lines -->
         <div class="ml-12 sm:ml-16 relative h-full">
           <div *ngFor="let hour of hours"
-               class="absolute w-full border-t border-border dark:border-border-dark"
+               class="absolute w-full border-t border-border"
                [style.top.px]="hour * 60"
                (click)="createEventAtTime(hour)">
           </div>
@@ -63,4 +63,3 @@
     </div>
   </div>
 </div>
-

@@ -18,7 +18,6 @@ export class TagFilterComponent implements OnInit {
   @Input() categories: Category[] = []
   @Input() selectedTagIds: number[] = []
   @Output() filterChange = new EventEmitter<number[]>()
-  @Output() openTagForm = new EventEmitter<void>()
 
   tagsByCategory: { [key: number]: Tag[] } = {}
 
