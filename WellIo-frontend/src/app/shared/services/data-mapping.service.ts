@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { Injectable } from "@angular/core"
+import { Observable, of } from "rxjs"
 import { map } from "rxjs/operators"
 import { ApiService } from "./api.service"
 import { MockDataService } from "./mock-data.service"
@@ -32,14 +32,16 @@ export class DataMappingService {
     if (this.useMockData) {
       return of(this.mockDataService.getEvents())
     }
-    return this.apiService.getEvents().pipe(map((events) => events.map(this.convertEventDTOToCalendarEvent)))
+    return this.apiService
+      .getEvents()
+      .pipe(map((events) => events.map((event) => this.convertEventDTOToCalendarEvent(event))))
   }
 
   getNotes(): Observable<Note[]> {
     if (this.useMockData) {
       return of(this.mockDataService.getNotes())
     }
-    return this.apiService.getNotes().pipe(map((notes) => notes.map(this.convertNoteDTOToNote)))
+    return this.apiService.getNotes().pipe(map((notes) => notes.map((note) => this.convertNoteDTOToNote(note))))
   }
 
   getTags(): Observable<Tag[]> {
@@ -65,7 +67,9 @@ export class DataMappingService {
     if (this.useMockData) {
       return of(this.mockDataService.getCategories())
     }
-    return this.apiService.getCategories().pipe(map((categories) => categories.map(this.convertCategoryDTOToCategory)))
+    return this.apiService
+      .getCategories()
+      .pipe(map((categories) => categories.map((category) => this.convertCategoryDTOToCategory(category))))
   }
 
   addEvent(event: CalendarEvent): Observable<CalendarEvent> {
@@ -74,7 +78,7 @@ export class DataMappingService {
     }
     return this.apiService
       .createEvent(this.convertCalendarEventToEventDTO(event))
-      .pipe(map(this.convertEventDTOToCalendarEvent))
+      .pipe(map((eventDTO) => this.convertEventDTOToCalendarEvent(eventDTO)))
   }
 
   updateEvent(event: CalendarEvent): Observable<CalendarEvent> {
@@ -83,7 +87,7 @@ export class DataMappingService {
     }
     return this.apiService
       .updateEvent(this.convertCalendarEventToEventDTO(event))
-      .pipe(map(this.convertEventDTOToCalendarEvent))
+      .pipe(map((eventDTO) => this.convertEventDTOToCalendarEvent(eventDTO)))
   }
 
   deleteEvent(id: number): Observable<void> {
@@ -98,14 +102,18 @@ export class DataMappingService {
     if (this.useMockData) {
       return of(this.mockDataService.addNote(note))
     }
-    return this.apiService.createNote(this.convertNoteToNoteDTO(note)).pipe(map(this.convertNoteDTOToNote))
+    return this.apiService
+      .createNote(this.convertNoteToNoteDTO(note))
+      .pipe(map((noteDTO) => this.convertNoteDTOToNote(noteDTO)))
   }
 
   updateNote(note: Note): Observable<Note> {
     if (this.useMockData) {
       return of(this.mockDataService.updateNote(note))
     }
-    return this.apiService.updateNote(this.convertNoteToNoteDTO(note)).pipe(map(this.convertNoteDTOToNote))
+    return this.apiService
+      .updateNote(this.convertNoteToNoteDTO(note))
+      .pipe(map((noteDTO) => this.convertNoteDTOToNote(noteDTO)))
   }
 
   deleteNote(id: number): Observable<void> {
