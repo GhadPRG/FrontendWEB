@@ -7,7 +7,6 @@
                     [categories]="categories"
                     [selectedTagIds]="selectedTagIds"
                     (filterChange)="onFilterChange($event)"
-                    (openTagForm)="openTagForm()"
             ></app-tag-filter>
         </section>
 
@@ -119,8 +118,7 @@
 </main>
 
 <!-- Modals -->
-<app-event-form [isOpen]="isEventFormOpen" [event]="selectedEvent"
-              [categories]="categories" [tags]="tags"
+<app-event-form [isOpen]="isEventFormOpen" [event]="selectedEvent" [tags]="tags"
               (closeModal)="closeEventForm()" (saveEvent)="saveEvent($event)">
 </app-event-form>
 
@@ -128,11 +126,6 @@
                [tags]="tags"
                (closeModal)="closeNoteForm()" (saveNote)="saveNote($event)">
 </app-note-form>
-
-<app-tag-form [isOpen]="isTagFormOpen" [tag]="selectedTag"
-              [categories]="categories"
-              (closeModal)="closeTagForm()" (saveTag)="saveTag($event)">
-</app-tag-form>
 
 <app-day-view *ngIf="selectedDay"
               [isOpen]="true"
