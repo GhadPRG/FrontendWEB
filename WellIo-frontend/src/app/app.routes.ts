@@ -8,12 +8,12 @@ import { DashMoodComponent } from './shared/components/dash-mood/dash-mood.compo
 
 export const routes: Routes = [
     {
-        path: '', 
+        path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
     },
     {
-        path: 'dashboard', 
+        path: 'dashboard',
         component: DashboardComponent,
         children: [
             {
@@ -35,12 +35,16 @@ export const routes: Routes = [
             {
                 path: 'mood',
                 component: DashMoodComponent
-            }
+            },
+          {
+            path: 'calendar',
+            loadComponent: () => import('./shared/components/calendar/calendar-notes/calendar-notes.component').then((c) => c.CalendarNotesComponent)
+          }
 
         ]
     },
     {
-        path: 'welcome-page', 
+        path: 'welcome-page',
         loadComponent: () => import('./business/index/index.component').then((c) => c.IndexComponent)
     },
 ];

@@ -1,18 +1,25 @@
 import { AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { DashboardService } from '../../../services/dashboard.service';
+import {NgIf} from '@angular/common';
+import {VerticalTimelineComponent} from '../../calendar/vertical-timeline/vertical-timeline.component';
 
 @Component({
   selector: 'app-sidecalendar-dashboard',
   standalone: true,
-  imports: [],
+  imports: [
+    NgIf,
+    VerticalTimelineComponent
+  ],
   templateUrl: './dash-side-calendar.component.html',
   styleUrl: './dash-side-calendar.component.css'
 })
 export class DashSideCalendarComponent implements AfterViewInit {
-  
+
   // Side-Calendar Elements
   @ViewChild('toggleSideCalendarButton') toggleSidebarBtnRef!: ElementRef;
   @ViewChild('sideCalendar') sidebarRef!: ElementRef;
+
+  isSideCalendarOpen = false;
 
   constructor(private dashService: DashboardService) {}
 
