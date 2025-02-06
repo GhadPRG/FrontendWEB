@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core"
-import { type Observable, of } from "rxjs"
+import { Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators"
 import { ApiService } from "./api.service"
 import { MockDataService } from "./mock-data.service"

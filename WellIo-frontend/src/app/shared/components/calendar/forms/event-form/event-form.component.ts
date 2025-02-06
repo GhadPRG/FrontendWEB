@@ -34,7 +34,11 @@ export class EventFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    // Initialization logic if needed
+    if (this.tags.length === 0) {
+      this.eventNoteService.categories$.subscribe((categories) => {
+        this.tags = this.eventNoteService.getAllTags()
+      })
+    }
   }
 
   ngOnChanges() {
