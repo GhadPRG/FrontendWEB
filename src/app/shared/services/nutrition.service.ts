@@ -49,7 +49,7 @@ export class NutritionService implements OnInit{
       fats: this.clamp(0, (consumedValue.fats / (dailyValue.fats === 0 ? 1 : dailyValue.fats)) * 100, 100),
     };
   });
-//const dailyKcals = inject(UserService).getUserInfo().dailyCalories;
+
   constructor(
     private http: HttpClient, 
     private userService: UserService
@@ -109,41 +109,41 @@ export class NutritionService implements OnInit{
     return request;
   }
 
-    setMacroValues(): void {
-        // Assicurati che dailyKcals sia definito
-        if (this.dailyKcals === undefined) {
-            console.error('Daily calories are not defined');
-            return; // Esci dalla funzione se dailyKcals non è definito
-        }
+  setMacroValues(): void {
+      // Assicurati che dailyKcals sia definito
+      if (this.dailyKcals === undefined) {
+          console.error('Daily calories are not defined');
+          return; // Esci dalla funzione se dailyKcals non è definito
+      }
 
-        // Costanti per i calcoli
-        const carbsDailyKcalFactor = 0.5;
-        const carbsPowerFactor = 3.75;
-        const fatsDailyKcalFactor = 0.25;
-        const fatsPowerFactor = 9;
-        const proteinPowerFactor = 4;
+      // Costanti per i calcoli
+      const carbsDailyKcalFactor = 0.5;
+      const carbsPowerFactor = 3.75;
+      const fatsDailyKcalFactor = 0.25;
+      const fatsPowerFactor = 9;
+      const proteinPowerFactor = 4;
 
-        // Calcoli delle calorie per macronutrienti
-        const carbsKcal = this.dailyKcals * carbsDailyKcalFactor;
-        const fatsKcal = this.dailyKcals * fatsDailyKcalFactor;
-        const proteinsKcal = this.dailyKcals - carbsKcal - fatsKcal;
+      // Calcoli delle calorie per macronutrienti
+      const carbsKcal = this.dailyKcals * carbsDailyKcalFactor;
+      const fatsKcal = this.dailyKcals * fatsDailyKcalFactor;
+      const proteinsKcal = this.dailyKcals - carbsKcal - fatsKcal;
 
-        // Conversione delle calorie in grammi
-        const carbsGPerDay = carbsKcal / carbsPowerFactor;
-        const fatsGPerDay = fatsKcal / fatsPowerFactor;
-        const proteinsGPerDay = proteinsKcal / proteinPowerFactor;
+      // Conversione delle calorie in grammi
+      const carbsGPerDay = carbsKcal / carbsPowerFactor;
+      const fatsGPerDay = fatsKcal / fatsPowerFactor;
+      const proteinsGPerDay = proteinsKcal / proteinPowerFactor;
 
-        // Fibre fisse
-        const fibersGPerDay = 26;
+      // Fibre fisse
+      const fibersGPerDay = 26;
 
-        // Aggiorna il target giornaliero
-        this.dailyTarget.update(current => ({
-            kcalories: this.dailyKcals!, // Usa l'operatore "non-null assertion" (!)
-            carbs: carbsGPerDay,
-            fats: fatsGPerDay,
-            proteins: proteinsGPerDay,
-            fibers: fibersGPerDay
-        }));
+      // Aggiorna il target giornaliero
+      this.dailyTarget.update(current => ({
+          kcalories: this.dailyKcals!, // Usa l'operatore "non-null assertion" (!)
+          carbs: carbsGPerDay,
+          fats: fatsGPerDay,
+          proteins: proteinsGPerDay,
+          fibers: fibersGPerDay
+      }));
     }
 
   recalculateMacros(mealDict: MealDictionary): void {
@@ -213,40 +213,5 @@ export class NutritionService implements OnInit{
 
     return dict;
   }
-
-
-  // mealsUnflattener(dishes: FlattenDish[]): MealInterface[] {
-  //   const mealsMap = new Map<string, MealInterface>();
-
-  //   dishes.forEach(dish => {
-  //     if (!dish.mealType) return; // To remove ?
-
-  //     // Populating eals' Map
-  //     if (!mealsMap.has(dish.mealType)) {
-  //         mealsMap.set(dish.mealType, {
-  //             id: dish.meal_id,
-  //             type: dish.mealType,
-  //             dishes: [],
-  //         });
-  //     }
-
-  //     // Current Dish inside Meal
-  //     const meal = mealsMap.get(dish.mealType)!;
-  //     meal.dishes.push({
-  //       unit: dish.unit,
-  //       quantity: dish.quantity,
-  //       meal: meal,
-  //       dishInfo: {
-  //         name: dish.name,
-  //         kcalories: dish.kcal,
-  //         proteins: dish.proteins,
-  //         fats: dish.fats,
-  //         carbs: dish.carbs,
-  //         fibers: dish.fibers,
-  //       }
-  //     });
-  //   });
-
-  //   return Array.from(mealsMap.values());
-  // }
+  
 }

@@ -9,11 +9,21 @@ import { Observable } from 'rxjs';
 })
 export class MoodService {
 
+  private token: string | null = localStorage.getItem("token") ? localStorage.getItem("token") : null
+  private getHeaders(): HttpHeaders {
+      let headers = new HttpHeaders()
+      if (this.token) {
+          headers = headers.set("Authorization", `Bearer ${this.token}`)
+      }
+      return headers
+  }
+
+
   // Internal Url
   private serverUrl: string = 'http://localhost:8080/api/mood';
   // Data
   readonly moodTypes = ['Dispear', 'Sad', 'Normal', 'Fine', 'Happy'];
-
+  private dailyKcals: number | undefined;
 
   constructor(private http: HttpClient) {}
 
@@ -68,32 +78,11 @@ export class MoodService {
   }
 
   getMoods(): Observable<MoodInterface[]>{
-    const tempToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODg0MDY5OSwiZXhwIjoxNzM4OTI3MDk5fQ.NuNkFLRUX_otunfy9DS_-AAfK9044MkVfg9Wl4JHBkQ';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${tempToken}`
-    });
-
-    let request = this.http.get<MoodInterface[]>(`${this.serverUrl}`, { headers });
-    request.subscribe({
-      next: (response) => console.log(response)
-    });
-
-    return request;
+    return this.http.get<MoodInterface[]>(`${this.serverUrl}`, { headers: this.getHeaders() });;
   }
 
-  registerNewMood(mood: MoodInterface): void {
-    const tempToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODg0MDY5OSwiZXhwIjoxNzM4OTI3MDk5fQ.NuNkFLRUX_otunfy9DS_-AAfK9044MkVfg9Wl4JHBkQ';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${tempToken}`
-    });
-
-    let request: Observable<any> = this.http.post(`${this.serverUrl}`, mood, { headers });
-    console.log(mood);
-
-    request.subscribe({
-      next: (response) => console.log('Bravo, dovrebbe essere andato tutto bene'),
-      error: (error) => console.log('Ci hai provato', error)
-    })
+  registerNewMood(mood: MoodInterface): Observable<any> {
+    return this.http.post(`${this.serverUrl}`, mood, { headers: this.getHeaders() });
   }
 
   mapMoodArrayToDictionary(moods: MoodInterface[]): MoodDictionary {

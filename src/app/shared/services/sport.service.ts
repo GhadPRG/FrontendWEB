@@ -8,6 +8,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class SportService {
 
+  private token: string | null = localStorage.getItem("token") ? localStorage.getItem("token") : null
+  private getHeaders(): HttpHeaders {
+      let headers = new HttpHeaders()
+      if (this.token) {
+          headers = headers.set("Authorization", `Bearer ${this.token}`)
+      }
+      return headers
+  }
+
   // API Data & Urls
   private apiUrlSearchExercise = 'https://trackapi.nutritionix.com/v2/natural/exercise'; // Endpoint API
   private appId = 'ae6bbf02'; // App ID - Bruno Caruso
@@ -38,10 +47,8 @@ export class SportService {
 
   constructor(private http: HttpClient) {}
 
-
-
   getWeekExercise(): Observable<ExerciseFlatten[]> {
-    return this.http.get<ExerciseFlatten[]>(`${this.serverUrl}`);
+    return this.http.get<ExerciseFlatten[]>(`${this.serverUrl}`, { headers: this.getHeaders() });
   }
 
   getExerciseInfo(exerciseName: string): Observable<any> {
@@ -54,7 +61,7 @@ export class SportService {
   }
 
   registerNewExercise(exercise: ExerciseInterface): Observable<any> {
-    return this.http.post(`${this.serverUrl}`, this.flattenExercise(exercise));
+    return this.http.post(`${this.serverUrl}`, this.flattenExercise(exercise), { headers: this.getHeaders() });
   }
 
 
