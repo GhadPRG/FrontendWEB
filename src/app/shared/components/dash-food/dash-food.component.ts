@@ -161,7 +161,6 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
 
     this.nutritionService.registerNewDish(this.currentDish).subscribe({
       next: (response) => {
-        this.nutritionService.registerNewDish(this.currentDish);
         const currMealType = (this.currentDish?.meal ?? { type: ''}).type;
         this.currentMeals[currMealType].dishes.push(this.currentDish);
 

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {computed, inject, Injectable, OnInit, signal} from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import { DishInterface, FlattenDish, MacrosInterface, MealDictionary, MealInterface } from '../utils/types/nutrition.interfaces';
 import { UserService } from './user.service';
 
@@ -51,11 +51,11 @@ export class NutritionService implements OnInit{
   });
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private userService: UserService
-  ) 
+  )
   {}
-    
+
   ngOnInit(): void {
       // Assegna il valore direttamente alla proprietà di classe
       this.dailyKcals = this.userService.getUserInfo().dailyCalories;
@@ -92,10 +92,8 @@ export class NutritionService implements OnInit{
   }
 
   registerNewDish(dish: DishInterface): Observable<any> {
-    let request: Observable<any> = this.http.post(`${this.baseUrl}/meal`, this.dishFlattener(dish),{ headers: this.getHeaders() });
-
-    request.subscribe({
-      next: (response) => {
+    return this.http.post(`${this.baseUrl}/meal`, this.dishFlattener(dish), { headers: this.getHeaders() }).pipe(
+      tap((response) => {
         this.consumed.update(current => ({
           kcalories: current.kcalories + (dish.dishInfo.kcalories * dish.quantity),
           carbs: current.carbs + (dish.dishInfo.carbs * dish.quantity),
@@ -103,10 +101,8 @@ export class NutritionService implements OnInit{
           proteins: current.proteins + (dish.dishInfo.proteins * dish.quantity),
           fibers: current.fibers + (dish.dishInfo.fibers * dish.quantity),
         }));
-      }
-    });
-
-    return request;
+      })
+    );
   }
 
   setMacroValues(): void {
@@ -213,5 +209,5 @@ export class NutritionService implements OnInit{
 
     return dict;
   }
-  
+
 }
