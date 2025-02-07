@@ -1,14 +1,10 @@
 import { Component, OnInit } from "@angular/core"
 import { DayViewComponent } from "../day-view/day-view.component"
 import { NgClass, NgForOf, NgIf } from "@angular/common"
-import { NoteFormComponent } from "../forms/note-form/note-form.component"
 import { EventFormComponent } from "../forms/event-form/event-form.component"
-import { NotesGridComponent } from "../notes-grid/notes-grid.component"
-import { TagFilterComponent } from "../tag-filter/tag-filter.component"
 import { DateTime } from "luxon"
-import type { CalendarEvent, Category, Note, Tag } from "../../../utils/types/calendar.interface"
+import type { CalendarEvent, Note, Tag } from "../../../utils/types/calendar.interface"
 import { EventNoteService } from "../../../services/event-note.service"
-import { DashboardService } from "../../../services/dashboard.service"
 
 @Component({
   selector: "app-calendar-notes",
@@ -16,12 +12,9 @@ import { DashboardService } from "../../../services/dashboard.service"
   imports: [
     DayViewComponent,
     NgIf,
-    NoteFormComponent,
     EventFormComponent,
-    NotesGridComponent,
     NgForOf,
     NgClass,
-    TagFilterComponent,
   ],
   templateUrl: "./calendar-notes.component.html",
   styleUrl: "./calendar-notes.component.css",
@@ -33,22 +26,17 @@ export class CalendarNotesComponent implements OnInit {
   events: CalendarEvent[] = []
   notes: Note[] = []
   tags: Tag[] = []
-  categories: Category[] = []
   selectedTagIds: number[] = []
 
   isEventFormOpen = false
-  isNoteFormOpen = false
   selectedEvent: CalendarEvent | null = null
-  selectedNote: Note | null = null
   selectedDay: DateTime | null = null
 
   constructor(
-    private eventNoteService: EventNoteService,
-    private dashService: DashboardService,
+    private eventNoteService: EventNoteService
   ) {}
 
   ngOnInit() {
-    this.dashService.setHeaderText("")
     this.updateCalendar()
     this.loadData()
   }
@@ -58,13 +46,12 @@ export class CalendarNotesComponent implements OnInit {
       this.events = events
     })
 
-    this.eventNoteService.notes$.subscribe((notes) => {
-      this.notes = notes
+    this.eventNoteService.categories$.subscribe(() => {
+      this.tags = this.eventNoteService.getAllTags()
     })
 
-    this.eventNoteService.categories$.subscribe((categories) => {
-      this.categories = categories
-      this.tags = this.eventNoteService.getAllTags()
+    this.eventNoteService.tagSelected$.subscribe((filteredTags) => {
+      this.onFilterChange(filteredTags)
     })
   }
 
@@ -135,62 +122,14 @@ export class CalendarNotesComponent implements OnInit {
     this.selectedEvent = null
   }
 
-  saveEvent(event: CalendarEvent) {
-    if (event.id) {
-      this.eventNoteService.updateEvent(event).subscribe(() => {
-        this.loadData()
-      })
-    } else {
-      this.eventNoteService.addEvent(event).subscribe(() => {
-        this.loadData()
-      })
-    }
-    this.closeEventForm()
-  }
-
-  openNoteForm(note?: Note) {
-    this.selectedNote = note || null
-    this.isNoteFormOpen = true
-  }
-
-  closeNoteForm() {
-    this.isNoteFormOpen = false
-    this.selectedNote = null
-  }
-
-  saveNote(note: Note) {
-    if (note.id) {
-      this.eventNoteService.updateNote(note).subscribe(() => {
-        this.loadData()
-      })
-    } else {
-      this.eventNoteService.addNote(note).subscribe(() => {
-        this.loadData()
-      })
-    }
-    this.closeNoteForm()
-  }
-
-  deleteItem(item: CalendarEvent | Note) {
-    if ("start" in item) {
-      this.eventNoteService.deleteEvent(item.id).subscribe(() => this.loadData())
-    } else {
-      this.eventNoteService.deleteNote(item.id).subscribe(() => this.loadData())
-    }
-  }
-
   onFilterChange(selectedTagIds: number[]) {
     this.selectedTagIds = selectedTagIds
+    this.getFilteredEvents();
   }
 
   getFilteredEvents(): CalendarEvent[] {
     if (this.selectedTagIds.length === 0) return this.events
     return this.events.filter((event) => event.tags.some((tagId) => this.selectedTagIds.includes(tagId)))
-  }
-
-  getFilteredNotes(): Note[] {
-    if (this.selectedTagIds.length === 0) return this.notes
-    return this.notes.filter((note) => note.tags.some((tagId) => this.selectedTagIds.includes(tagId)))
   }
 
   focusOnEvent(event: CalendarEvent) {

@@ -10,10 +10,12 @@ export class EventNoteService {
   private eventsSubject = new BehaviorSubject<CalendarEvent[]>([])
   private notesSubject = new BehaviorSubject<Note[]>([])
   private categoriesSubject = new BehaviorSubject<Category[]>([])
+  private tagSelectedSubject = new BehaviorSubject<number []>([])
 
   events$ = this.eventsSubject.asObservable()
   notes$ = this.notesSubject.asObservable()
   categories$ = this.categoriesSubject.asObservable()
+  tagSelected$ = this.tagSelectedSubject.asObservable()
 
   constructor(private dataMappingService: DataMappingService) {
     this.loadInitialData()
@@ -122,6 +124,10 @@ export class EventNoteService {
     return this.categoriesSubject.value.reduce((allTags: Tag[], category) => {
       return allTags.concat(category.tags || [])
     }, [])
+  }
+
+  updateSelectedTags(tagIds: number[]): void {
+    this.tagSelectedSubject.next(tagIds)
   }
 
   // Helper method to get tags by category

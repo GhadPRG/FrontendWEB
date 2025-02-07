@@ -15,11 +15,10 @@ import { NgForOf, NgIf } from "@angular/common"
 export class NoteFormComponent implements OnInit, OnChanges {
   @Input() isOpen = false
   @Input() note: Note | null = null
-  @Input() tags: Tag[] = []
   @Output() closeModal = new EventEmitter<void>()
-  @Output() saveNote = new EventEmitter<Note>()
 
   noteForm: FormGroup
+  tags: Tag[] = []
 
   constructor(
     private fb: FormBuilder,
@@ -67,8 +66,16 @@ export class NoteFormComponent implements OnInit, OnChanges {
         tags: formValue.tags,
       }
 
-      this.saveNote.emit(note)
+      this.saveNote(note)
       this.closeModal.emit()
+    }
+  }
+
+  saveNote(note: Note) {
+    if (note.id) {
+      this.eventNoteService.updateNote(note)
+    } else {
+      this.eventNoteService.addNote(note)
     }
   }
 

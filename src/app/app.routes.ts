@@ -41,7 +41,7 @@ export const routes: Routes = [
             },
           {
             path: 'calendar',
-            loadComponent: () => import('./shared/components/calendar/calendar-notes/calendar-notes.component').then((c) => c.CalendarNotesComponent)
+            loadComponent: () => import('./business/calendar/calendar.component').then((c) => c.CalendarComponent)
           }
 
         ]

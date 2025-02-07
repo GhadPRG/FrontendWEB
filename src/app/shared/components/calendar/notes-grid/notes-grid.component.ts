@@ -1,33 +1,58 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ConfirmDeleteModalComponent} from '../forms/confirm-delete-modal/confirm-delete-modal.component';
 import {NgForOf} from '@angular/common';
 import {Note, Tag} from '../../../utils/types/calendar.interface';
 import {EventNoteService} from '../../../services/event-note.service';
+import {NoteFormComponent} from "../forms/note-form/note-form.component";
 
 @Component({
   selector: 'app-notes-grid',
   standalone: true,
-  imports: [
-    ConfirmDeleteModalComponent,
-    NgForOf
-  ],
+    imports: [
+        ConfirmDeleteModalComponent,
+        NgForOf,
+        NoteFormComponent
+    ],
   templateUrl: './notes-grid.component.html',
   styleUrl: './notes-grid.component.css'
 })
-export class NotesGridComponent {
-  @Input() notes: Note[] = []
-  @Input() tags: Tag[] = []
-  @Input() selectedTagIds: number[] = []
-  @Output() createNote = new EventEmitter<void>()
-  @Output() editNote = new EventEmitter<Note>()
-  @Output() deleteNote = new EventEmitter<Note>()
+export class NotesGridComponent implements OnInit {
+  notes: Note[] = []
+  tags: Tag[] = []
+  selectedTagIds: number[] = []
 
+  isNoteFormOpen = false
+  selectedNote: Note | null = null
   isDeleteModalOpen = false;
   noteToDelete: Note | null = null;
+  filteredNotes: Note[] = []
 
   constructor(private eventNoteService: EventNoteService) {}
 
-  get filteredNotes(): Note[] {
+  ngOnInit() {
+    this.loadData()
+  }
+
+  loadData(): void {
+    this.eventNoteService.notes$.subscribe((notes) => {
+      this.notes = notes
+    })
+
+    this.eventNoteService.categories$.subscribe(() => {
+      this.tags = this.eventNoteService.getAllTags()
+    })
+
+    this.eventNoteService.tagSelected$.subscribe((filteredTags) => {
+      this.onFilterChange(filteredTags)
+    })
+  }
+
+  onFilterChange(selectedTagIds: number[]) {
+    this.selectedTagIds = selectedTagIds
+    this.getFilteredNotes();
+  }
+
+  getFilteredNotes(): Note[] {
     if (this.selectedTagIds.length === 0) return this.notes
     return this.notes.filter((note) => note.tags.some((tagId) => this.selectedTagIds.includes(tagId)))
   }
@@ -57,7 +82,6 @@ export class NotesGridComponent {
     if (this.noteToDelete) {
       this.eventNoteService.deleteNote(this.noteToDelete.id).subscribe({
         next: () => {
-          this.deleteNote.emit(this.noteToDelete!);
           this.closeDeleteModal();
         },
         error: (error) => {
@@ -74,7 +98,22 @@ export class NotesGridComponent {
     this.noteToDelete = null;
   }
 
-  onNoteClick(note: Note): void {
-    this.editNote.emit(note);
+  createNote(): void {
+    this.openNoteForm();
   }
+
+  onNoteClick(note: Note): void {
+    this.openNoteForm(note)
+  }
+
+  openNoteForm(note?: Note) {
+      this.selectedNote = note || null
+      this.isNoteFormOpen = true
+  }
+
+  closeNoteForm() {
+      this.isNoteFormOpen = false
+      this.selectedNote = null
+  }
+
 }

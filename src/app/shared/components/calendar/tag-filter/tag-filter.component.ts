@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, type OnInit, Output } from "@angular/core"
+import { Component, OnInit, } from "@angular/core"
 import type { Category, Tag } from "../../../utils/types/calendar.interface"
 import { KeyValuePipe, NgForOf, NgIf } from "@angular/common"
+import {EventNoteService} from '../../../services/event-note.service';
 
 @Component({
   selector: "app-tag-filter",
@@ -10,14 +11,28 @@ import { KeyValuePipe, NgForOf, NgIf } from "@angular/common"
   styleUrl: "./tag-filter.component.css",
 })
 export class TagFilterComponent implements OnInit {
-  @Input() tags: Tag[] = []
-  @Input() categories: Category[] = []
-  @Input() selectedTagIds: number[] = []
-  @Output() filterChange = new EventEmitter<number[]>()
+  tags: Tag[] = []
+  categories: Category[] = []
+  selectedTagIds: number[] = []
 
   tagsByCategory: { [key: number]: Tag[] } = {}
 
+  constructor(private eventNoteService: EventNoteService) {
+  }
+
   ngOnInit() {
+    this.loadData()
+  }
+
+  loadData(): void {
+    this.eventNoteService.categories$.subscribe((categories) => {
+      this.categories = categories;
+      this.tags = this.eventNoteService.getAllTags();
+    })
+
+    this.eventNoteService.tagSelected$.subscribe((filteredTags) => {
+      this.selectedTagIds = filteredTags
+    })
     this.groupTagsByCategory()
   }
 
@@ -28,12 +43,16 @@ export class TagFilterComponent implements OnInit {
     } else {
       this.selectedTagIds.splice(index, 1)
     }
-    this.filterChange.emit(this.selectedTagIds)
+    this.filterChange(this.selectedTagIds)
   }
 
   clearAll() {
     this.selectedTagIds = []
-    this.filterChange.emit(this.selectedTagIds)
+    this.filterChange(this.selectedTagIds)
+  }
+
+  filterChange(tagIds: number[]) {
+    this.eventNoteService.updateSelectedTags(tagIds)
   }
 
   isTagSelected(tagId: number): boolean {
