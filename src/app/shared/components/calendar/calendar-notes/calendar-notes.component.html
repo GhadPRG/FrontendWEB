@@ -1,152 +1,113 @@
-<main class="glass-panel rounded-lg shadow-lg container mx-auto p-2 text-foreground">
-  <div class="grid grid-cols-1 gap-2">
-    <!-- Tag Filter -->
-    <section class="rounded-lg p-2">
-      <app-tag-filter
-        [tags]="tags"
-        [categories]="categories"
-        [selectedTagIds]="selectedTagIds"
-        (filterChange)="onFilterChange($event)"
-      ></app-tag-filter>
-    </section>
-
-    <!-- Calendar section -->
-    <section class="glass-panel rounded-lg p-2">
-      <article>
-        <header class="flex justify-between items-center mb-2">
-          <h2 class="text-sm font-semibold text-foreground">{{ currentMonth.toFormat('MMM yyyy') }}</h2>
-          <div class="flex gap-1">
+<article >
+    <header class="flex justify-between items-center mb-2">
+        <h2 class="text-sm font-semibold text-foreground">{{ currentMonth.toFormat('MMM yyyy') }}</h2>
+        <div class="flex gap-1">
             <button (click)="prevMonth()"
                     class="w-8 h-8 rounded-lg bg-skin-fill-dark text-skin-base-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-              </svg>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
             </button>
             <button (click)="nextMonth()"
                     class="w-8 h-8 rounded-lg bg-skin-fill-dark text-skin-base-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
             </button>
             <button (click)="openEventForm()"
                     class="w-8 h-8 rounded-lg bg-skin-fill-dark text-skin-base-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-              </svg>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
             </button>
-          </div>
-        </header>
+        </div>
+    </header>
 
-        <!-- Mobile Day View -->
-        <div class="block sm:hidden">
-          <div class="flex overflow-x-auto pb-2">
+    <!-- Mobile Day View -->
+    <div class="block sm:hidden">
+        <div class="flex overflow-x-auto pb-2">
             <div *ngFor="let day of getDaysArray()"
                  class="flex-shrink-0 w-14 mr-1 flex flex-col">
-              <div class="text-center text-xs text-muted-foreground mb-1">
-                {{ day.toFormat('ccc') }}
-              </div>
-              <div (click)="selectDate(day)"
-                   class="aspect-square rounded-lg flex flex-col items-center justify-between p-2 cursor-pointer hover:bg-skin-fill-light transition-all"
-                   [class.opacity-50]="!isCurrentMonth(day)"
-                   [class.bg-skin-accent-light]="isToday(day)">
+                <div class="text-center text-xs text-muted-foreground mb-1">
+                    {{ day.toFormat('ccc') }}
+                </div>
+                <div (click)="selectDate(day)"
+                     class="aspect-square rounded-lg flex flex-col items-center justify-between p-2 cursor-pointer hover:bg-skin-fill-light transition-all"
+                     [class.opacity-50]="!isCurrentMonth(day)"
+                     [class.bg-skin-accent-light]="isToday(day)">
                 <span class="text-sm font-semibold" [class.text-skin-accent-light]="isToday(day)">
                   {{ day.toFormat('d') }}
                 </span>
-                <div class="flex flex-wrap gap-0.5 justify-center w-full">
-                  <div *ngFor="let event of getEventsForDay(day).slice(0, 3)"
-                       class="w-1.5 h-1.5 rounded-full"
-                       [style.backgroundColor]="event.color">
-                  </div>
-                  <span *ngIf="getEventsForDay(day).length > 3"
-                        class="text-[8px] text-muted-foreground">
+                    <div class="flex flex-wrap gap-0.5 justify-center w-full">
+                        <div *ngFor="let event of getEventsForDay(day).slice(0, 3)"
+                             class="w-1.5 h-1.5 rounded-full"
+                             [style.backgroundColor]="event.color">
+                        </div>
+                        <span *ngIf="getEventsForDay(day).length > 3"
+                              class="text-[8px] text-muted-foreground">
                     +{{ getEventsForDay(day).length - 3 }}
                   </span>
+                    </div>
                 </div>
-              </div>
-              <!-- Eventi del giorno -->
-              <div *ngIf="getEventsForDay(day).length > 0"
-                   class="mt-1 w-full">
-                <div *ngFor="let event of getEventsForDay(day)"
-                     class="text-xs p-1 mb-1 rounded truncate"
-                     [style.backgroundColor]="event.color + '33'"
-                     (click)="openEventForm(event)">
-                  {{ event.title }}
+                <!-- Eventi del giorno -->
+                <div *ngIf="getEventsForDay(day).length > 0"
+                     class="mt-1 w-full">
+                    <div *ngFor="let event of getEventsForDay(day)"
+                         class="text-xs p-1 mb-1 rounded truncate"
+                         [style.backgroundColor]="event.color + '33'"
+                         (click)="openEventForm(event)">
+                        {{ event.title }}
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
+    </div>
 
-        <!-- Desktop Grid View -->
-        <div class="hidden sm:block">
-          <div class="grid grid-cols-7 mb-1">
+    <!-- Desktop Grid View -->
+    <div class="hidden sm:block">
+        <div class="grid grid-cols-7 mb-1">
             <div *ngFor="let day of daysOfWeek"
                  class="text-center text-muted-foreground text-xs">
-              {{ day }}
+                {{ day }}
             </div>
-          </div>
+        </div>
 
-          <div class="grid grid-cols-7 gap-1 aspect-square">
+        <div class="grid grid-cols-7 gap-1 aspect-square">
             <ng-container *ngFor="let week of calendar">
-              <div *ngFor="let day of week"
-                   [ngClass]="{
+                <div *ngFor="let day of week"
+                     [ngClass]="{
                      'opacity-50': !isCurrentMonth(day),
                      'ring-1 ring-skin-accent-light': isToday(day)
                    }"
-                   class="p-1 rounded-lg cursor-pointer hover:bg-skin-fill-light transition-all flex flex-col"
-                   (click)="selectDate(day)">
-                <div class="text-xs mb-1">{{ day.toFormat('d') }}</div>
-                <div class="flex flex-wrap gap-0.5 justify-start">
-                  <div *ngFor="let event of getEventsForDay(day).slice(0, 3)"
-                       class="w-1.5 h-1.5 rounded-full"
-                       [style.backgroundColor]="event.color">
-                  </div>
-                  <span *ngIf="getEventsForDay(day).length > 3"
-                        class="text-[8px] text-muted-foreground">
+                     class="p-1 rounded-lg cursor-pointer hover:bg-skin-fill-light transition-all flex flex-col"
+                     (click)="selectDate(day)">
+                    <div class="text-xs mb-1">{{ day.toFormat('d') }}</div>
+                    <div class="flex flex-wrap gap-0.5 justify-start">
+                        <div *ngFor="let event of getEventsForDay(day).slice(0, 3)"
+                             class="w-1.5 h-1.5 rounded-full"
+                             [style.backgroundColor]="event.color">
+                        </div>
+                        <span *ngIf="getEventsForDay(day).length > 3"
+                              class="text-[8px] text-muted-foreground">
                     +{{ getEventsForDay(day).length - 3 }}
                   </span>
+                    </div>
                 </div>
-              </div>
             </ng-container>
-          </div>
         </div>
-      </article>
-    </section>
-
-    <!-- Notes Grid section -->
-    <section class="rounded-lg p-2">
-      <app-notes-grid
-        [notes]="getFilteredNotes()"
-        [tags]="tags"
-        [selectedTagIds]="selectedTagIds"
-        (createNote)="openNoteForm()"
-        (editNote)="openNoteForm($event)"
-        (deleteNote)="deleteItem($event)"
-      ></app-notes-grid>
-    </section>
-  </div>
-</main>
+    </div>
+</article>
 
 <!-- Modals -->
 <app-event-form [isOpen]="isEventFormOpen"
                 [event]="selectedEvent"
-                [tags]="tags"
-                (closeModal)="closeEventForm()"
-                (saveEvent)="saveEvent($event)">
+                (closeModal)="closeEventForm()">
 </app-event-form>
-
-<app-note-form [isOpen]="isNoteFormOpen"
-               [note]="selectedNote"
-               [tags]="tags"
-               (closeModal)="closeNoteForm()"
-               (saveNote)="saveNote($event)">
-</app-note-form>
 
 <app-day-view *ngIf="selectedDay"
               [isOpen]="true"
               [date]="selectedDay"
               [events]="getEventsForDay(selectedDay)"
-              [tags]="tags"
               (closeView)="closeDayView()"
               (createEvent)="openEventForm($event)"
               (editEventEmitter)="openEventForm($event)">

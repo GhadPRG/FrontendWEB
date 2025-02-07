@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, Output} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {DateTime} from 'luxon';
@@ -24,6 +24,7 @@ import {ClickOutsideDirective} from '../../directives/click-outside.directive';
 })
 export class DatePickerComponent implements ControlValueAccessor {
   @Input() placeholder = "Select date"
+  @Output() dateSelected = new EventEmitter<DateTime>()
 
   isOpen = false
   currentMonth: DateTime = DateTime.now()
@@ -77,20 +78,30 @@ export class DatePickerComponent implements ControlValueAccessor {
   selectDate(date: DateTime) {
     this.selectedDate = date
     this.onChange(date.toJSDate())
+    this.dateSelected.emit(date)
   }
 
-  togglePicker(): void {
-    this.isOpen = !this.isOpen;
+  togglePicker(event: Event): void {
+    event.preventDefault()
+    event.stopPropagation()
+    this.isOpen = !this.isOpen
     if (this.isOpen) {
-      this.onTouched();
+      this.onTouched()
     }
   }
 
-  confirm() {
+  confirm(event: Event) {
+    event.preventDefault()
+    event.stopPropagation()
     this.isOpen = false
+    if (this.selectedDate) {
+      this.dateSelected.emit(this.selectedDate)
+    }
   }
 
-  cancel() {
+  cancel(event: Event) {
+    event.preventDefault()
+    event.stopPropagation()
     this.isOpen = false
   }
 

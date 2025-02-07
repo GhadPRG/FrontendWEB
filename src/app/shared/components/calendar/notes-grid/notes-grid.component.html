@@ -1,7 +1,7 @@
 <section class="glass-panel text-skin-base-light backdrop-blur-sm rounded-lg shadow-lg p-3 sm:p-4 md:p-6 border border-border">
     <header class="flex justify-between items-center mb-3 sm:mb-4 md:mb-6">
         <h2 class="text-lg sm:text-xl md:text-2xl font-semibold text-foreground">Note</h2>
-        <button (click)="createNote.emit()" class="w-10 h-10 rounded-full bg-skin-fill-dark backdrop-blur-sm flex items-center justify-center hover:bg-skin-fill-medium transition-all fixed bottom-4 right-4 sm:bottom-6 sm:right-6 shadow-lg z-10">
+        <button (click)="createNote()" class="w-10 h-10 rounded-full bg-skin-fill-dark backdrop-blur-sm flex items-center justify-center hover:bg-skin-fill-medium transition-all fixed bottom-4 right-4 sm:bottom-6 sm:right-6 shadow-lg z-10">
             <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
@@ -43,9 +43,6 @@
             {{ getTagName(tagId) }}
           </span>
                 </div>
-                <time class="text-[10px] sm:text-xs text-muted-foreground">
-                    {{ note.createdAt.toFormat('dd LLL yyyy HH:mm') }}
-                </time>
             </footer>
         </article>
     </div>
@@ -56,3 +53,8 @@
         (confirm)="confirmDelete()"
         (cancel)="closeDeleteModal()"
 ></app-confirm-delete-modal>
+
+<app-note-form [isOpen]="isNoteFormOpen"
+               [note]="selectedNote"
+               (closeModal)="closeNoteForm()">
+</app-note-form>

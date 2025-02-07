@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core"
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core"
 import {NgForOf, NgIf} from "@angular/common"
 import type {DateTime} from "luxon"
 import type {CalendarEvent, Tag} from "../../../utils/types/calendar.interface"
+import {EventNoteService} from '../../../services/event-note.service';
 
 @Component({
   selector: "app-day-view",
@@ -10,14 +11,23 @@ import type {CalendarEvent, Tag} from "../../../utils/types/calendar.interface"
   templateUrl: "./day-view.component.html",
   styleUrl: "./day-view.component.css",
 })
-export class DayViewComponent {
+export class DayViewComponent implements OnInit {
   @Input() isOpen = false
   @Input() date!: DateTime
   @Input() events: CalendarEvent[] = []
-  @Input() tags: Tag[] = []
   @Output() closeView = new EventEmitter<void>()
   @Output() createEvent = new EventEmitter<CalendarEvent>()
   @Output() editEventEmitter = new EventEmitter<CalendarEvent>()
+
+  tags: Tag[] = []
+  constructor(private eventNoteService: EventNoteService) {
+  }
+
+  ngOnInit() {
+    this.eventNoteService.categories$.subscribe(() => {
+      this.tags = this.eventNoteService.getAllTags()
+    })
+  }
 
   hours: number[] = Array.from({ length: 24 }, (_, i) => i)
 

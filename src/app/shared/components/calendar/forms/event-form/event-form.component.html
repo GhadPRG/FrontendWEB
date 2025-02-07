@@ -20,22 +20,22 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <div class="relative z-30">
           <label for="start" class="block text-sm font-medium">Data Inizio</label>
-          <app-date-picker formControlName="start" class="mt-1 block w-full"></app-date-picker>
+          <app-date-picker formControlName="start" (dateSelected)="onDateChange('start', $event)" class="mt-1 block w-full"></app-date-picker>
         </div>
         <div class="relative z-30">
           <label for="startTime" class="block text-sm font-medium">Ora Inizio</label>
-          <app-time-picker formControlName="startTime" class="mt-1 block w-full"></app-time-picker>
+          <app-time-picker formControlName="startTime" (timeChange)="onTimeChange('startTime', $event)" class="mt-1 block w-full"></app-time-picker>
         </div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <div class="relative z-20">
           <label for="end" class="block text-sm font-medium">Data Fine</label>
-          <app-date-picker formControlName="end" class="mt-1 block w-full"></app-date-picker>
+          <app-date-picker formControlName="end" (dateSelected)="onDateChange('end', $event)" class="mt-1 block w-full"></app-date-picker>
         </div>
         <div class="relative z-20">
           <label for="endTime" class="block text-sm font-medium">Ora Fine</label>
-          <app-time-picker formControlName="endTime" class="mt-1 block w-full"></app-time-picker>
+          <app-time-picker formControlName="endTime" (timeChange)="onTimeChange('endTime', $event)" class="mt-1 block w-full"></app-time-picker>
         </div>
       </div>
 
