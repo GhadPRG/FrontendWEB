@@ -13,14 +13,14 @@
        class="absolute bg-skin-fill-lighter z-50 mt-1 p-2 sm:p-3 border border-input rounded-md shadow-lg w-[280px]"
        (appClickOutside)="onClickOutside()">
     <header class="flex justify-between items-center mb-2 sm:mb-3">
-      <button (click)="prevMonth()"
+      <button (click)="prevMonth($event)"
               class="p-1 hover:bg-skin-fill-medium rounded-md text-foreground transition-colors">
         <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
       </button>
       <h3 class="text-foreground font-medium text-sm sm:text-base">{{ currentMonth.toFormat('MMMM yyyy') }}</h3>
-      <button (click)="nextMonth()"
+      <button (click)="nextMonth($event)"
               class="p-1 hover:bg-skin-fill-medium rounded-md text-foreground transition-colors">
         <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>

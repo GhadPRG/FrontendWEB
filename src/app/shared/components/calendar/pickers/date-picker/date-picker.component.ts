@@ -53,12 +53,16 @@ export class DatePickerComponent implements ControlValueAccessor {
     }
   }
 
-  prevMonth() {
+  prevMonth(event: Event) {
+    event.preventDefault()
+    event.stopPropagation()
     this.currentMonth = this.currentMonth.minus({ months: 1 })
     this.updateCalendarDays()
   }
 
-  nextMonth() {
+  nextMonth(event: Event) {
+    event.preventDefault()
+    event.stopPropagation()
     this.currentMonth = this.currentMonth.plus({ months: 1 })
     this.updateCalendarDays()
   }
