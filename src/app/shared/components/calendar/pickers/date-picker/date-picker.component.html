@@ -2,7 +2,7 @@
   <input
     type="text"
     [value]="selectedDate ? selectedDate.toFormat('dd/MM/yyyy') : ''"
-    (click)="togglePicker()"
+    (click)="togglePicker($event)"
     readonly
     [placeholder]="placeholder"
     [disabled]="disabled"
@@ -10,8 +10,8 @@
   />
 
   <div *ngIf="isOpen"
-       class="absolute bg-skin-fill-lighter shadow-glass z-50 mt-1 p-2 sm:p-3 border border-input rounded-md shadow-lg w-[280px]"
-       (clickOutside)="onClickOutside()">
+       class="absolute bg-skin-fill-lighter z-50 mt-1 p-2 sm:p-3 border border-input rounded-md shadow-lg w-[280px]"
+       (appClickOutside)="onClickOutside()">
     <header class="flex justify-between items-center mb-2 sm:mb-3">
       <button (click)="prevMonth()"
               class="p-1 hover:bg-skin-fill-medium rounded-md text-foreground transition-colors">
@@ -47,11 +47,11 @@
     </div>
 
     <footer class="flex justify-end space-x-2 mt-2 sm:mt-3">
-      <button (click)="cancel()"
+      <button (click)="cancel($event)"
               class="px-2 sm:px-3 py-1 rounded-md hover:bg-skin-fill-medium text-foreground transition-colors text-xs sm:text-sm">
         Annulla
       </button>
-      <button (click)="confirm()"
+      <button (click)="confirm($event)"
               class="px-2 sm:px-3 py-1 rounded-md bg-skin-fill-medium hover:bg-skin-fill-dark text-skin-base-dark transition-colors text-xs sm:text-sm">
         OK
       </button>

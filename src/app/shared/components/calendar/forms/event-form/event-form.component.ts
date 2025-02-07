@@ -18,11 +18,9 @@ import { DateTime } from "luxon"
 export class EventFormComponent implements OnInit, OnChanges {
   @Input() isOpen = false
   @Input() event: CalendarEvent | null = null
-  @Input() tags: Tag[] = []
   @Output() closeModal = new EventEmitter<void>()
-  @Output() saveEvent = new EventEmitter<CalendarEvent>()
-  @Output() deleteEvent = new EventEmitter<CalendarEvent>()
 
+  tags: Tag[] = []
   eventForm: FormGroup
   isDeleteModalOpen = false
 
@@ -78,7 +76,8 @@ export class EventFormComponent implements OnInit, OnChanges {
     })
   }
 
-  onSubmit() {
+  onSubmit(event: Event) {
+    event.preventDefault()
     if (this.eventForm.valid) {
       const formValue = this.eventForm.value
       try {
@@ -90,7 +89,7 @@ export class EventFormComponent implements OnInit, OnChanges {
           end: this.combineDateTime(formValue.end, formValue.endTime),
           tags: formValue.tags,
         }
-        this.saveEvent.emit(event)
+        this.saveEvent(event)
         this.closeModal.emit()
       } catch (error) {
         console.error("Error creating event:", error)
@@ -98,11 +97,19 @@ export class EventFormComponent implements OnInit, OnChanges {
     }
   }
 
+  saveEvent(event: CalendarEvent) {
+    if (event.id) {
+      this.eventNoteService.updateEvent(event)
+    } else {
+      this.eventNoteService.addEvent(event)
+    }
+  }
+
   private combineDateTime(date: DateTime, time: string): DateTime {
     if (!date || !time) return DateTime.now()
     try {
       const [hours, minutes] = time.split(":").map(Number)
-      return DateTime.fromJSDate(date.toJSDate()).set({
+      return date.set({
         hour: hours || 0,
         minute: minutes || 0,
         second: 0,
@@ -112,6 +119,14 @@ export class EventFormComponent implements OnInit, OnChanges {
       console.error("Error combining date and time:", error)
       return DateTime.now()
     }
+  }
+
+  onDateChange(field: string, date: DateTime) {
+    this.eventForm.patchValue({ [field]: date })
+  }
+
+  onTimeChange(field: string, time: string) {
+    this.eventForm.patchValue({ [field]: time })
   }
 
   onTagChange(event: Event) {
@@ -135,9 +150,14 @@ export class EventFormComponent implements OnInit, OnChanges {
     this.isDeleteModalOpen = true
   }
 
+  deleteEvent(event: CalendarEvent) {
+    this.eventNoteService.deleteEvent(event.id)
+  }
+
   confirmDelete() {
     if (this.event) {
-      this.deleteEvent.emit(this.event)
+
+      this.deleteEvent(this.event)
       this.closeDeleteModal()
       this.closeModal.emit()
     }

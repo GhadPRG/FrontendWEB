@@ -48,11 +48,9 @@ export class TimePickerComponent implements ControlValueAccessor {
     this.onTouched = fn
   }
 
-  togglePicker(event?: MouseEvent): void {
-    if (event) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
+  togglePicker(event: Event): void {
+    event.preventDefault()
+    event.stopPropagation()
     this.isOpen = !this.isOpen
     if (this.isOpen) {
       this.onTouched()
@@ -87,12 +85,6 @@ export class TimePickerComponent implements ControlValueAccessor {
     this.updateTime()
   }
 
-  updateTime(): void {
-    const time = this.formatTime()
-    this.onChange(time)
-    this.timeChange.emit(time)
-  }
-
   formatTime(): string {
     return `${this.padZero(this.hours)}:${this.padZero(this.minutes)}`
   }
@@ -101,13 +93,20 @@ export class TimePickerComponent implements ControlValueAccessor {
     return num.toString().padStart(2, "0")
   }
 
-  confirm(event: MouseEvent): void {
+  updateTime(): void {
+    const time = this.formatTime()
+    this.onChange(time)
+    this.timeChange.emit(time)
+  }
+
+  confirm(event: Event): void {
     event.preventDefault()
     event.stopPropagation()
     this.isOpen = false
+    this.updateTime()
   }
 
-  cancel(event: MouseEvent): void {
+  cancel(event: Event): void {
     event.preventDefault()
     event.stopPropagation()
     this.isOpen = false
