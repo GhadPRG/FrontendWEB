@@ -99,9 +99,21 @@ export class EventFormComponent implements OnInit, OnChanges {
 
   saveEvent(event: CalendarEvent) {
     if (event.id) {
-      this.eventNoteService.updateEvent(event)
+      this.eventNoteService.updateEvent(event).subscribe({
+        next: () => {
+        },
+        error: (error) => {
+          console.error('Error updating event:', error);
+        }
+      });
     } else {
-      this.eventNoteService.addEvent(event)
+      this.eventNoteService.addEvent(event).subscribe({
+        next: () => {
+        },
+        error: (error) => {
+          console.error('Error adding event:', error);
+        }
+      });
     }
   }
 
@@ -156,7 +168,6 @@ export class EventFormComponent implements OnInit, OnChanges {
 
   confirmDelete() {
     if (this.event) {
-
       this.deleteEvent(this.event)
       this.closeDeleteModal()
       this.closeModal.emit()

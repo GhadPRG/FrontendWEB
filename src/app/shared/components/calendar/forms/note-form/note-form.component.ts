@@ -73,9 +73,21 @@ export class NoteFormComponent implements OnInit, OnChanges {
 
   saveNote(note: Note) {
     if (note.id) {
-      this.eventNoteService.updateNote(note)
+      this.eventNoteService.updateNote(note).subscribe({
+        next: () => {
+        },
+        error: (error) => {
+          console.error('Error updating note:', error);
+        }
+      });
     } else {
-      this.eventNoteService.addNote(note)
+      this.eventNoteService.addNote(note).subscribe({
+        next: () => {
+        },
+        error: (error) => {
+          console.error('Error adding note:', error);
+        }
+      });
     }
   }
 
