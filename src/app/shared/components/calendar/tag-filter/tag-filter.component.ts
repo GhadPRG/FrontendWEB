@@ -1,4 +1,4 @@
-import { Component, OnInit, } from "@angular/core"
+import {AfterViewInit, Component} from "@angular/core"
 import type { Category, Tag } from "../../../utils/types/calendar.interface"
 import { KeyValuePipe, NgForOf, NgIf } from "@angular/common"
 import {EventNoteService} from '../../../services/event-note.service';
@@ -10,7 +10,7 @@ import {EventNoteService} from '../../../services/event-note.service';
   templateUrl: "./tag-filter.component.html",
   styleUrl: "./tag-filter.component.css",
 })
-export class TagFilterComponent implements OnInit {
+export class TagFilterComponent implements AfterViewInit {
   tags: Tag[] = []
   categories: Category[] = []
   selectedTagIds: number[] = []
@@ -20,7 +20,7 @@ export class TagFilterComponent implements OnInit {
   constructor(private eventNoteService: EventNoteService) {
   }
 
-  ngOnInit() {
+  ngAfterViewInit(): void {
     this.loadData()
   }
 
