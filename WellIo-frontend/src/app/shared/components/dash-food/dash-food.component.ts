@@ -62,8 +62,6 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
     this.nutritionService.getTodayMeals().subscribe({
       next: (response) => {
         this.currentMeals = this.nutritionService.defineAllMealType(response);
-
-        console.log(this.currentMeals);
       }
     })
 
@@ -120,8 +118,7 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
     if (!foodQuery.trim()) return; 
 
     this.nutritionService.searchFood(foodQuery).subscribe({
-      next: (response) => { 
-        console.log('Risultati:', response);
+      next: (response) => {
         this.brandedFoodArray = response.branded;
         this.commonFoodArray = response.common; this.commonFoodArray.slice(0, 3);
 
@@ -164,8 +161,6 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
 
     this.nutritionService.registerNewDish(this.currentDish).subscribe({
       next: (response) => {
-        console.log(this.currentDish);
-
         this.nutritionService.registerNewDish(this.currentDish);
         const currMealType = (this.currentDish?.meal ?? { type: ''}).type;
         this.currentMeals[currMealType].dishes.push(this.currentDish);

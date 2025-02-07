@@ -41,38 +41,13 @@ export class DashSidebarComponent implements OnInit, AfterViewInit {
     this.authService.logout();
   }
 
-  // public sideNavigationLinks = [
-  //   {
-  //     path: '/dashboard',
-  //     label: 'DashBoard',
-  //     icon: 'ri-home-5-fill',
-  //   },
-  //   {
-  //     path: '/dashboard/sport',
-  //     label: 'Exercise',
-  //     icon: 'ri-home-5-fill',
-  //   },
-  //   {
-  //     path: '/dashboard/food',
-  //     label: 'Food',
-  //     icon: 'ri-home-5-fill',
-  //   },
-  //   {
-  //     path: '/dashboard/notes',
-  //     label: 'Notes',
-  //     icon: 'ri-home-5-fill',
-  //   },
-  //   {
-  //     path: '/dashboard/calendar',
-  //     label: 'Calendar',
-  //     icon: 'ri-home-5-fill',
-  //   },
-  // ]
-
-  constructor(private dashService: DashboardService,
-              private themeService: ThemeService,
-              private authService: AuthService,
-              private userService: UserService) {
+  constructor(
+    private dashService: DashboardService,
+    private themeService: ThemeService,
+    private authService: AuthService,
+    private userService: UserService
+  ) 
+  {
     this.userInfo$ = this.userService.getUserInfo$();
   }
 

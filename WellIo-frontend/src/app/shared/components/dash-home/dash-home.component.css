@@ -69,6 +69,7 @@
 }
 
 .content.nutrition-content, .content.sports-content { @apply h-[28rem]; }
+
 /* ==================================================================================================================
  * ===== Nutrition Stats - Styling for Medium-Large Screens =========================================================
  * ==================================================================================================================
@@ -166,65 +167,4 @@
 
 .home-container .content-container 
 { @apply max-md:grid-cols-1; }
-
-.sports-content .sports-stats .graphics .chart {
-    /* @apply max-md:translate-x-[calc(-50%_+_2.75rem)]; */
-}
-
-
-
-
-/* height : 15% + (min: 15%, max: calc(100% - 0.5rem))*/
-
-
-/* .nutrition-content .nutrition-stats .fats-stats {
-    @apply  before:block before:absolute before:w-44 before:h-44 
-            /* before:rounded-xl  *
-            before:bg-white;
-} */
-/*
-.mask {
-    @apply w-44 h-44 bg-transparent shadow-glass ;
-    --r: 15px; /* the radius *
-    --s: 30px; /* the size of the corner*
-
-    /* 
-    --_m:/calc(2*var(--r)) calc(2*var(--r))
-    radial-gradient(#000 70%,#0000 72%) no-repeat;
-    
-    --mask-1: right calc(var(--s) + var(--r)) top var(--_m);
-    --mask-2: right calc(var(--s) + var(--r)) var(--_m);
-    --mask-3: radial-gradient(var(--s) at 100% 0,#0000 99%,#000 101%) calc(-1*var(--r)) var(--r) no-repeat;
-    --mask-4: conic-gradient(at calc(100% - var(--s) - 2*var(--r)) calc(var(--s) + 2*var(--r)),
-    #0000 25%,#000 0); 
-    
-    *
-
-    --_m:/calc(2*var(--r)) calc(2*var(--r))
-    radial-gradient(#000 70%,#0000 72%) no-repeat;
-
-    --mask-1: right calc(var(--s) + var(--r)) bottom var(--_m);
-    --mask-2: right 0 bottom calc(var(--s) + var(--r)) / calc(2*var(--r)) calc(2*var(--r)) radial-gradient(#000 70%,#0000 72%) no-repeat;
-    --mask-3: radial-gradient(var(--s) at 100% 100%,#0000 99%,#000 101%) calc(-1*var(--r)) calc(-1*var(--r)) no-repeat;
-    --mask-4: conic-gradient(at calc(100% - var(--s) - 2*var(--r)) calc(100% - var(--s) - 2*var(--r)),#000 25%, #0000 25%,
-    #0000 50%,#000f 0);
-
-    border-radius: var(--r);
-
-    mask: 
-        var(--mask-1),
-        var(--mask-2), 
-        var(--mask-3), 
-        var(--mask-4);
-    /* mask:
-      right calc(var(--s) + var(--r)) top var(--_m),
-      right calc(var(--s) + var(--r)) var(--_m),
-      radial-gradient(var(--s) at 100% 0,#0000 99%,#000 101%) 
-       calc(-1*var(--r)) var(--r) no-repeat,
-      conic-gradient(at calc(100% - var(--s) - 2*var(--r)) calc(var(--s) + 2*var(--r)),
-       #0000 25%,#000 0); 
-    *
-}
-*/
-
 

@@ -76,6 +76,7 @@
 }
 .color-container .color-block.selected { @apply after:bg-white/50; }
 
+
 /* ==================================================================================================================
  * ===== Settings Component - Styling for Small Screens =============================================================
  * ==================================================================================================================
@@ -88,6 +89,8 @@
 .settings-container .info-container.themes-panel
 { @apply max-md:col-span-1; }
 
+
+/* ----- Settings: Personal Info ------------------------------------------------------------------------------------ */
 .info-container.stats-info .personal-infos { @apply  max-md:grid-cols-2; }
 
 .info-container .info-content .info-box { @apply max-md:h-24; }
@@ -99,3 +102,9 @@
 
 .info-container.stats-info .personal-infos .info-field { @apply max-md:text-2xl}
 .stats-info .info-box .info-field.info-measure { @apply max-md:text-sm max-md:pb-3; }
+
+
+/* ----- Settings: Themes Panel ------------------------------------------------------------------------------------- */
+.info-container.themes-panel .info-content.color-container {
+    @apply  max-md:grid-cols-1;
+}

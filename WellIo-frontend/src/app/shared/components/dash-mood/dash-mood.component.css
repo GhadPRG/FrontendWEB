@@ -59,7 +59,7 @@
 }
 
 .calendar-container .calendar-grid-container .calendar-cell { 
-    @apply  w-12 h-12 p-2 
+    @apply  w-12 h-12 p-2
             rounded-xl bg-gradient-to-br shadow-glass
             flex justify-center items-center 
             transition-transform duration-500 cursor-pointer
@@ -90,7 +90,6 @@
 
 .mood-info-container .note-list { @apply flex-col gap-2 h-32; }
 .mood-info-container .note-list .note-item { @apply w-full text-wrap; }
-
 
 
 /* ==================================================================================================================

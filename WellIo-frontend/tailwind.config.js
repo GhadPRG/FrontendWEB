@@ -55,8 +55,6 @@ module.exports = {
         'poppins': ["Poppins", "sans-serif"]
       },
       boxShadow: {
-        'custom-for-container-1': '-10px -10px 10px rgba(255 255 255 / 0.2), 15px 15px 15px rgba(0 0 0 / 0.1)',
-        'custom-for-button': 'inset 4px 4px 5px rgba(255 255 255 / 0.2), inset -4px -4px 5px rgba(0 0 0 / 0.1)',
         'glass': 'inset 0px 2px 4px 0px rgba(255 255 255 / 0.8), inset 0px 20px 40px 0px rgba(255 255 255 / .25), 0 8px 32px rgba(0 0 0 / 0.2)',
       }
     },

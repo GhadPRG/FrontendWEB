@@ -43,93 +43,6 @@ export class SportService {
 
 
   getWeekExercise(): Observable<ExerciseFlatten[]> {
-    // let temp = new BehaviorSubject<ExerciseInterface[]>([
-    //   {
-    //     exerciseInfo: {
-    //       name: 'Esercizio 1',
-    //       target_muscle_group: 'Back',
-    //       met: 2
-    //     },
-    //     date: '2025-02-05',
-    //     sets: 2,
-    //     reps: 10,
-    //     weight_used: 0,
-    //     time_passed: 12
-    //   },
-    //   {
-    //     exerciseInfo: {
-    //       name: 'Esercizio 2',
-    //       target_muscle_group: 'Back',
-    //       met: 2
-    //     },
-    //     date: '2025-02-04',
-    //     sets: 2,
-    //     reps: 10,
-    //     weight_used: 0,
-    //     time_passed: 12
-    //   },
-    //   {
-    //     exerciseInfo: {
-    //       name: 'Esercizio 1 in Chest',
-    //       target_muscle_group: 'Chest',
-    //       met: 2
-    //     },
-    //     date: '2025-02-05',
-    //     sets: 2,
-    //     reps: 10,
-    //     weight_used: 0,
-    //     time_passed: 12
-    //   },
-    //   {
-    //     exerciseInfo: {
-    //       name: 'Esercizio 3',
-    //       target_muscle_group: 'Chest',
-    //       met: 2
-    //     },
-    //     date: '2025-02-04',
-    //     sets: 2,
-    //     reps: 10,
-    //     weight_used: 0,
-    //     time_passed: 12
-    //   },
-    // ]);
-
-    // return temp;
-    // let temp = new BehaviorSubject<ExerciseFlatten[]>([
-    //   {
-    //     name: 'miao',
-    //     muscleGroup: 'Legs',
-    //     reps: 0,
-    //     sets: 0,
-    //     met: 0,
-    //     weight: 0
-    //   },
-    //   {
-    //     name: 'miao',
-    //     muscleGroup: 'Legs',
-    //     reps: 0,
-    //     sets: 0,
-    //     met: 0,
-    //     weight: 0
-    //   },
-    //   {
-    //     name: 'Miaoo',
-    //     muscleGroup: 'Chest',
-    //     reps: 0,
-    //     sets: 0,
-    //     met: 0,
-    //     weight: 0
-    //   },
-    //   {
-    //     name: 'miao',
-    //     muscleGroup: 'Back',
-    //     reps: 0,
-    //     sets: 0,
-    //     met: 0,
-    //     weight: 0
-    //   }
-    // ]);
-    // return temp;
     return this.http.get<ExerciseFlatten[]>(`${this.serverUrl}`);
   }
 
@@ -143,7 +56,6 @@ export class SportService {
   }
 
   registerNewExercise(exercise: ExerciseInterface): Observable<any> {
-    console.log(this.flattenExercise(exercise));
     return this.http.post(`${this.serverUrl}`, this.flattenExercise(exercise));
   }
 

@@ -44,12 +44,10 @@
 }
 
 .sidebar .account-info-box .account-icon {
-    @apply  w-20 h-20 min-w-[var(--icon-with-padding-size)] p-2
+    @apply  w-20 h-20 min-w-[var(--icon-with-padding-size)] py-1 px-2
             rounded-lg glass-panel
-            /* bg-skin-lightest/85 */
             flex justify-end items-end
             font-bold text-3xl text-skin-accent-light/25
-            /* shadow-custom-for-button */
             cursor-pointer
             transition-all duration-500 ease-in-out;
 }
@@ -87,9 +85,7 @@
 { @apply font-bold hover:bg-transparent; }
 
 .sidebar .sidebar-nav .sidebar-link:has(.link.active) { 
-    @apply  rounded-lg glass-panel
-     /* bg-gradient-to-br from-skin-fill-dark to-skin-fill-darker
-            shadow-custom-for-button; */
+    @apply  rounded-lg glass-panel;
 }
 
 
@@ -141,7 +137,7 @@
 }
 
 .sidebar.closed .account-info-box .account-text-info { @apply  pl-3; }
-
+.sidebar.closed .account-info-box .account-icon { @apply py-[.375rem] px-1; }
 
 /* ==================================================================================================================
  * ===== SideBar - Styling for Small Screens ======================================================================== 
@@ -193,7 +189,6 @@
 .sidebar .sidebar-nav .sidebar-link .sub-menu.shown { 
     @apply  max-md:w-full max-md:h-auto max-md:py-2 max-md:z-50
             max-md:absolute max-md:bottom-[calc(var(--sidebar-sm-size)+.25rem)] max-md:left-0 
-            /* max-md:bg-skin-fill-lighter */
             max-md:flex max-md:justify-center
             max-md:duration-300;
 }

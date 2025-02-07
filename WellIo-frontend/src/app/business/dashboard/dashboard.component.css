@@ -4,14 +4,9 @@
 */
 .dashboard-container {
     @apply  w-full h-full
-            /* bg-skin-fill-dark bg-gradient-to-b from-skin-fill-lighter/85 to-skin-fill-light/85 */
             grid grid-cols-[auto_1fr_auto];
 
-    @apply bg-gradient-to-br from-[var(--bg-grad-1)] to-[var(--bg-grad-2)];
-    /* background-image: url('/images/Blue-Gradient.jpg'); */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-image: linear-gradient(to bottom right, var(--bg-grad-1), var(--bg-grad-2));
 
     --sidebar-sm-size: calc(var(--icon-with-padding-size) + 1.5rem);
     --sidebar-close-size: calc(var(--icon-with-padding-size) + 1rem);

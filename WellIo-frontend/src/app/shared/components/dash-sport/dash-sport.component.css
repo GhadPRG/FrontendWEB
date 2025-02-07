@@ -6,12 +6,10 @@
     @apply  h-32 [grid-auto-rows:_auto];
 }
 
-
 /* ----- Sport: Statistics ------------------------------------------------------------------------------------------ */
 .sport-container .info-container.exercise-stats { @apply  col-span-6 row-span-2; }
 
 .sport-container .info-content.stats-list { @apply max-w-[50rem] grid-cols-3 grid-rows-2 h-[18.25rem]; }
-
 
 .sport-container .stats-list .stats {
     @apply  w-full h-full p-3 relative z-10
@@ -76,7 +74,6 @@
 .sport-container .info-content.muscle-group-description .exercise-list .exercise .exercise-name { @apply font-semibold mr-2; }
 
 
-
 /* ----- Sport: Exercises Form -------------------------------------------------------------------------------------- */
 .sport-container .info-container.exercise-form { @apply  col-span-3 row-span-2 pb-3; }
 
@@ -91,9 +88,8 @@
 }
 .info-container.exercise-form .exercise-register .exercise-search-input {
     @apply  w-full h-full flex-1 px-2
-            bg-transparent outline-none;
+            bg-transparent outline-none placeholder:text-skin-base-light;
 }
-
 
 .info-content.form-container .muscle-group-list { @apply w-full h-min px-3 grid grid-cols-2 grid-rows-2 gap-3; }
 
@@ -126,7 +122,6 @@
             rounded-full bg-skin-fill-dark/50 shadow-glass
             flex justify-center items-center gap-3; 
 }
-
 
 /* ==================================================================================================================
  * ===== Sport Component - Styling for Small Screens ================================================================

@@ -76,91 +76,6 @@ export class NutritionService {
     });
 
     return request;
-
-  //   let temp = new BehaviorSubject<MealDictionary>({
-  //     'Breakfast': {
-  //         dishes: [
-  //             {
-  //                 unit: 'grams',
-  //                 quantity: 3,
-  //                 dishInfo: {
-  //                     kcalories: 1,
-  //                     fats: 1,
-  //                     carbs: 1,
-  //                     name: 'Pasta Bella',
-  //                     proteins: 1,
-  //                     fibers: 1
-  //                 }
-  //             },
-  //             {
-  //                 unit: 'plates',
-  //                 quantity: 2,
-  //                 dishInfo: {
-  //                     kcalories: 1,
-  //                     fats: 1,
-  //                     carbs: 1,
-  //                     name: 'Pasta Bella',
-  //                     proteins: 1,
-  //                     fibers: 1
-  //                 }
-  //             },
-  //             {
-  //                 unit: 'units',
-  //                 quantity: 2,
-  //                 dishInfo: {
-  //                     kcalories: 1,
-  //                     fats: 1,
-  //                     carbs: 1,
-  //                     name: 'Pasta Bella',
-  //                     proteins: 1,
-  //                     fibers: 1
-  //                 }
-  //             }
-  //         ],
-  //         id: 4,
-  //         type: 'Breakfast'
-  //     },
-  //     'Dinner': {
-  //         dishes: [
-  //             {
-  //                 unit: 'plates',
-  //                 quantity: 8,
-  //                 dishInfo: {
-  //                     kcalories: 1,
-  //                     fats: 1,
-  //                     carbs: 1,
-  //                     name: 'Pasta Bella',
-  //                     proteins: 1,
-  //                     fibers: 1
-  //                 }
-  //             }
-  //         ],
-  //         id: 6,
-  //         type: 'Dinner'
-  //     },
-  //     'Lunch': {
-  //         dishes: [
-  //             {
-  //                 unit: 'plates',
-  //                 quantity: 5,
-  //                 dishInfo: {
-  //                     kcalories: 400,
-  //                     fats: 8,
-  //                     carbs: 70,
-  //                     name: 'Pasta al Pomodoro',
-  //                     proteins: 10,
-  //                     fibers: 5
-  //                 }
-  //             }
-  //         ],
-  //         id: 5,
-  //         type: 'Lunch'
-  //     }
-  // });
-
-  // this.recalculateMacros(temp.value);
-
-  // return temp;
   }
 
   registerNewDish(dish: DishInterface): Observable<any> {
@@ -170,7 +85,6 @@ export class NutritionService {
     });
 
     let request: Observable<any> = this.http.post(`${this.serverUrl}`, this.dishFlattener(dish), {headers});
-    console.log(this.dishFlattener(dish));
 
     request.subscribe({
       next: (response) => {
@@ -189,8 +103,8 @@ export class NutritionService {
 
   // Internal Calcutations
   setMacroValues(): void {
-    //const dailyKcals = inject(UserService).getCurrentUserInfo().daily_kcalories;
-    const dailyKcals = 2000;
+    const dailyKcals = inject(UserService).getUserInfo().dailyCalories;
+    //const dailyKcals = 2000;
 
     const carbsDailyKcalFactor = 0.5; const carbsPowerFactor = 3.75;
     const fatsDailyKcalFactor = 0.25; const fatsPowerFactor = 9;

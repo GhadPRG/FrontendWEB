@@ -3,7 +3,6 @@
         <div class="panel-title glass-top-title-bg">How are you feeling today?</div>
         <div class="form-container">
             <form [formGroup]="form_moodForm" class="mood-info" (ngSubmit)="onRegisterMood()">
-            
                 <ul class="mood-choice-list">
                     @for (moodType of this.moodService.moodTypes; track moodType) {
                         <li class="mood-choice">
@@ -89,7 +88,6 @@
                         </ul>
                     }
                 }
-
             </div>
         </div>
     </div>

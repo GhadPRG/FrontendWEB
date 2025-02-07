@@ -37,37 +37,36 @@
     </div>
 
     <div class="info-container exercise-form">
-            <div class="panel-title glass-top-title-bg">Add An Exercise</div>
-    
-            <div class="info-content form-container">
-                <form class="exercise-register" [formGroup]="form_registerExercise" (ngSubmit)="onRegisterExercise()">
-                    <div class="exercise-name-container">
-                        <input #searchFoodInput class="exercise-search-input" type="text" placeholder="Write down an Exercise" formControlName="name" required/>
+        <div class="panel-title glass-top-title-bg">Add An Exercise</div>
+
+        <div class="info-content form-container">
+            <form class="exercise-register" [formGroup]="form_registerExercise" (ngSubmit)="onRegisterExercise()">
+                <div class="exercise-name-container">
+                    <input #searchFoodInput class="exercise-search-input" type="text" placeholder="Write down an Exercise" formControlName="name" required/>
+                </div>
+
+                <div class="muscle-group-list">
+                @for (muscleGroup of this.sportService.muscleGroups; track $index) {
+                    <div class="muscle-group-choice">
+                        <input class="peer" formControlName="muscleGroup_choice" type="radio" [id]="muscleGroup" name="muscleGroup_choice" [value]="muscleGroup" required>
+                        <label class="after:bg-white/25 after:hover:bg-white/50 peer-checked:after:bg-skin-fill-medium/50" [for]="muscleGroup">{{ muscleGroup }}</label>
                     </div>
+                }
+                </div>
 
-                    <div class="muscle-group-list">
-                    @for (muscleGroup of this.sportService.muscleGroups; track $index) {
-                        <div class="muscle-group-choice">
-                            <input class="peer" formControlName="muscleGroup_choice" type="radio" [id]="muscleGroup" name="muscleGroup_choice" [value]="muscleGroup" required>
-                            <label class="after:bg-white/25 after:hover:bg-white/50 peer-checked:after:bg-skin-fill-medium/50" [for]="muscleGroup">{{ muscleGroup }}</label>
-                        </div>
-                    }
-                    </div>
+                <div class="quantity-container">
+                    <label for="sets">Sets</label>
+                    <label for="reps">Reps</label>
+                    <input class="quantity sets-quantity" formControlName="sets" min="0" type="number" name="quantity" id="quantity">
+                    <input class="quantity reps-quantity" formControlName="reps" min="0" type="number" name="quantity" id="quantity">
 
-                    <div class="quantity-container">
-                        <label for="sets">Sets</label>
-                        <label for="reps">Reps</label>
-                        <input class="quantity sets-quantity" formControlName="sets" min="0" type="number" name="quantity" id="quantity">
-                        <input class="quantity reps-quantity" formControlName="reps" min="0" type="number" name="quantity" id="quantity">
+                    <label for="weight_used">Weight Used (kg)</label>
+                    <input class="quantity time-quantity" formControlName="weight_used" min="0" type="number" name="quantity" id="quantity">
 
-                        <label for="weight_used">Weight Used (kg)</label>
-                        <input class="quantity time-quantity" formControlName="weight_used" min="0" type="number" name="quantity" id="quantity">
-    
-                        <button class="register-exercise-btn" type="submit" value="Register Dish">Add this Exercise<i class="bx bx-plus bx-sm"></i></button>
-                    </div>
-                </form>
-            </div>
-
+                    <button class="register-exercise-btn" type="submit" value="Register Dish">Add this Exercise<i class="bx bx-plus bx-sm"></i></button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

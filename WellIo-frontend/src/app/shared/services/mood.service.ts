@@ -106,15 +106,11 @@ export class MoodService {
             tags: mood.tags ? mood.tags : undefined
         };
         
-        // Se la data non è ancora presente, inizializziamo l'array
-        if (!acc[dateKey]) {
-            acc[dateKey] = [];
-        }
+        if (!acc[dateKey]) { acc[dateKey] = []; }
         
-        // Aggiungiamo il mood all'array della data corrispondente
         acc[dateKey].push(moodFlatten);
         
         return acc;
     }, {} as MoodDictionary);
-}
+  }
 }

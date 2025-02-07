@@ -3,7 +3,7 @@
  * ==================================================================================================================
 */
 .nutrition-container {
-    @apply  h-32 [grid-auto-rows:_auto];
+    @apply  h-32 [grid-auto-rows:_auto] text-skin-base-light;
 }
 
 /* ----- Nutrition: Statistics ---------------------------------------------------------------------------------------- */
@@ -117,7 +117,7 @@
 }
 .info-container.dish-form .food-search .food-search-input {
     @apply  w-full h-full flex-1 px-2
-            bg-transparent outline-none;
+            bg-transparent outline-none placeholder:text-skin-base-light;
 }
 .info-container.dish-form .food-search .food-search-btn {
     @apply  w-10 h-10 
