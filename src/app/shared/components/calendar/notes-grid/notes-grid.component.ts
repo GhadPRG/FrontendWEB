@@ -49,7 +49,7 @@ export class NotesGridComponent implements OnInit {
 
   onFilterChange(selectedTagIds: number[]) {
     this.selectedTagIds = selectedTagIds
-    this.getFilteredNotes();
+    this.filteredNotes = this.getFilteredNotes();
   }
 
   getFilteredNotes(): Note[] {
