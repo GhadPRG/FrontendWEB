@@ -1,17 +1,14 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {NgForOf, NgIf} from '@angular/common';
-import {DateTime} from 'luxon';
-import {CalendarEvent, Tag} from '../../../utils/types/calendar.interface';
+import { Component, EventEmitter, Input, Output } from "@angular/core"
+import { NgForOf, NgIf } from "@angular/common"
+import type { DateTime } from "luxon"
+import type { CalendarEvent, Tag } from "../../../utils/types/calendar.interface"
 
 @Component({
-  selector: 'app-day-view',
+  selector: "app-day-view",
   standalone: true,
-  imports: [
-    NgIf,
-    NgForOf
-  ],
-  templateUrl: './day-view.component.html',
-  styleUrl: './day-view.component.css'
+  imports: [NgIf, NgForOf],
+  templateUrl: "./day-view.component.html",
+  styleUrl: "./day-view.component.css",
 })
 export class DayViewComponent {
   @Input() isOpen = false
@@ -134,3 +131,4 @@ export class DayViewComponent {
     )
   }
 }
+

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core"
-import { type Observable, of } from "rxjs"
+import { Observable, of } from "rxjs"
 import { map } from "rxjs/operators"
 import { ApiService } from "./api.service"
 import { MockDataService } from "./mock-data.service"
@@ -13,47 +13,63 @@ import type {
   NoteDTO,
   TagDTO,
   CategoryDTO,
-} from "../utils/types/calendar.interface";
+} from "../utils/types/calendar.interface"
 
 @Injectable({
   providedIn: "root",
 })
 export class DataMappingService {
-  private useMockData = true;
+  private useMockData = true
 
   constructor(
     private apiService: ApiService,
     private mockDataService: MockDataService,
   ) {
-    this.useMockData = this.mockDataService.useMockData;
+    this.useMockData = this.mockDataService.useMockData
   }
 
   getEvents(): Observable<CalendarEvent[]> {
     if (this.useMockData) {
       return of(this.mockDataService.getEvents())
     }
-    return this.apiService.getEvents().pipe(map((events) => events.map(this.convertEventDTOToCalendarEvent)))
+    return this.apiService
+      .getEvents()
+      .pipe(map((events) => events.map((event) => this.convertEventDTOToCalendarEvent(event))))
   }
 
   getNotes(): Observable<Note[]> {
     if (this.useMockData) {
       return of(this.mockDataService.getNotes())
     }
-    return this.apiService.getNotes().pipe(map((notes) => notes.map(this.convertNoteDTOToNote)))
+    return this.apiService.getNotes().pipe(map((notes) => notes.map((note) => this.convertNoteDTOToNote(note))))
   }
 
-  getTags(categoryId: number): Observable<Tag[]> {
+  getTags(): Observable<Tag[]> {
     if (this.useMockData) {
       return of(this.mockDataService.getTags())
     }
-    return this.apiService.getTags(categoryId).pipe(map((tags) => tags.map(this.convertTagDTOToTag)))
+    return this.getCategories().pipe(
+      map((categories) => {
+        return categories.reduce((allTags: Tag[], category) => {
+          const categoryTags =
+            category.tags?.map((tag) => ({
+              ...tag,
+              categoryId: category.id,
+              color: category.color || tag.color,
+            })) || []
+          return [...allTags, ...categoryTags]
+        }, [])
+      }),
+    )
   }
 
   getCategories(): Observable<Category[]> {
     if (this.useMockData) {
       return of(this.mockDataService.getCategories())
     }
-    return this.apiService.getCategories().pipe(map((categories) => categories.map(this.convertCategoryDTOToCategory)))
+    return this.apiService
+      .getCategories()
+      .pipe(map((categories) => categories.map((category) => this.convertCategoryDTOToCategory(category))))
   }
 
   addEvent(event: CalendarEvent): Observable<CalendarEvent> {
@@ -62,7 +78,7 @@ export class DataMappingService {
     }
     return this.apiService
       .createEvent(this.convertCalendarEventToEventDTO(event))
-      .pipe(map(this.convertEventDTOToCalendarEvent))
+      .pipe(map((eventDTO) => this.convertEventDTOToCalendarEvent(eventDTO)))
   }
 
   updateEvent(event: CalendarEvent): Observable<CalendarEvent> {
@@ -71,7 +87,7 @@ export class DataMappingService {
     }
     return this.apiService
       .updateEvent(this.convertCalendarEventToEventDTO(event))
-      .pipe(map(this.convertEventDTOToCalendarEvent))
+      .pipe(map((eventDTO) => this.convertEventDTOToCalendarEvent(eventDTO)))
   }
 
   deleteEvent(id: number): Observable<void> {
@@ -86,14 +102,18 @@ export class DataMappingService {
     if (this.useMockData) {
       return of(this.mockDataService.addNote(note))
     }
-    return this.apiService.createNote(this.convertNoteToNoteDTO(note)).pipe(map(this.convertNoteDTOToNote))
+    return this.apiService
+      .createNote(this.convertNoteToNoteDTO(note))
+      .pipe(map((noteDTO) => this.convertNoteDTOToNote(noteDTO)))
   }
 
   updateNote(note: Note): Observable<Note> {
     if (this.useMockData) {
       return of(this.mockDataService.updateNote(note))
     }
-    return this.apiService.updateNote(this.convertNoteToNoteDTO(note)).pipe(map(this.convertNoteDTOToNote))
+    return this.apiService
+      .updateNote(this.convertNoteToNoteDTO(note))
+      .pipe(map((noteDTO) => this.convertNoteDTOToNote(noteDTO)))
   }
 
   deleteNote(id: number): Observable<void> {
@@ -105,17 +125,15 @@ export class DataMappingService {
   }
 
   private convertEventDTOToCalendarEvent(dto: EventDTO): CalendarEvent {
-    console.log("DTO QUA:", dto.title, dto.start, dto.end);
-
     return {
       id: dto.id!,
       categoryId: dto.categoryId,
       title: dto.title,
       description: dto.description,
-      start: DateTime.fromISO(dto.start), // Usa dto.start invece di dto.startDate
-      end: dto.end ? DateTime.fromISO(dto.end) : DateTime.fromISO(dto.start), // Usa dto.end invece di dto.endDate
+      start: DateTime.fromISO(dto.start),
+      end: dto.end ? DateTime.fromISO(dto.end) : DateTime.fromISO(dto.start),
       tags: dto.tags ? dto.tags : [],
-    };
+    }
   }
 
   private convertCalendarEventToEventDTO(event: CalendarEvent): EventDTO {
@@ -150,13 +168,13 @@ export class DataMappingService {
     }
   }
 
-  private convertTagDTOToTag(dto: TagDTO): Tag {
+  private convertTagDTOToTag(dto: TagDTO, categoryId: number, categoryColor: string): Tag {
     return {
       id: dto.id!,
-      categoryId: dto.categoryId,
+      categoryId: categoryId,
       name: dto.name,
       description: dto.description,
-      color: dto.color || "#0000ff",
+      color: categoryColor,
     }
   }
 
@@ -166,6 +184,7 @@ export class DataMappingService {
       name: dto.name,
       description: dto.description || "",
       color: dto.color || "",
+      tags: dto.tags ? dto.tags.map((tagDto) => this.convertTagDTOToTag(tagDto, dto.id!, dto.color || "")) : [],
     }
   }
 }

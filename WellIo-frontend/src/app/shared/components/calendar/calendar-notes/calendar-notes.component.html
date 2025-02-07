@@ -128,13 +128,18 @@
 </main>
 
 <!-- Modals -->
-<app-event-form [isOpen]="isEventFormOpen" [event]="selectedEvent" [tags]="tags"
-                (closeModal)="closeEventForm()" (saveEvent)="saveEvent($event)">
+<app-event-form [isOpen]="isEventFormOpen"
+                [event]="selectedEvent"
+                [tags]="tags"
+                (closeModal)="closeEventForm()"
+                (saveEvent)="saveEvent($event)">
 </app-event-form>
 
-<app-note-form [isOpen]="isNoteFormOpen" [note]="selectedNote"
+<app-note-form [isOpen]="isNoteFormOpen"
+               [note]="selectedNote"
                [tags]="tags"
-               (closeModal)="closeNoteForm()" (saveNote)="saveNote($event)">
+               (closeModal)="closeNoteForm()"
+               (saveNote)="saveNote($event)">
 </app-note-form>
 
 <app-day-view *ngIf="selectedDay"

@@ -1,17 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {DayViewComponent} from '../day-view/day-view.component';
-import {NgClass, NgForOf, NgIf} from '@angular/common';
-import {NoteFormComponent} from '../forms/note-form/note-form.component';
-import {EventFormComponent} from '../forms/event-form/event-form.component';
-import {NotesGridComponent} from '../notes-grid/notes-grid.component';
-import {TagFilterComponent} from '../tag-filter/tag-filter.component';
-import {DateTime} from 'luxon';
-import {CalendarEvent, Category, Note, Tag} from '../../../utils/types/calendar.interface';
-import {EventNoteService} from '../../../services/event-note.service';
-import {DashboardService} from '../../../services/dashboard.service';
+import { Component, OnInit } from "@angular/core"
+import { DayViewComponent } from "../day-view/day-view.component"
+import { NgClass, NgForOf, NgIf } from "@angular/common"
+import { NoteFormComponent } from "../forms/note-form/note-form.component"
+import { EventFormComponent } from "../forms/event-form/event-form.component"
+import { NotesGridComponent } from "../notes-grid/notes-grid.component"
+import { TagFilterComponent } from "../tag-filter/tag-filter.component"
+import { DateTime } from "luxon"
+import type { CalendarEvent, Category, Note, Tag } from "../../../utils/types/calendar.interface"
+import { EventNoteService } from "../../../services/event-note.service"
+import { DashboardService } from "../../../services/dashboard.service"
 
 @Component({
-  selector: 'app-calendar-notes',
+  selector: "app-calendar-notes",
   standalone: true,
   imports: [
     DayViewComponent,
@@ -21,10 +21,10 @@ import {DashboardService} from '../../../services/dashboard.service';
     NotesGridComponent,
     NgForOf,
     NgClass,
-    TagFilterComponent
+    TagFilterComponent,
   ],
-  templateUrl: './calendar-notes.component.html',
-  styleUrl: './calendar-notes.component.css'
+  templateUrl: "./calendar-notes.component.html",
+  styleUrl: "./calendar-notes.component.css",
 })
 export class CalendarNotesComponent implements OnInit {
   currentMonth: DateTime = DateTime.local()
@@ -42,11 +42,13 @@ export class CalendarNotesComponent implements OnInit {
   selectedNote: Note | null = null
   selectedDay: DateTime | null = null
 
-  constructor(private eventNoteService: EventNoteService,
-              private dashService: DashboardService) {}
+  constructor(
+    private eventNoteService: EventNoteService,
+    private dashService: DashboardService,
+  ) {}
 
   ngOnInit() {
-    this.dashService.setHeaderText('');
+    this.dashService.setHeaderText("")
     this.updateCalendar()
     this.loadData()
   }
@@ -60,12 +62,9 @@ export class CalendarNotesComponent implements OnInit {
       this.notes = notes
     })
 
-    this.eventNoteService.tags$.subscribe((tags) => {
-      this.tags = tags
-    })
-
     this.eventNoteService.categories$.subscribe((categories) => {
       this.categories = categories
+      this.tags = this.eventNoteService.getAllTags()
     })
   }
 
@@ -172,7 +171,6 @@ export class CalendarNotesComponent implements OnInit {
     this.closeNoteForm()
   }
 
-
   deleteItem(item: CalendarEvent | Note) {
     if ("start" in item) {
       this.eventNoteService.deleteEvent(item.id).subscribe(() => this.loadData())
@@ -222,3 +220,4 @@ export class CalendarNotesComponent implements OnInit {
     return days
   }
 }
+

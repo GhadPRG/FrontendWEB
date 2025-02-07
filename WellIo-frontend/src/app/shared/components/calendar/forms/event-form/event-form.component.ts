@@ -27,14 +27,18 @@ export class EventFormComponent implements OnInit, OnChanges {
   isDeleteModalOpen = false
 
   constructor(
-      private fb: FormBuilder,
-      private eventNoteService: EventNoteService,
+    private fb: FormBuilder,
+    private eventNoteService: EventNoteService,
   ) {
     this.eventForm = this.createForm()
   }
 
   ngOnInit() {
-    // Initialization logic if needed
+    if (this.tags.length === 0) {
+      this.eventNoteService.categories$.subscribe((categories) => {
+        this.tags = this.eventNoteService.getAllTags()
+      })
+    }
   }
 
   ngOnChanges() {
@@ -77,23 +81,37 @@ export class EventFormComponent implements OnInit, OnChanges {
   onSubmit() {
     if (this.eventForm.valid) {
       const formValue = this.eventForm.value
-      const event: CalendarEvent = {
-        id: this.event?.id || 0,
-        title: formValue.title,
-        description: formValue.description,
-        start: this.combineDateTime(formValue.start, formValue.startTime),
-        end: this.combineDateTime(formValue.end, formValue.endTime),
-        tags: formValue.tags,
+      try {
+        const event: CalendarEvent = {
+          id: this.event?.id || 0,
+          title: formValue.title,
+          description: formValue.description,
+          start: this.combineDateTime(formValue.start, formValue.startTime),
+          end: this.combineDateTime(formValue.end, formValue.endTime),
+          tags: formValue.tags,
+        }
+        this.saveEvent.emit(event)
+        this.closeModal.emit()
+      } catch (error) {
+        console.error("Error creating event:", error)
       }
-
-      this.saveEvent.emit(event)
-      this.closeModal.emit()
     }
   }
 
   private combineDateTime(date: DateTime, time: string): DateTime {
-    const [hours, minutes] = time.split(":").map(Number)
-    return date.set({ hour: hours, minute: minutes })
+    if (!date || !time) return DateTime.now()
+    try {
+      const [hours, minutes] = time.split(":").map(Number)
+      return DateTime.fromJSDate(date.toJSDate()).set({
+        hour: hours || 0,
+        minute: minutes || 0,
+        second: 0,
+        millisecond: 0,
+      })
+    } catch (error) {
+      console.error("Error combining date and time:", error)
+      return DateTime.now()
+    }
   }
 
   onTagChange(event: Event) {

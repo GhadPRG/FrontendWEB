@@ -1,23 +1,16 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {
-  CategoryDTO,
-  EventDTO,
-  NoteDTO,
-  TagDTO
-} from '../utils/types/calendar.interface';
-import {LoginRequest, LoginResponse, RegisterRequest} from '../utils/types/auth.interface';
-import {UserInfoInterface} from '../utils/types/user.interfaces';
-
+import { Injectable } from "@angular/core"
+import { HttpClient, HttpHeaders } from "@angular/common/http"
+import { Observable } from "rxjs"
+import type { CategoryDTO, EventDTO, NoteDTO } from "../utils/types/calendar.interface"
+import type { LoginRequest, LoginResponse, RegisterRequest } from "../utils/types/auth.interface"
+import type { UserInfoInterface } from "../utils/types/user.interfaces"
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ApiService {
   private baseUrl = "http://localhost:8080/api"
-  // Temp-token "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODg0MDY5OSwiZXhwIjoxNzM4OTI3MDk5fQ.NuNkFLRUX_otunfy9DS_-AAfK9044MkVfg9Wl4JHBkQ"
-  private token: string | null = localStorage.getItem("token") ? localStorage.getItem("token") : null;
+  private token: string | null = localStorage.getItem("token") ? localStorage.getItem("token") : null
 
   constructor(private http: HttpClient) {}
 
@@ -79,12 +72,7 @@ export class ApiService {
     return this.http.delete<void>(`${this.baseUrl}/notes/${id}`, { headers: this.getHeaders() })
   }
 
-  // Tags CRUD
-  getTags(categoryId: number): Observable<TagDTO[]> {
-    return this.http.get<TagDTO[]>(`${this.baseUrl}/tags/category/${categoryId}`, { headers: this.getHeaders() })
-  }
-
-  // Categories CRUD
+  // Categories CRUD (now includes tags)
   getCategories(): Observable<CategoryDTO[]> {
     return this.http.get<CategoryDTO[]>(`${this.baseUrl}/categories`, { headers: this.getHeaders() })
   }
@@ -93,3 +81,4 @@ export class ApiService {
     return this.http.get<UserInfoInterface>(`${this.baseUrl}/user`, { headers: this.getHeaders() })
   }
 }
+
