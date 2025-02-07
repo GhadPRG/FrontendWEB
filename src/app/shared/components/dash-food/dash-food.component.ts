@@ -45,14 +45,14 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
     private dashServive: DashboardService,
     public nutritionService: NutritionService,
     private fb: FormBuilder
-  ) 
+  )
   {
     this.initiateForms();
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     // Arriving on the Page
-    this.dashServive.setHeaderText("Nutrition"); 
+    this.dashServive.setHeaderText("Nutrition");
 
     // Setting up Meals Type
     this.currentMeals = this.nutritionService.defineAllMealType(this.currentMeals);
@@ -115,7 +115,7 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
   onSearchForFood(): void {
     const foodQuery = this.form_foodQuery.get('foodQuery')?.value;
 
-    if (!foodQuery.trim()) return; 
+    if (!foodQuery.trim()) return;
 
     this.nutritionService.searchFood(foodQuery).subscribe({
       next: (response) => {
@@ -132,8 +132,8 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
 
   getFoodInfo(foodName: string) {
     this.nutritionService.getFoodInfo(foodName).subscribe({
-      next: (response) => { 
-        
+      next: (response) => {
+
         // Settings for Current Dish
         this.currentDish = this.mapToDish(response, foodName);
         this.searchFoodInputRef.nativeElement.value = foodName;
@@ -152,7 +152,7 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
     if(!this.form_dishForm.valid) return;
 
     const quantity = this.form_dishForm.getRawValue().quantity;
-    if (quantity === 0) return; 
+    if (quantity === 0) return;
 
     // Setting Current Dish Attributes
     this.currentDish.meal = this.currentMeals[this.form_dishForm.getRawValue().meal_choice];
@@ -229,7 +229,7 @@ export class DashFoodComponent implements OnInit, AfterViewInit {
     });
 
     // Take the biggest Partial Quantity (Grams) as Unit Measure
-    const maxQuantityFood = obj.foods.reduce((max: any, food: any) => 
+    const maxQuantityFood = obj.foods.reduce((max: any, food: any) =>
       food.serving_weight_grams > max.serving_weight_grams ? food : max, obj.foods[0]
     );
 

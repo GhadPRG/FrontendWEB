@@ -19,7 +19,7 @@ import type {
   providedIn: "root",
 })
 export class DataMappingService {
-  private useMockData = true
+  private useMockData = false
 
   constructor(
     private apiService: ApiService,
