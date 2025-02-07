@@ -40,7 +40,7 @@
               [class.bg-skin-fill-dark]="isSelected(date)"
               [class.text-skin-base-dark]="isSelected(date)"
               [class.font-bold]="isToday(date)"
-              (click)="selectDate(date)"
+              (click)="selectDate(date, $event)"
               class="aspect-square flex items-center justify-center text-[10px] sm:text-xs rounded-md hover:bg-skin-fill-medium transition-colors text-foreground">
         {{ date.toFormat('d') }}
       </button>

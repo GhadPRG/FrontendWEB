@@ -75,7 +75,9 @@ export class DatePickerComponent implements ControlValueAccessor {
     return this.selectedDate?.hasSame(date, "day") ?? false
   }
 
-  selectDate(date: DateTime) {
+  selectDate(date: DateTime, event: Event) {
+    event.preventDefault()
+    event.stopPropagation()
     this.selectedDate = date
     this.onChange(date.toJSDate())
     this.dateSelected.emit(date)
