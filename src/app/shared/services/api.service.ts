@@ -61,16 +61,20 @@ export class ApiService {
   }
 
   createNote(note: NoteDTO): Observable<NoteDTO> {
+    console.log("QUA CREATENOTE")
     return this.http.post<NoteDTO>(`${this.baseUrl}/notes`, note, { headers: this.getHeaders() })
   }
 
   updateNote(note: NoteDTO): Observable<NoteDTO> {
-    return this.http.put<NoteDTO>(`${this.baseUrl}/notes/${note.id}`, note, { headers: this.getHeaders() })
+    return this.http.put<NoteDTO>(`${this.baseUrl}/notes`, note, { headers: this.getHeaders() })
   }
 
-  deleteNote(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/notes/${id}`, { headers: this.getHeaders() })
-  }
+    deleteNote(id: number): Observable<void> {
+        return this.http.delete<void>(`${this.baseUrl}/notes`, {
+            headers: this.getHeaders(),
+            params: { id: id } // Aggiungi l'id come query parameter
+        });
+    }
 
   // Categories CRUD (now includes tags)
   getCategories(): Observable<CategoryDTO[]> {
