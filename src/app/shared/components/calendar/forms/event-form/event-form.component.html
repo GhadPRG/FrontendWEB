@@ -4,7 +4,7 @@
       {{ event ? 'Modifica Evento' : 'Crea Nuovo Evento' }}
     </h2>
 
-    <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 gap-4 sm:gap-6">
+    <form [formGroup]="eventForm" (ngSubmit)="onSubmit($event)" class="grid grid-cols-1 gap-4 sm:gap-6">
       <div>
         <label for="title" class="block text-sm font-medium">Titolo</label>
         <input type="text" id="title" formControlName="title"
