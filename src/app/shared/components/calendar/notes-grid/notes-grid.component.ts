@@ -36,10 +36,12 @@ export class NotesGridComponent implements OnInit {
   loadData(): void {
     this.eventNoteService.notes$.subscribe((notes) => {
       this.notes = notes
+      this.filteredNotes = this.getFilteredNotes();
     })
 
     this.eventNoteService.categories$.subscribe(() => {
       this.tags = this.eventNoteService.getAllTags()
+      this.filteredNotes = this.getFilteredNotes();
     })
 
     this.eventNoteService.tagSelected$.subscribe((filteredTags) => {
