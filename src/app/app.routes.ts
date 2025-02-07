@@ -7,6 +7,7 @@ import { DashSportComponent } from './shared/components/dash-sport/dash-sport.co
 import { DashMoodComponent } from './shared/components/dash-mood/dash-mood.component';
 import {LoginComponent} from './business/login/login.component';
 import {authGuard} from './shared/utils/guards/auth.guard';
+import {CalendarComponent} from './business/calendar/calendar.component';
 
 export const routes: Routes = [
     {
@@ -41,7 +42,7 @@ export const routes: Routes = [
             },
           {
             path: 'calendar',
-            loadComponent: () => import('./business/calendar/calendar.component').then((c) => c.CalendarComponent)
+            component: CalendarComponent
           }
 
         ]
