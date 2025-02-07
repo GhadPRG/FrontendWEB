@@ -1,0 +1,72 @@
+<div class="grid-container sport-container">
+    <div class="info-container exercise-stats">
+        <div class="panel-title glass-top-title-bg">Muscle Groups Training</div>
+        <ul class="info-content stats-list">
+            @for(muscleGroup of this.sportService.muscleGroups; track $index) {
+                <li [class]="'stats ' + muscleGroup.toLocaleLowerCase() + '-stats'">
+                    <p class="title">{{ muscleGroup }}</p>
+                    <p class="value">{{ this.exerciseDict[muscleGroup].length }}</p>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="info-container exercise-summary">
+        <div class="panel-title glass-top-title-bg">Your Today Exercise Recap</div>
+        <ul class="info-content muscle-groups-list">
+            @for(muscleGroup of this.sportService.muscleGroups; track muscleGroup) {
+                <li class="muscle-group-box">
+                    <button #muscleGroupBtn class="muscle-group-item" [value]="muscleGroup">
+                        <div>{{ muscleGroup }}</div>
+                    </button>
+                </li>
+            }
+        </ul>
+
+        <div class="info-content muscle-group-description">
+            <ul class="exercise-list">
+                <button class="new-exercise-btn" (click)="selectCurrentMuscleGroupToShow()"><i class="bx bx-plus bx-md"></i></button>
+                @for(ex of this.todayExerciseDict[this.currentMuscleGroupShown()]; track $index) {
+                    <li class="exercise">
+                        <span class="exercise-name">{{ ex.exerciseInfo.name }}</span>
+                        <span class="exercise-reps">{{ ex.sets }}x{{ ex.reps }}</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="info-container exercise-form">
+        <div class="panel-title glass-top-title-bg">Add An Exercise</div>
+
+        <div class="info-content form-container">
+            <form class="exercise-register" [formGroup]="form_registerExercise" (ngSubmit)="onRegisterExercise()">
+                <div class="exercise-name-container">
+                    <input #searchFoodInput class="exercise-search-input" type="text" placeholder="Write down an Exercise" formControlName="name" required/>
+                </div>
+
+                <div class="muscle-group-list">
+                @for (muscleGroup of this.sportService.muscleGroups; track $index) {
+                    <div class="muscle-group-choice">
+                        <input class="peer" formControlName="muscleGroup_choice" type="radio" [id]="muscleGroup" name="muscleGroup_choice" [value]="muscleGroup" required>
+                        <label class="after:bg-white/25 after:hover:bg-white/50 peer-checked:after:bg-skin-fill-medium/50" [for]="muscleGroup">{{ muscleGroup }}</label>
+                    </div>
+                }
+                </div>
+
+                <div class="quantity-container">
+                    <label for="sets">Sets</label>
+                    <label for="reps">Reps</label>
+                    <input class="quantity sets-quantity" formControlName="sets" min="0" type="number" name="quantity" id="quantity">
+                    <input class="quantity reps-quantity" formControlName="reps" min="0" type="number" name="quantity" id="quantity">
+
+                    <label for="weight_used">Weight Used (kg)</label>
+                    <input class="quantity time-quantity" formControlName="weight_used" min="0" type="number" name="quantity" id="quantity">
+
+                    <button class="register-exercise-btn" type="submit" value="Register Dish">Add this Exercise<i class="bx bx-plus bx-sm"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,122 @@
+/* ==================================================================================================================
+ * ===== Mood Component - Styling for Medium-Large Screens ==========================================================
+ * ==================================================================================================================
+*/
+.mood-tracker-container {
+    @apply  h-32 [grid-auto-rows:_auto];
+}
+
+/* ----- Mood: Mood Form -------------------------------------------------------------------------------------------- */
+.mood-tracker-container .info-container.mood-form-container { @apply  h-min col-span-6 row-span-2; }
+.mood-tracker-container .info-container.mood-form-container .form-container { @apply w-full p-6; }
+
+.mood-tracker-container .info-container.mood-form-container .mood-info { @apply w-full h-full flex flex-row justify-around items-center gap-3; }
+
+.info-container.mood-form-container .mood-info .mood-choice-list { @apply w-72 h-min flex flex-wrap justify-center items-center gap-6; }
+
+.info-container.mood-form-container .mood-info .mood-choice-list .mood-choice input { @apply hidden}
+.info-container.mood-form-container .mood-info .mood-choice-list .mood-choice label { 
+    @apply  w-20 h-20 p-3 text-white text-base
+            rounded-xl bg-gradient-to-br shadow-glass
+            flex justify-center items-center gap-6; 
+}
+
+.info-container.mood-form-container .mood-info .notes-container {
+    @apply h-max flex flex-col items-start justify-center gap-3;
+}
+
+.info-container.mood-form-container .mood-info .notes-container .note-title { @apply pl-3 text-xl font-semibold; }
+.info-container.mood-form-container .mood-info .notes-container .notes-area { 
+    @apply  w-96 h-28 p-3 overflow-auto
+            rounded-xl bg-transparent outline-none shadow-glass
+            text-lg font-normal; 
+}
+
+.info-container.mood-form-container .mood-info .register-mood-btn { 
+    @apply  w-full h-min p-3 mt-6
+            rounded-full bg-skin-fill-dark/50 shadow-glass
+            flex justify-center items-center gap-3; 
+}
+
+
+
+/* ----- Mood: Calendar Tracker ------------------------------------------------------------------------------------- */
+.mood-tracker-container .info-container.mood-tracker-calendar { @apply  col-span-6 row-span-2; }
+.info-container.mood-tracker-calendar .info-content.mood-content { @apply   grid grid-cols-2 grid-rows-1 gap-6 h-96; }
+
+.info-container.mood-tracker-calendar .calendar-container { @apply flex flex-col items-center space-y-2; }
+
+.info-container.mood-tracker-calendar .calendar-container .calendar-week-days-contaiener { 
+    @apply w-96 grid grid-cols-7 text-xl;
+}
+
+.calendar-container .calendar-week-days-contaiener .week-day {
+    @apply w-full text-center;
+}
+
+.info-container.mood-tracker-calendar .calendar-container .calendar-grid-container {
+    @apply w-96 grid grid-cols-7 gap-3 text-lg;
+}
+
+.calendar-container .calendar-grid-container .calendar-cell { 
+    @apply  w-12 h-12 p-2
+            rounded-xl bg-gradient-to-br shadow-glass
+            flex justify-center items-center 
+            transition-transform duration-500 cursor-pointer
+            hover:scale-125;
+}
+.calendar-container .calendar-grid-container .calendar-cell.active { @apply scale-125; }
+.calendar-container .calendar-grid-container .calendar-cell.not-current-month { @apply opacity-30 hover:transform-none cursor-default; }
+
+/* ----- Mood: Day Info --------------------------------------------------------------------------------------------- */
+.mood-info-container { 
+    @apply  relative pl-12 
+            before:inline-block before:absolute before:w-1 before:h-3/4 before:mx-3 
+            before:top-1/2 before:left-0 before:-translate-y-1/2
+            before:rounded-full before:shadow-glass;}
+.mood-info-container .mood-day-info .title { @apply text-xl font-semibold; }
+.mood-info-container .title { @apply text-lg pt-3; }
+
+.mood-info-container .average-mood-container { @apply w-full flex justify-center items-center gap-3 text-xl font-bold; }
+.mood-info-container .average-mood-container .average-mood { @apply w-12 h-12 rounded-xl bg-gradient-to-br shadow-glass; }
+
+.mood-info-container .mood-list,
+.mood-info-container .tag-list,
+.mood-info-container .note-list {
+    @apply p-1 flex flex-nowrap overflow-auto gap-3
+}
+.mood-info-container .mood-list .mood-item { @apply w-8 h-8 rounded-xl bg-gradient-to-br shadow-glass; }
+.mood-info-container .tag-list .tag-item { @apply w-min px-3 py-2 text-nowrap rounded-xl shadow-glass; }
+
+.mood-info-container .note-list { @apply flex-col gap-2 h-32; }
+.mood-info-container .note-list .note-item { @apply w-full text-wrap; }
+
+
+/* ==================================================================================================================
+ * ===== Mood Component - Styling for Small Screens =================================================================
+ * ==================================================================================================================
+*/
+.mood-tracker-container .info-container.mood-form-container,
+.mood-tracker-container .info-container.mood-tracker-calendar
+{ @apply max-md:col-span-1; }
+
+
+.mood-tracker-container .info-container.mood-form-container .mood-info 
+{ @apply max-md:flex-col max-md:gap-12; }
+
+.info-container.mood-form-container .mood-info .mood-choice-list .mood-choice label
+{ @apply max-md:h-min; }
+
+.info-container.mood-form-container .mood-info .notes-container .notes-area 
+{ @apply max-md:w-72}
+
+.info-container.mood-tracker-calendar .info-content.mood-content
+{ @apply max-md:grid-cols-1 max-md:grid-rows-2 max-md:h-max; }
+
+
+.info-container.mood-tracker-calendar .calendar-container .calendar-week-days-contaiener,
+.info-container.mood-tracker-calendar .calendar-container .calendar-grid-container
+{ @apply max-md:w-72 max-md:text-lg; }
+
+.calendar-container .calendar-grid-container .calendar-cell
+{ @apply max-md:w-[2.25rem] max-md:h-[2.25rem]; }

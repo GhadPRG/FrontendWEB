@@ -1,0 +1,58 @@
+<section class="glass-panel text-skin-base-light backdrop-blur-sm rounded-lg shadow-lg p-3 sm:p-4 md:p-6 border border-border">
+    <header class="flex justify-between items-center mb-3 sm:mb-4 md:mb-6">
+        <h2 class="text-lg sm:text-xl md:text-2xl font-semibold text-foreground">Note</h2>
+        <button (click)="createNote.emit()" class="w-10 h-10 rounded-full bg-skin-fill-dark backdrop-blur-sm flex items-center justify-center hover:bg-skin-fill-medium transition-all fixed bottom-4 right-4 sm:bottom-6 sm:right-6 shadow-lg z-10">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+        </button>
+    </header>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <article *ngFor="let note of filteredNotes"
+                 (click)="onNoteClick(note)"
+                 class="bg-background/60 backdrop-blur-sm rounded-lg p-2 sm:p-3 md:p-4 hover:bg-background/80 transition-all cursor-pointer group border border-border"
+                 [style.backgroundColor]="getNoteBgColor(note)">
+            <header class="flex justify-between items-start mb-2">
+                <h3 class="text-sm sm:text-base md:text-lg font-medium text-foreground">{{ note.title }}</h3>
+                <div class="flex space-x-1 sm:space-x-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button (click)="$event.stopPropagation(); onNoteClick(note)"
+                            class="text-muted-foreground hover:text-foreground transition-colors p-1 rounded-full hover:bg-background/80">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                        </svg>
+                    </button>
+                    <button (click)="$event.stopPropagation(); onDeleteNote(note)"
+                            class="text-red-500 hover:text-red-700 transition-colors p-1 rounded-full hover:bg-red-100">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <div class="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3 md:mb-4 line-clamp-3">{{ note.content }}</div>
+
+            <footer class="mt-auto">
+                <div class="flex flex-wrap gap-1 mb-1 sm:mb-2">
+          <span *ngFor="let tagId of note.tags"
+                class="px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs rounded-full bg-skin-fill-light backdrop-blur-sm"
+                [style.backgroundColor]="getTagColor(tagId)">
+            {{ getTagName(tagId) }}
+          </span>
+                </div>
+                <time class="text-[10px] sm:text-xs text-muted-foreground">
+                    {{ note.createdAt.toFormat('dd LLL yyyy HH:mm') }}
+                </time>
+            </footer>
+        </article>
+    </div>
+</section>
+
+<app-confirm-delete-modal
+        [isOpen]="isDeleteModalOpen"
+        (confirm)="confirmDelete()"
+        (cancel)="closeDeleteModal()"
+></app-confirm-delete-modal>

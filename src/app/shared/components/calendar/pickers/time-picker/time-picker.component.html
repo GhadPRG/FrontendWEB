@@ -1,0 +1,58 @@
+<div class="relative text-skin-base-light">
+  <input
+    [id]="label"
+    type="text"
+    [value]="formatTime()"
+    [placeholder]="placeholder"
+    (click)="togglePicker($event)"
+    readonly
+    class="w-full px-2 sm:px-3 py-1.5 sm:py-2 bg-background text-foreground rounded-md border border-input focus:outline-none focus:ring-2 focus:ring-skin-accent-light focus:border-transparent cursor-pointer text-sm"
+  />
+
+  <div *ngIf="isOpen"
+       class="absolute z-50 mt-1 p-2 sm:p-3 bg-skin-fill-lighter border border-input rounded-md shadow-lg w-full sm:w-[200px]"
+       (clickOutside)="onClickOutside()">
+    <div class="flex justify-between mb-2 sm:mb-3">
+      <div class="flex flex-col items-center">
+        <button (click)="incrementHours($event)"
+                class="p-1 hover:bg-skin-fill-medium rounded-md text-foreground transition-colors">
+          ▲
+        </button>
+        <input type="text"
+               [value]="padZero(hours)"
+               class="w-8 sm:w-10 text-center bg-transparent text-foreground border-none text-sm sm:text-base"
+               readonly />
+        <button (click)="decrementHours($event)"
+                class="p-1 hover:bg-skin-fill-medium rounded-md text-foreground transition-colors">
+          ▼
+        </button>
+      </div>
+      <div class="text-foreground text-lg sm:text-xl flex items-center">:</div>
+      <div class="flex flex-col items-center">
+        <button (click)="incrementMinutes($event)"
+                class="p-1 hover:bg-skin-fill-medium rounded-md text-foreground transition-colors">
+          ▲
+        </button>
+        <input type="text"
+               [value]="padZero(minutes)"
+               class="w-8 sm:w-10 text-center bg-transparent text-foreground border-none text-sm sm:text-base"
+               readonly />
+        <button (click)="decrementMinutes($event)"
+                class="p-1 hover:bg-skin-fill-medium rounded-md text-foreground transition-colors">
+          ▼
+        </button>
+      </div>
+    </div>
+    <div class="flex justify-end space-x-2">
+      <button (click)="cancel($event)"
+              class="px-2 sm:px-3 py-1 rounded-md hover:bg-skin-fill-medium text-foreground transition-colors text-xs sm:text-sm">
+        Annulla
+      </button>
+      <button (click)="confirm($event)"
+              class="px-2 sm:px-3 py-1 rounded-md bg-skin-fill-dark hover:bg-skin-fill-medium text-skin-base-dark transition-colors text-xs sm:text-sm">
+        OK
+      </button>
+    </div>
+  </div>
+</div>
+

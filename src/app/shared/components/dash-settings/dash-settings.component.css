@@ -1,0 +1,110 @@
+/* ==================================================================================================================
+ * ===== Settings Component - Styling for Medium-Large Screens ======================================================
+ * ==================================================================================================================
+*/
+.settings-container {
+    @apply  h-32 [grid-auto-rows:_auto];
+}
+
+/* ----- Settings: Contents ------------------------------------------------------------------------------------------ */
+.info-container .info-content .info-box {
+    @apply  w-full h-28 relative
+            rounded-xl
+            flex flex-col
+            shadow-glass;
+}
+
+.info-box .title-container {
+    @apply  py-2 px-3
+            flex justify-start items-center;
+}
+.info-box .title-container .field-title { @apply text-base font-semibold; }
+
+.info-box:has(.info-email) { @apply col-span-2; }
+
+/* ----- Settings: Personal Info Input Fields ----------------------------------------------------------------------- */
+.info-box .info-field {
+    @apply  w-full h-full p-3 
+            bg-transparent outline-none
+            flex justify-end items-end
+            text-right font-bold text-2xl text-skin-base-light;
+}
+.info-box .field-container { @apply h-full flex justify-end items-end; }
+.info-box .field-container .info-field:nth-child(2) { @apply pl-0 w-min; }
+
+/* ----- Settings: Personal Info ------------------------------------------------------------------------------------ */
+.settings-container .info-container.personal-info {
+    @apply  col-span-4 row-span-2;
+}
+
+.info-container.personal-info .personal-infos {
+    @apply  grid-flow-row grid-cols-2;
+}
+
+/* ----- Settings: Personal Info ------------------------------------------------------------------------------------ */
+.settings-container .info-container.stats-info {
+    @apply  col-span-2 row-span-3;
+}
+
+.info-container.stats-info .personal-infos {
+    @apply  grid-flow-row grid-cols-1;
+}
+
+.stats-info .info-box .info-field:not(.info-select) { @apply text-4xl pb-2; }
+.stats-info .info-box .info-field.info-measure { @apply text-xl; }
+
+
+/* ----- Settings: Themes Panel ------------------------------------------------------------------------------------- */
+.settings-container .info-container.themes-panel {
+    @apply  col-span-4 row-span-2;
+}
+
+.info-container.themes-panel .info-content.color-container {
+    @apply  grid-cols-5;
+}
+
+.color-container .color-block {
+    @apply  w-full h-20 relative
+            rounded-xl bg-gradient-to-br from-skin-fill-dark/75 to-skin-fill-darker/75
+            shadow-glass
+            after:block after:w-6 after:h-6
+            after:absolute after:bottom-2 after:right-2
+            after:rounded-xl after:rounded-br-3xl after:rounded-tl-[3rem] 
+            after:bg-white/25 after:hover:bg-white/50
+            after:transition-colors after:duration-300
+            after:pointer-events-none;
+}
+.color-container .color-block.selected { @apply after:bg-white/50; }
+
+
+/* ==================================================================================================================
+ * ===== Settings Component - Styling for Small Screens =============================================================
+ * ==================================================================================================================
+*/
+
+
+/* ----- Settings: Containers -------------------------------------------------------------------------------------- */
+.settings-container .info-container.personal-info,
+.settings-container .info-container.stats-info,
+.settings-container .info-container.themes-panel
+{ @apply max-md:col-span-1; }
+
+
+/* ----- Settings: Personal Info ------------------------------------------------------------------------------------ */
+.info-container.stats-info .personal-infos { @apply  max-md:grid-cols-2; }
+
+.info-container .info-content .info-box { @apply max-md:h-24; }
+
+.info-box .title-container { @apply max-md:pb-0 max-md:justify-end; }
+
+.info-box .title-container .field-title { @apply max-md:font-normal; }
+.info-box .info-field { @apply max-md:text-base; }
+
+.info-container.stats-info .personal-infos .info-field { @apply max-md:text-2xl}
+.stats-info .info-box .info-field.info-measure { @apply max-md:text-sm max-md:pb-3; }
+
+
+/* ----- Settings: Themes Panel ------------------------------------------------------------------------------------- */
+.info-container.themes-panel .info-content.color-container {
+    @apply  max-md:grid-cols-1;
+}

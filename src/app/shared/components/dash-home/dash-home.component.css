@@ -1,0 +1,170 @@
+.content { @apply rounded-xl glass-panel min-h-40 h-max; }
+.content .panel-title {
+    @apply  w-full h-16
+            flex justify-center items-center 
+            font-bold text-xl;
+}
+
+/* ==================================================================================================================
+ * ===== Header - Styling for Medium-Large Screens ==================================================================
+ * ==================================================================================================================
+*/
+.header {
+    @apply  /* px-3 rounded-xl glass-panel */
+            col-span-6
+            grid grid-rows-subgrid grid-cols-subgrid
+            text-skin-base-light;
+}
+
+/* ----- Header: Welcome Message ------------------------------------------------------------------------------------ */
+.header .content.welcome-content { @apply h-full p-6 col-span-4 flex flex-col justify-center items-start; }
+
+.header .welcome-content .welcome-message { @apply space-y-1; }
+.header .welcome-content .welcome-message .title { @apply text-3xl font-bold; }
+.header .welcome-content .welcome-message .subtitle { @apply text-sm; }
+
+/* ----- Header: Mood Tracker Content ------------------------------------------------------------------------------- */
+.header .content.mood-content {
+    @apply  p-6 col-span-2 flex flex-col space-y-4;
+}
+
+.mood-content .mood-question-container { @apply flex justify-center items-center; }
+.mood-content .mood-question-container .mood-question { @apply pr-6 flex-1 text-wrap; }
+.mood-content .mood-question-container .today-mood { 
+    @apply  w-20 h-20 
+            rounded-lg shadow-glass bg-gradient-to-br bg-white/15
+            transition-all duration-300; 
+}
+
+.mood-content .mood-list { @apply flex justify-center items-center space-x-3; }
+.mood-content .mood-list .mood { 
+    @apply  w-10 h-10
+            rounded-lg bg-gradient-to-br
+            shadow-glass
+            transition-all ease-in-out
+            hover:scale-125;
+}
+
+
+/* ==================================================================================================================
+ * ===== Content Blocks - Styling for Medium-Large Screens ==========================================================
+ * ==================================================================================================================
+*/
+.content-container { 
+    @apply  h-32 col-span-6
+            grid grid-cols-subgrid gap-6
+            text-skin-base-light;
+}
+
+.content-container .sports-content,
+.content-container .nutrition-content 
+{ @apply col-span-3 relative; }
+
+.content-container .notes-content 
+{ @apply col-span-6; }
+
+.content-container .content .stats-container { 
+    @apply  w-11/12 max-w-[28rem] p-6 gap-3 
+            grid grid-rows-3 grid-cols-4 justify-self-center; 
+}
+
+.content.nutrition-content, .content.sports-content { @apply h-[28rem]; }
+
+/* ==================================================================================================================
+ * ===== Nutrition Stats - Styling for Medium-Large Screens =========================================================
+ * ==================================================================================================================
+*/
+.content-container .nutrition-content .nutrition-stats { 
+    @apply  w-11/12 max-w-[28rem] p-6 gap-3 
+            grid grid-rows-3 grid-cols-4 justify-self-center; 
+}
+
+.nutrition-content .nutrition-stats .stats { 
+    @apply  w-full h-full p-3 pb-2 relative z-10
+            row-span-1 col-span-2
+            rounded-[2rem] shadow-glass;
+}
+
+.nutrition-content .nutrition-stats .stats .values { 
+    @apply  w-full h-full pr-3 relative z-10
+            flex flex-row-reverse justify-start items-center;
+}
+.nutrition-content .nutrition-stats .stats .values .to-reach { @apply text-sm tracking-tighter before:content-['/'] before:px-1; }
+.nutrition-content .nutrition-stats .stats .values .reached { @apply text-2xl font-bold tracking-wide; }
+
+
+/* ----- Nutrition Stats: Colors & Shapes --------------------------------------------------------------------------- */
+.nutrition-content .nutrition-stats .stats.calories-stats { @apply w-full h-full row-span-1 col-span-4 text-4xl; }
+.nutrition-content .nutrition-stats .stats.calories-stats .values { @apply items-end px-3 py-1; }
+
+.nutrition-content .nutrition-stats .stats.calories-stats .values .to-reach { @apply pb-1; }
+.nutrition-content .nutrition-stats .stats.calories-stats .values .reached { @apply text-3xl font-bold; }
+
+/* ----- Nutrition & Stats: Legend Boxes ---------------------------------------------------------------------------- */
+.content .stats-container .legend-container {
+    @apply  w-full h-full row-span-1 col-span-4 mt-5 pt-5 relative
+            grid grid-rows-1 grid-cols-4
+            before:block before:w-2/3 before:h-1
+            before:absolute before:top-0 before:left-1/2 before:-translate-x-1/2
+            before:rounded-full before:shadow-glass;
+}
+
+.content .stats-container .legend-container .legend-box {
+    @apply  flex flex-col justify-center items-center space-y-1;
+}
+.content .stats-container .legend-container .legend-box .legend-icon {
+    @apply  w-8 h-8 rounded-lg shadow-glass bg-gradient-to-br;
+}
+.content .stats-container .legend-container .legend-box .legend-label { @apply text-sm font-semibold; }
+
+.sports-content .sports-stats .legend-container { @apply grid-cols-3; }
+
+/* ==================================================================================================================
+ * ===== Exercise Stats - Styling for Medium-Large Screens ==========================================================
+ * ==================================================================================================================
+*/
+.content-container .sports-content .sports-stats { @apply  p-6 grid grid-rows-3 grid-cols-4 gap-3 justify-self-center; }
+.content-container .sports-content .sports-stats .graphics { @apply w-48 h-48 relative row-span-2 col-span-2; }
+
+.sports-content .sports-stats .graphics-container { 
+    @apply w-full h-full row-span-2 col-span-4 flex items-center justify-center;
+}
+.sports-content .sports-stats .graphics-container .graphics-anchor { @apply relative; }
+
+.sports-content .sports-stats .graphics .chart {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+ 
+.sports-content .sports-stats .upper-body { @apply from-blue-300/75  to-blue-400/75; }
+.sports-content .sports-stats .lower-body { @apply from-green-500/75 to-green-600/75; }
+.sports-content .sports-stats .core { @apply from-red-300/75 to-red-400/75; }
+
+.sports-stats .graphics .chart.upper-body { 
+    @apply w-48 h-48;
+
+    --inner-ring-percent: 60%;
+}
+.sports-stats .graphics .chart.lower-body { 
+    @apply w-36 h-36;
+
+    --inner-ring-percent: 55%;
+}
+.sports-stats .graphics .chart.core {
+    @apply w-24 h-24;
+}
+
+
+/* ==================================================================================================================
+ * ===== Header - Styling for Small Screens =========================================================================
+ * ==================================================================================================================
+*/
+
+.header {
+    @apply max-md:grid-cols-4;
+}
+
+.header .content.mood-content { @apply max-md:hidden; }
+
+.home-container .content-container 
+{ @apply max-md:grid-cols-1; }
+

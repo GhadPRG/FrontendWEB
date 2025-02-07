@@ -1,0 +1,124 @@
+<div class="grid-container home-container">
+    <header class="header">
+        <div class="content welcome-content">
+            <div class="welcome-message">
+                <h2 class="title">Hello, {{ userFullName }}</h2>
+                <h4 class="subtitle">Today is {{ getFormattedDate() }}</h4>
+            </div>
+        </div>
+        <div class="content mood-content">
+            <div class="mood-question-container">
+                <div class="mood-question">
+                    <span class="spacer"></span>How are you feeling today?
+                </div>
+                <div class="today-mood"
+                [class]="'mood-' + this.currMoodSelected().toLocaleLowerCase()"></div>
+            </div>
+            <ul class="mood-list">
+                @for (moodType of this.moodService.moodTypes; track $index) {
+                    <li [class]="'mood mood-' + moodType.toLocaleLowerCase()"
+                    (click)="addMoodByType(moodType)"></li>
+                }
+            </ul>
+        </div>
+    </header>
+
+    <div class="content-container">
+        <div class="content sports-content ">
+            <div class="panel-title glass-top-title-bg">Exercise Stats</div>
+            <div class="stats-container sports-stats">
+                <div class="graphics-container">
+                    <div class="graphics-anchor">
+                    <div class="graphics">
+                        <div class="donut-chart chart upper-body"
+                        [style.--fill-percent]="this.sportService.exerciseStatisticsWeeklyPerType().upper_body"></div>
+                        <div class="donut-chart chart lower-body"
+                        [style.--fill-percent]="this.sportService.exerciseStatisticsWeeklyPerType().lower_body"></div>
+                        <div class="donut-chart chart core"
+                        [style.--fill-percent]="this.sportService.exerciseStatisticsWeeklyPerType().core"></div>
+                    </div>
+                </div>
+                </div>
+                <div class="legend-container">
+                    <div class="legend-box">
+                        <div class="legend-icon upper-body"></div>
+                        <p class="legend-label">Upper Body</p>
+                    </div>                                      
+                    <div class="legend-box">
+                        <div class="legend-icon lower-body"></div>
+                        <p class="legend-label">Lower Body</p>
+                    </div> 
+                    <div class="legend-box">
+                        <div class="legend-icon core"></div>
+                        <p class="legend-label">Core</p>
+                    </div>                          
+                </div>
+            </div>
+
+        </div>
+        <div class="content nutrition-content">
+            <div class="panel-title glass-top-title-bg">Nutritional Stats</div>
+            <div class="stats-container nutrition-stats">
+                <div class="stats calories calories-stats">
+                    <div class="bar-chart horizontal-bar-chart"
+                    [style.--fill-percent]="this.nutritionService.percentage().kcalories"></div>
+                    <div class="values">
+                        <p class="to-reach">{{ this.nutritionService.dailyTarget().kcalories | number: '1.0-0' }} kcal</p>
+                        <p class="reached">{{ this.nutritionService.consumed().kcalories | number: '1.0-0' }}</p>
+                    </div>
+                </div>
+                <div class="stats proteins proteins-stats">
+                    <div class="bar-chart horizontal-bar-chart"
+                    [style.--fill-percent]="this.nutritionService.percentage().proteins"></div>
+                    <div class="values">
+                        <p class="to-reach">{{ this.nutritionService.dailyTarget().proteins | number: '1.0-0' }} g</p>
+                        <p class="reached">{{ this.nutritionService.consumed().proteins | number: '1.0-0' }}</p>
+                    </div>
+                </div>
+                <div class="stats fibers fibers-stats">
+                    <div class="bar-chart horizontal-bar-chart"
+                    [style.--fill-percent]="this.nutritionService.percentage().fibers"></div>
+                    <div class="values">
+                        <p class="to-reach">{{ this.nutritionService.dailyTarget().fibers | number: '1.0-0' }} g</p>
+                        <p class="reached">{{ this.nutritionService.consumed().fibers | number: '1.0-0' }}</p>
+                    </div>
+                </div>
+                <div class="stats carbs carbs-stats">
+                    <div class="bar-chart horizontal-bar-chart"
+                    [style.--fill-percent]="this.nutritionService.percentage().carbs"></div>
+                    <div class="values">
+                        <p class="to-reach">{{ this.nutritionService.dailyTarget().carbs | number: '1.0-0' }} g</p>
+                        <p class="reached">{{ this.nutritionService.consumed().carbs | number: '1.0-0' }}</p>
+                    </div>
+                </div>
+                <div class="stats fats fats-stats">
+                    <div class="bar-chart horizontal-bar-chart"
+                    [style.--fill-percent]="this.nutritionService.percentage().fats"></div>
+                    <div class="values">
+                        <p class="to-reach">{{ this.nutritionService.dailyTarget().fats | number: '1.0-0' }} g</p>
+                        <p class="reached">{{ this.nutritionService.consumed().fats | number: '1.0-0' }}</p>
+                    </div>
+                </div>
+                <div class="legend-container">
+                    <div class="legend-box">
+                        <div class="legend-icon proteins"></div>
+                        <p class="legend-label">Proteins</p>
+                    </div>
+                    <div class="legend-box">
+                        <div class="legend-icon carbs"></div>
+                        <p class="legend-label">Carbs</p>
+                    </div>
+                    <div class="legend-box">
+                        <div class="legend-icon fats"></div>
+                        <p class="legend-label">Fats</p>
+                    </div>
+                    <div class="legend-box">
+                        <div class="legend-icon fibers"></div>
+                        <p class="legend-label">Fibers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

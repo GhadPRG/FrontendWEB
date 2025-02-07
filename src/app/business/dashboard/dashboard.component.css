@@ -1,0 +1,39 @@
+/* ==================================================================================================================
+ * ===== Dashboard - Styling for Medium-Large Screens ===============================================================
+ * ==================================================================================================================
+*/
+.dashboard-container {
+    @apply  w-full h-full
+            grid grid-cols-[auto_1fr_auto];
+
+    background-image: linear-gradient(to bottom right, var(--bg-grad-1), var(--bg-grad-2));
+
+    --sidebar-sm-size: calc(var(--icon-with-padding-size) + 1.5rem);
+    --sidebar-close-size: calc(var(--icon-with-padding-size) + 1rem);
+    --icon-with-padding-size: calc(24.8px + 1rem);
+}
+
+.dashboard-container .wrapper { @apply w-min h-min sticky top-0; }
+
+.dashboard-container .main-container {
+    @apply  h-[calc(100vh-0.75rem)] py-3 px-3 rounded-xl;
+}
+
+.dashboard-container .main-container::-webkit-scrollbar { @apply hidden; }
+.dashboard-container .main-container .content-wrapper { @apply py-6; }
+
+/* ==================================================================================================================
+ * ===== Dashboard - Styling for Small Screens ======================================================================
+ * ==================================================================================================================
+*/
+.dashboard-container {
+    @apply  max-md:grid-cols-[1fr];
+}
+.dashboard-container .main-container {
+    @apply  max-md:h-[calc(100vh-var(--sidebar-sm-size)-1.25rem)]
+            max-md:mb-[calc(var(--sidebar-sm-size)+1.25rem)];
+}
+.dashboard-container .main-container.sidebar-menu-opened {
+    @apply  max-md:h-[calc(100vh-var(--sidebar-sm-size)*2-2rem)]
+            max-md:mb-[calc(var(--sidebar-sm-size)*2+2rem)];
+}

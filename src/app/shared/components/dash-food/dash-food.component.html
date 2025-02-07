@@ -1,0 +1,155 @@
+<div class="grid-container nutrition-container">
+    <div class="info-container nutrition-stats">
+        <div class="panel-title glass-top-title-bg">Nutirion Balance</div>
+        <ul class="info-content stats-list">
+            <li class="stats calories calories-stats">
+                <div class="chart-container">
+                    <div class="bar-chart horizontal-bar-chart"
+                    [style.--fill-percent]="this.nutritionService.percentage().kcalories"></div>
+                </div>
+                <div class="values">
+                    <p class="to-reach">{{ this.nutritionService.dailyTarget().kcalories | number: '1.0-0' }} kcal</p>
+                    <p class="reached">{{ this.nutritionService.consumed().kcalories | number: '1.0-0' }}</p>
+                </div>
+            </li>
+            <li class="stats proteins proteins-stats">
+                <div class="bar-chart horizontal-bar-chart"
+                [style.--fill-percent]="this.nutritionService.percentage().proteins"></div>
+                <div class="values">
+                    <p class="to-reach">{{ this.nutritionService.dailyTarget().proteins | number: '1.0-0' }} g</p>
+                    <p class="reached">{{ this.nutritionService.consumed().proteins | number: '1.0-0' }}</p>
+                </div>
+            </li>
+            <li class="stats carbs carbs-stats">
+                <div class="bar-chart horizontal-bar-chart"
+                [style.--fill-percent]="this.nutritionService.percentage().carbs"></div>
+                <div class="values">
+                    <p class="to-reach">{{ this.nutritionService.dailyTarget().carbs | number: '1.0-0' }} g</p>
+                    <p class="reached">{{ this.nutritionService.consumed().carbs | number: '1.0-0' }}</p>
+                </div>
+            </li>
+            <li class="stats fats fats-stats">
+                <div class="bar-chart horizontal-bar-chart"
+                [style.--fill-percent]="this.nutritionService.percentage().fats"></div>
+                <div class="values">
+                    <p class="to-reach">{{ this.nutritionService.dailyTarget().fats | number: '1.0-0' }} g</p>
+                    <p class="reached">{{ this.nutritionService.consumed().fats | number: '1.0-0' }}</p>
+                </div>
+            </li>
+            <li class="stats fibers fibers-stats">
+                <div class="bar-chart horizontal-bar-chart"
+                [style.--fill-percent]="this.nutritionService.percentage().fibers"></div>
+                <div class="values">
+                    <p class="to-reach">{{ this.nutritionService.dailyTarget().fibers | number: '1.0-0' }} g</p>
+                    <p class="reached">{{ this.nutritionService.consumed().fibers | number: '1.0-0' }}</p>
+                </div>
+            </li>
+            <li class="legend-container">
+                <div class="legend-box">
+                    <div class="legend-icon proteins"></div>
+                    <p class="legend-label">Proteins</p>
+                </div>                                      
+                <div class="legend-box">
+                    <div class="legend-icon carbs"></div>
+                    <p class="legend-label">Carbs</p>
+                </div>                    
+                <div class="legend-box">
+                    <div class="legend-icon fats"></div>
+                    <p class="legend-label">Fats</p>
+                </div>
+                <div class="legend-box">
+                    <div class="legend-icon fibers"></div>
+                    <p class="legend-label">Fibers</p>
+                </div>  
+            </li>
+        </ul>
+    </div>
+
+    <div class="info-container meal-summary">
+        <div class="panel-title glass-top-title-bg">Your Today Meals Recap</div>
+        <ul class="info-content meals-list">
+            @for(mealType of this.nutritionService.mealTypes; track mealType) {
+                <li class="meal-box">
+                    <button #mealTypeBtn class="meal-item" [value]="mealType">
+                        <div>{{ mealType }}</div>
+                    </button>
+                </li>
+            }
+        </ul>
+
+        <div class="info-content meal-description">
+            <ul class="dish-list">
+                <button class="new-dish-btn" (click)="selectCurrentMealAsMealDish()"><i class="bx bx-plus bx-md"></i></button>
+                @for(dish of getCurrentDishes(); track $index) {
+                    <li class="dish">
+                        <span class="dish-name">{{ dish.dishInfo.name }}</span>
+                        <span class="dish-quantity">{{ dish.quantity }} {{ dish.unit}}</span>
+                    </li>
+                }  
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="info-container dish-form">
+        <div class="panel-title glass-top-title-bg">Add A Dish</div>
+
+        <div class="info-content form-container">
+            <form class="food-search" [formGroup]="form_foodQuery" (ngSubmit)="onSearchForFood()">
+                <input #searchFoodInput class="food-search-input" type="text" placeholder="Inserisci un cibo..." formControlName="foodQuery" required/>
+                <button class="food-search-btn" type="submit" value="Search Food"><i class="bx bx-search bx-sm"></i></button>
+            </form>
+        </div>
+        <div #foodResponseDisplayer class="info-content food-response-container closed">
+
+            @if (this.commonFoodArray.length !== 0) 
+            { <div class="food-title">Common Food</div> }
+            @for(food of this.commonFoodArray; track $index) {
+                <div class="food-item" (click)="getFoodInfo(food.food_name)">
+                    <div class="food-info">
+                        <span class="food-name">{{ food.food_name }}</span>
+                    </div>
+                </div>
+            }
+        
+            @if (this.brandedFoodArray.length !== 0) 
+            { <div class="food-title">Branded Food</div> }
+            @for(food of this.brandedFoodArray; track $index) {
+                <div class="food-item" (click)="getFoodInfo(food.food_name)">
+                    <div class="food-info">
+                        <img [src]="food.photo.thumb" alt="A photo of The Product" class="food-img" [class.not-shown]="isLogoAPI(food.photo.thumb)">
+                        <span class="food-name">{{ food.food_name }}</span>
+                    </div>
+                    <span class="food-kcal">{{food.nf_calories}}</span>
+                </div>
+            }
+        </div>
+
+        <div #dishOptionsDisplayer class="info-content form-container dish-info-form">
+            <form [formGroup]="form_dishForm" class="dish-info" (ngSubmit)="onRegisterDish()">
+                <div class="meal-choice-list">
+                @for (mealType of this.nutritionService.mealTypes; track mealType) {
+                    <div class="meal-choice">
+                        <input class="peer" formControlName="meal_choice" type="radio" [id]="mealType" name="meal_choice" [value]="mealType" required>
+                        <label class="after:bg-white/25 after:hover:bg-white/50 peer-checked:after:bg-skin-fill-medium/50" [for]="mealType">{{ mealType }}</label>
+                    </div>
+                }
+                </div>
+                <div class="quantity-container">
+                    <input class="dish-quantity" formControlName="quantity" min="0" type="number" name="quantity" id="quantity" [(value)]="this.currentDish.quantity">
+                    <p class="dish-unit">{{ this.currentDish.unit }}</p>
+
+                    <button class="register-dish-btn" type="submit" value="Register Dish">Add this Dish <i class="bx bx-plus bx-sm"></i></button>
+                </div>
+
+                <div class="dish-stats">
+                    <span class="stats calories">Calories: {{ this.adjustedStatsForCurrentDish.kcalories | number: '1.0-0' }} kcal</span>
+                    <span class="stats proteins">Proteins: <br>{{ this.adjustedStatsForCurrentDish.proteins | number: '1.1-2' }} g</span>
+                    <span class="stats fats">Fats: <br>{{ this.adjustedStatsForCurrentDish.fats | number: '1.1-2' }} g</span>
+                    <span class="stats carbs">Carbs: <br>{{ this.adjustedStatsForCurrentDish.carbs | number: '1.1-2' }} g</span>
+                    <span class="stats fibers">Fibers: <br>{{ this.adjustedStatsForCurrentDish.fibers | number: '1.1-2' }} g</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

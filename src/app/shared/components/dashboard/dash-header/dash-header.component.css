@@ -1,0 +1,8 @@
+.header {
+    @apply  h-20 mb-6
+            rounded-xl glass-panel opacity-100
+            flex justify-center items-center 
+            font-bold text-2xl text-skin-base-light text-opacity-100
+            transition-all duration-500;
+}
+.header.closed { @apply h-0 m-0 opacity-100 text-opacity-0; }

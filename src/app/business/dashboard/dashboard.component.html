@@ -1,0 +1,14 @@
+<div class="dashboard-container">
+    <aside class="wrapper">
+       <app-sidebar-dashboard />
+    </aside>
+    <main class="main-container overflow-auto" [class.sidebar-menu-opened]="isSidebarMenuOpened()">
+        <app-header-dashboard />
+
+        <router-outlet></router-outlet>
+    </main>
+    <aside class="wrapper">
+        <app-sidecalendar-dashboard />
+    </aside>
+</div>
+

@@ -1,0 +1,89 @@
+<div class="grid-container settings-container">
+        <div class="info-container personal-info">
+            <div class="panel-title glass-top-title-bg">Personal Info</div>
+            <ul class="info-content personal-infos">
+                <li class="info-box">
+                    <div class="title-container">
+                        <p class="field-title">First Name</p>
+                    </div>
+                    <p class="info-field info-first-name">{{ userInfo.firstName }}</p>
+                </li>
+                <li class="info-box">
+                    <div class="title-container">
+                        <p class="field-title">Last Name</p>
+                    </div>
+                    <p class="info-field info-last-name">{{ userInfo.lastName }}</p>
+                </li>
+                <li class="info-box">
+                    <div class="title-container">
+                        <p class="field-title">Birth Date</p>
+                    </div>
+                    <p class="info-field info-birth-date">{{ userInfo.birthDate }}</p>
+                </li>
+                <li class="info-box">
+                    <div class="title-container">
+                        <p class="field-title">User Name</p>
+                    </div>
+                    <p class="info-field info-first-name">{{ userInfo.firstName}} {{ userInfo.lastName }}</p>
+                </li>
+                <li class="info-box">
+                    <div class="title-container">
+                        <p class="field-title">Email Address</p>
+                    </div>
+                    <p class="info-field info-email">{{ userInfo.email }}</p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="info-container stats-info">
+            <div class="panel-title glass-top-title-bg">Your Stats</div>
+            <ul class="info-content personal-infos">
+                <li class="info-box">
+                    <div class="title-container">
+                        <p class="field-title">Age</p>
+                    </div>
+                    <p class="info-field info-birth-date">{{ getAge() }}</p>
+                </li>
+                <li class="info-box">
+                    <div class="title-container">
+                        <p class="field-title">Gender</p>
+                    </div>
+                    <p class="info-field info-gender">{{ userInfo.gender }}</p>
+                </li>
+                <li class="info-box">
+                    <div class="title-container">
+                        <p for="height" class="field-title">Height</p>
+                    </div>
+                    <div class="field-container">
+                        <p class="info-field info-height" id="height">{{ userInfo.height }}</p>
+                        <p class="info-field info-measure" id="height">cm</p>
+                    </div>
+                </li>
+                <li class="info-box">
+                    <div class="title-container">
+                        <p for="weight" class="field-title">Weight</p>
+                    </div>
+                    <div class="field-container">
+                        <p class="info-field info-weight" id="weight">{{ userInfo.weight }}</p>
+                        <p class="info-field info-measure" id="height">kg</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="info-container themes-panel">
+            <div class="panel-title glass-top-title-bg">Themes</div>
+            <div class="info-content color-container">
+                <div (click)="setTheme('blue')" [ngClass]="{selected: selectedTheme==='blue'}"
+                  class="color-block theme-blue selected"></div>
+                <div (click)="setTheme('red')" [ngClass]="{selected: selectedTheme==='red'}"
+                  class="color-block theme-red"></div>
+                <div (click)="setTheme('amber')" [ngClass]="{selected: selectedTheme==='amber'}"
+                  class="color-block theme-amber"></div>
+                <div (click)="setTheme('green')" [ngClass]="{selected: selectedTheme==='green'}"
+                  class="color-block theme-green"></div>
+                <div (click)="setTheme('purple')" [ngClass]="{selected: selectedTheme==='purple'}"
+                  class="color-block theme-purple"></div>
+            </div>
+        </div>
+</div>
