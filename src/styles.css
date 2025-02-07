@@ -1,0 +1,318 @@
+
+/* --- Imports --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+
+/* ----- Tailwind CSS Modules ----- */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    /* ----- Theme Style Variables ----- */
+    :root {
+        /* ----- Default Theme: Base ----- */
+        --color-text-light-base: 0 0 0;
+        --color-text-light-muted: 29 30 46;
+        --color-text-light-accent: 30 64 175;
+
+        --color-text-dark-base: 255 255 255;
+        --color-text-dark-muted: 242 242 242;
+        --color-text-dark-accent: 29 78 216;
+
+        --color-fill-lighter: 191 219 254; /* 200 */
+        --color-fill-light: 147 197 253; /* 300 */
+        --color-fill-medium: 96 165 259; /* 400 */
+        --color-fill-dark: 37 99 235; /* 600 */
+        --color-fill-darker: 30 64 175; /* 800 */
+
+        --color-fill-lightest: 239 246 255; /* 50 */
+        --color-fill-darkest: 23 37 84; /* 950 */
+
+      --bg-grad-1: #3b82f6;
+      --bg-grad-2: #4f46e5;
+
+        --color-text-logo: var(--color-fill-light);
+    }
+
+  .dark {
+    --color-text-ligh-base: 255 255 255;
+    --color-text-light-muted: 242 242 242;
+    --color-text-light-accent: 29 78 216;
+  }
+
+    .theme-blue {
+        --color-text-light-accent: 30 64 175;
+        --color-text-dark-accent: 29 78 216;
+
+        --color-fill-lighter: 191 219 254; /* 200 */
+        --color-fill-light: 147 197 253; /* 300 */
+        --color-fill-medium: 96 165 259; /* 400 */
+        --color-fill-dark: 37 99 235; /* 600 */
+        --color-fill-darker: 30 64 175; /* 800 */
+
+        --color-fill-lightest: 239 246 255; /* 50 */
+        --color-fill-darkest: 23 37 84; /* 950 */
+
+      --bg-grad-1: #3b82f6;
+      --bg-grad-2: #4f46e5;
+
+    }
+
+  .dark.theme-blue {
+    --color-text-light-accent: 30 64 175;
+    --color-text-dark-accent: 29 78 216;
+
+    --color-fill-lighter: 59 130 246; /* 500 */
+    --color-fill-light: 37 99 235; /* 600 */
+    --color-fill-medium: 29 78 216; /* 700 */
+    --color-fill-dark: 30 64 175; /* 800 */
+    --color-fill-darker: 30 58 138; /* 900 */
+
+    --color-fill-lightest: 239 246 255; /* 50 */
+    --color-fill-darkest: 23 37 84; /* 950 */
+
+    --bg-grad-1: #0f172a;
+    --bg-grad-2: #334155;
+
+  }
+
+    .theme-red {
+        --color-text-light-accent: 174 30 30;
+        --color-text-dark-accent: 216 29 29;
+
+        --color-fill-lighter: 254 202 202; /* 200 */
+        --color-fill-light: 252 165 165; /* 300 */
+        --color-fill-medium: 248 113 113; /* 400 */
+        --color-fill-dark: 220 38 38; /* 600 */
+        --color-fill-darker: 153 27 27; /* 800 */
+
+        --color-fill-lightest: 254 242 242; /* 50 */
+        --color-fill-darkest: 69 10 10; /* 950 */
+
+      --bg-grad-1: #ef4444;
+      --bg-grad-2: #b91c1c;
+    }
+
+  .dark.theme-red {
+    --color-text-light-accent: 174 30 30; /* 700 */
+    --color-text-dark-accent: 216 29 29; /* 300 */
+
+    --color-fill-lighter: 239 68 68; /* 500 */
+    --color-fill-light: 220 38 38; /* 600 */
+    --color-fill-medium: 185 28 28; /* 700 */
+    --color-fill-dark: 153 27 27; /* 800 */
+    --color-fill-darker: 127 29 29; /* 900 */
+
+    --color-fill-lightest: 254 242 242; /* 50 */
+    --color-fill-darkest: 69 10 10; /* 950 */
+
+    --bg-grad-1: #7f1d1d;
+    --bg-grad-2: #450a0a;
+  }
+
+  .theme-amber {
+    --color-text-light-accent: 180 83 9; /* 700 */
+    --color-text-dark-accent: 252 211 77; /* 300 */
+
+    --color-fill-lighter: 253 230 138; /* 200 */
+    --color-fill-light: 252 211 77; /* 300 */
+    --color-fill-medium: 251 191 36; /* 400 */
+    --color-fill-dark: 217 119 6; /* 600 */
+    --color-fill-darker: 146 64 14; /* 800 */
+
+    --color-fill-lightest: 255 251 235; /* 50 */
+    --color-fill-darkest: 69 26 3; /* 950 */
+
+    --bg-grad-1: #fbbf24;
+    --bg-grad-2: #d97706;
+  }
+
+  .dark.theme-amber {
+    --color-text-light-accent: 180 83 9; /* 700 */
+    --color-text-dark-accent: 252 211 77; /* 300 */
+
+    --color-fill-lighter: 245 158 11; /* 500 */
+    --color-fill-light: 217 119 6; /* 600 */
+    --color-fill-medium: 185 28 28; /* 700 */
+    --color-fill-dark: 146 64 14; /* 800 */
+    --color-fill-darker: 120 53 15; /* 900 */
+
+    --color-fill-lightest: 255 251 235; /* 50 */
+    --color-fill-darkest: 69 26 3; /* 950 */
+
+    --bg-grad-1: #92400e;
+    --bg-grad-2: #78350f;
+  }
+
+  .theme-purple {
+    --color-text-light-accent: 126 34 206; /* 700 */
+    --color-text-dark-accent: 216 180 254; /* 300 */
+
+    --color-fill-lighter: 233 213 255; /* 200 */
+    --color-fill-light: 216 180 254; /* 300 */
+    --color-fill-medium: 192 132 252; /* 400 */
+    --color-fill-dark: 147 51 234; /* 600 */
+    --color-fill-darker: 107 33 168; /* 800 */
+
+    --color-fill-lightest: 250 245 255; /* 50 */
+    --color-fill-darkest: 59 7 100; /* 950 */
+
+    --bg-grad-1: #a855f7;
+    --bg-grad-2: #7e22ce;
+  }
+
+  .dark.theme-purple {
+    --color-text-light-accent: 126 34 206; /* 700 */
+    --color-text-dark-accent: 216 180 254; /* 300 */
+
+    --color-fill-lighter: 168 85 247; /* 500 */
+    --color-fill-light: 147 51 234; /* 600 */
+    --color-fill-medium: 126 34 206; /* 700 */
+    --color-fill-dark: 107 33 168; /* 800 */
+    --color-fill-darker: 88 28 135; /* 900 */
+
+    --color-fill-lightest: 250 245 255; /* 50 */
+    --color-fill-darkest: 59 7 100; /* 950 */
+
+    --bg-grad-1: #6b21a8;
+    --bg-grad-2: #3b0764;
+  }
+
+  .theme-green {
+    --color-text-light-accent: 21 128 61; /* 700 */
+    --color-text-dark-accent: 134 239 172; /* 300 */
+
+    --color-fill-lighter: 187 247 208; /* 200 */
+    --color-fill-light: 134 239 172; /* 300 */
+    --color-fill-medium: 74 222 128; /* 400 */
+    --color-fill-dark: 22 163 74; /* 600 */
+    --color-fill-darker: 22 101 52; /* 800 */
+
+    --color-fill-lightest: 240 253 244; /* 50 */
+    --color-fill-darkest: 5 46 22; /* 950 */
+
+    --bg-grad-1: #22c55e;
+    --bg-grad-2: #15803d;
+  }
+
+  .dark.theme-green {
+    --color-text-light-accent: 21 128 61; /* 700 */
+    --color-text-dark-accent: 134 239 172; /* 300 */
+
+    --color-fill-lighter: 34 197 94; /* 500 */
+    --color-fill-light: 22 163 74; /* 600 */
+    --color-fill-medium: 21 128 61; /* 700 */
+    --color-fill-dark: 22 101 52; /* 800 */
+    --color-fill-darker: 20 83 45; /* 900 */
+
+    --color-fill-lightest: 240 253 244; /* 50 */
+    --color-fill-darkest: 5 46 22; /* 950 */
+
+    --bg-grad-1: #166534;
+    --bg-grad-2: #14532d;
+  }
+}
+
+/* @layer components {
+    .glass-panel {
+        background: linear-gradient(225deg, rgba(255 255 255 / 0.3), rgba(255 255 255 / 0.1)), rgba(255 255 255 / .15);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        filter: saturate(150%);
+        border-radius: 30px;
+        box-shadow: inset 0px 2px 4px 0px rgba(255 255 255 / 0.8),
+                    inset 0px 20px 40px 0px rgba(255 255 255 / .5),
+                    0 8px 32px rgba(0 0 0 / 0.37);
+    }
+} */
+
+
+/* ----- Global Styling --------------------------------------------------------------------------------------------- */
+*, *::before, *::after {
+    @apply m-0 p-0 box-border placeholder:text-skin-base-light;
+}
+
+body { @apply min-h-screen font-poppins; }
+
+.grid-container { @apply grid grid-flow-row grid-cols-6 gap-6 text-skin-base-light
+                         max-md:grid-cols-1; }
+
+
+/* --- Scrollbars --------------------------------------------------------------------------------------------------- */
+*::-webkit-scrollbar { @apply w-2 h-2; }
+*::-webkit-scrollbar-track { @apply bg-transparent; }
+*::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb:hover { @apply rounded-xl bg-skin-fill-dark/50 shadow-glass; }
+
+
+/* ----- Glass Title Backgrounds ------------------------------------------------------------------------------------ */
+.glass-top-title-bg { @apply rounded-tl-xl rounded-tr-xl bg-gradient-to-b from-transparent to-white/15; }
+.glass-inner-title-bg { @apply rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-white/25 to-white/5; }
+
+
+/* ----- Charts ----------------------------------------------------------------------------------------------------- */
+.donut-chart {
+    @apply rounded-full shadow-glass;
+
+    --inner-ring-percent: 50%;
+    --fill-percent: 0;
+
+    --fill: calc(var(--fill-percent) * 1%);
+    --tw-gradient-from-position: 0;
+    --tw-gradient-to-position: var(--fill);
+
+    mask: radial-gradient(circle at 50% 50%, transparent 0 var(--inner-ring-percent), black 0 75%, transparent 0);
+    background: conic-gradient(var(--tw-gradient-stops), transparent 0 100%);
+}
+
+.bar-chart {
+    @apply  absolute top-2 left-2 bottom-2 right-2
+            rounded-[1.75rem] bg-transparent overflow-hidden
+            pointer-events-none
+            /* ----- Before: Actual Gradient ----- */
+            before:block before:w-full before:h-full
+            before:absolute before:bottom-0
+            before:rounded-lg before:bg-gradient-to-br
+            before:shadow-glass;
+
+    --fill-percent: 0;
+    --min-fill-val: 5;
+    --delta-fill: calc(var(--fill-percent) * (100 - var(--min-fill-val)) / 100);
+    --translate-value: calc(100% - var(--min-fill-val) * 1% - var(--delta-fill) * 1%);
+}
+.vertical-bar-chart { @apply before:translate-y-[var(--translate-value)]; }
+.horizontal-bar-chart { @apply before:right-[var(--translate-value)]; }
+
+/* ----- Info Structure --------------------------------------------------------------------------------------------- */
+.info-container {
+    @apply  w-full h-full relative rounded-xl glass-panel;
+}
+
+.info-container .panel-title {
+    @apply  w-full h-16
+            flex justify-center items-center
+            font-bold text-xl;
+}
+.info-container .info-content {
+     @apply w-11/12 h-auto mx-auto p-6
+            grid gap-3;
+}
+
+/* ----- Base Color ------------------------------------------------------------------------------------------------- */
+
+.calories { @apply from-green-500/75 to-green-600/75; }
+.carbs { @apply from-blue-300/75  to-blue-400/75; }
+.proteins { @apply from-red-300/75 to-red-400/75; }
+.fats { @apply from-amber-300/75 to-amber-400/75; }
+.fibers { @apply from-yellow-800/75 to-yellow-900/75; }
+
+.mood-happy { @apply from-teal-500 to-teal-700; }
+.mood-fine { @apply from-green-500 to-green-700; }
+.mood-normal { @apply from-blue-500 to-blue-700; }
+.mood-sad { @apply from-orange-500 to-orange-700; }
+.mood-dispear { @apply from-red-500 to-red-700; }
+
+
