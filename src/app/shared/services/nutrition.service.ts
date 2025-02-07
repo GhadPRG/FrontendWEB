@@ -15,18 +15,17 @@ export class NutritionService implements OnInit{
   private appId = 'ae6bbf02'; // App ID - Bruno Caruso
   private appKey = '11200806d60896b176ad76b08e53d83b'; // App Key - Bruno Caruso
   private baseUrl = "http://localhost:8080/api"
-    private token: string | null = localStorage.getItem("token") ? localStorage.getItem("token") : null
+  private token: string | null = localStorage.getItem("token") ? localStorage.getItem("token") : null
 
-    private userService = inject(UserService);
-    private dailyKcals: number | undefined;
+  private dailyKcals: number | undefined;
 
-    private getHeaders(): HttpHeaders {
-        let headers = new HttpHeaders()
-        if (this.token) {
-            headers = headers.set("Authorization", `Bearer ${this.token}`)
-        }
-        return headers
-    }
+  private getHeaders(): HttpHeaders {
+      let headers = new HttpHeaders()
+      if (this.token) {
+          headers = headers.set("Authorization", `Bearer ${this.token}`)
+      }
+      return headers
+  }
 
   readonly mealTypes = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
 
@@ -51,14 +50,17 @@ export class NutritionService implements OnInit{
     };
   });
 //const dailyKcals = inject(UserService).getUserInfo().dailyCalories;
-  constructor(private http: HttpClient, userService: UserService) {
-      this.userService = userService;
+  constructor(
+    private http: HttpClient, 
+    private userService: UserService
+  ) 
+  {}
+    
+  ngOnInit(): void {
+      // Assegna il valore direttamente alla proprietà di classe
+      this.dailyKcals = this.userService.getUserInfo().dailyCalories;
+      console.log(this.dailyKcals); // Usa "this" per accedere alla proprietà di classe
   }
-    ngOnInit(): void {
-        // Assegna il valore direttamente alla proprietà di classe
-        this.dailyKcals = this.userService.getUserInfo().dailyCalories;
-        console.log(this.dailyKcals); // Usa "this" per accedere alla proprietà di classe
-    }
 
   // External Data Requests
   searchFood(query: string): Observable<any> {
