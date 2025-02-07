@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import {computed, inject, Injectable, OnInit, signal} from '@angular/core';
 import { Observable } from 'rxjs';
 import { DishInterface, FlattenDish, MacrosInterface, MealDictionary, MealInterface } from '../utils/types/nutrition.interfaces';
 import { UserService } from './user.service';
@@ -7,17 +7,27 @@ import { UserService } from './user.service';
 @Injectable({
   providedIn: 'root'
 })
-export class NutritionService {
+export class NutritionService implements OnInit{
 
   // API Data & Urls
   private apiUrlSearchFood = 'https://trackapi.nutritionix.com/v2/search/instant'; // Endpoint API
   private apiUrlGetFoodInfo = 'https://trackapi.nutritionix.com/v2/natural/nutrients'; // Endpoint API
   private appId = 'ae6bbf02'; // App ID - Bruno Caruso
   private appKey = '11200806d60896b176ad76b08e53d83b'; // App Key - Bruno Caruso
+  private baseUrl = "http://localhost:8080/api"
+    private token: string | null = localStorage.getItem("token") ? localStorage.getItem("token") : null
 
-  // Internal Url
-  private serverUrl: string = 'http://localhost:8080/api/meal';
-  // Data
+    private userService = inject(UserService);
+    private dailyKcals: number | undefined;
+
+    private getHeaders(): HttpHeaders {
+        let headers = new HttpHeaders()
+        if (this.token) {
+            headers = headers.set("Authorization", `Bearer ${this.token}`)
+        }
+        return headers
+    }
+
   readonly mealTypes = ['Breakfast', 'Lunch', 'Dinner', 'Snack'];
 
   dailyTarget = signal<MacrosInterface>({
@@ -40,9 +50,15 @@ export class NutritionService {
       fats: this.clamp(0, (consumedValue.fats / (dailyValue.fats === 0 ? 1 : dailyValue.fats)) * 100, 100),
     };
   });
-
-  constructor(private http: HttpClient) {}
-
+//const dailyKcals = inject(UserService).getUserInfo().dailyCalories;
+  constructor(private http: HttpClient, userService: UserService) {
+      this.userService = userService;
+  }
+    ngOnInit(): void {
+        // Assegna il valore direttamente alla proprietà di classe
+        this.dailyKcals = this.userService.getUserInfo().dailyCalories;
+        console.log(this.dailyKcals); // Usa "this" per accedere alla proprietà di classe
+    }
 
   // External Data Requests
   searchFood(query: string): Observable<any> {
@@ -65,26 +81,16 @@ export class NutritionService {
 
   getTodayMeals(): Observable<MealDictionary> {
 
-    const tempToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODg0MDY5OSwiZXhwIjoxNzM4OTI3MDk5fQ.NuNkFLRUX_otunfy9DS_-AAfK9044MkVfg9Wl4JHBkQ';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${tempToken}`
-    });
-
-    let request = this.http.get<MealDictionary>(`${this.serverUrl}`, { headers });
+    let request = this.http.get<MealDictionary>(`${this.baseUrl}/meal`, { headers: this.getHeaders() });
     request.subscribe({
-      next: (responce) => this.recalculateMacros(responce)
+      next: (response) => this.recalculateMacros(response)
     });
 
     return request;
   }
 
   registerNewDish(dish: DishInterface): Observable<any> {
-    const tempToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbGljZSIsImlhdCI6MTczODg0MDY5OSwiZXhwIjoxNzM4OTI3MDk5fQ.NuNkFLRUX_otunfy9DS_-AAfK9044MkVfg9Wl4JHBkQ';
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${tempToken}`
-    });
-
-    let request: Observable<any> = this.http.post(`${this.serverUrl}`, this.dishFlattener(dish), {headers});
+    let request: Observable<any> = this.http.post(`${this.baseUrl}/meal`, this.dishFlattener(dish),{ headers: this.getHeaders() });
 
     request.subscribe({
       next: (response) => {
@@ -101,28 +107,42 @@ export class NutritionService {
     return request;
   }
 
-  // Internal Calcutations
-  setMacroValues(): void {
-    const dailyKcals = inject(UserService).getUserInfo().dailyCalories;
-    //const dailyKcals = 2000;
+    setMacroValues(): void {
+        // Assicurati che dailyKcals sia definito
+        if (this.dailyKcals === undefined) {
+            console.error('Daily calories are not defined');
+            return; // Esci dalla funzione se dailyKcals non è definito
+        }
 
-    const carbsDailyKcalFactor = 0.5; const carbsPowerFactor = 3.75;
-    const fatsDailyKcalFactor = 0.25; const fatsPowerFactor = 9;
-                                      const proteinPowerFactor = 4;
+        // Costanti per i calcoli
+        const carbsDailyKcalFactor = 0.5;
+        const carbsPowerFactor = 3.75;
+        const fatsDailyKcalFactor = 0.25;
+        const fatsPowerFactor = 9;
+        const proteinPowerFactor = 4;
 
-    let carbsKcal = dailyKcals * carbsDailyKcalFactor;
-    let fatsKcal = dailyKcals * fatsDailyKcalFactor;
-    let proteinsKcal = dailyKcals - carbsKcal - fatsKcal;
+        // Calcoli delle calorie per macronutrienti
+        const carbsKcal = this.dailyKcals * carbsDailyKcalFactor;
+        const fatsKcal = this.dailyKcals * fatsDailyKcalFactor;
+        const proteinsKcal = this.dailyKcals - carbsKcal - fatsKcal;
 
-    let carbsGPerDay = carbsKcal / carbsPowerFactor;
-    let fatsGPerDay = fatsKcal / fatsPowerFactor;
-    let proteinsGPerDay = proteinsKcal / proteinPowerFactor;
-    const fibersGPerDay = 26;
+        // Conversione delle calorie in grammi
+        const carbsGPerDay = carbsKcal / carbsPowerFactor;
+        const fatsGPerDay = fatsKcal / fatsPowerFactor;
+        const proteinsGPerDay = proteinsKcal / proteinPowerFactor;
 
-    this.dailyTarget.update(current => ({
-      kcalories: dailyKcals, carbs: carbsGPerDay, fats: fatsGPerDay, proteins: proteinsGPerDay, fibers: fibersGPerDay
-    }));
-  }
+        // Fibre fisse
+        const fibersGPerDay = 26;
+
+        // Aggiorna il target giornaliero
+        this.dailyTarget.update(current => ({
+            kcalories: this.dailyKcals!, // Usa l'operatore "non-null assertion" (!)
+            carbs: carbsGPerDay,
+            fats: fatsGPerDay,
+            proteins: proteinsGPerDay,
+            fibers: fibersGPerDay
+        }));
+    }
 
   recalculateMacros(mealDict: MealDictionary): void {
     const comsumedMacros: MacrosInterface = Object.values(mealDict).reduce<MacrosInterface>(

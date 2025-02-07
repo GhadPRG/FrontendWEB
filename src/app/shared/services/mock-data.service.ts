@@ -8,7 +8,7 @@ import {UserInfoInterface} from '../utils/types/user.interfaces';
   providedIn: "root",
 })
 export class MockDataService {
-  useMockData: boolean = true;
+  useMockData: boolean = false;
 
   private events: CalendarEvent[] = [
     {
