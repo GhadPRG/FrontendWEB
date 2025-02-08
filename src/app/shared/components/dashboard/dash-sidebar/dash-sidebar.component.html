@@ -33,6 +33,18 @@
                 </a>
             </li>
             <li class="sidebar-link">
+                <a routerLink="/dashboard/mood" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" class="link">
+                    <i class="bx bxs-smile bx-sm"></i>
+                    <span>Mood Tracker</span>
+                </a>
+            </li>
+            <li class="sidebar-link">
+                <a routerLink="/dashboard/calendar" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" class="link">
+                    <i class="bx bxs-calendar bx-sm"></i>
+                    <span>Calendar & Notes</span>
+                </a>
+            </li>
+            <!-- <li class="sidebar-link">
                 <button #dropDownButtonForSubMenu class="dropdown-btn">
                     <i class="bx bxs-edit bx-sm"></i>
                     <span>Journal</span>
@@ -45,13 +57,7 @@
                         <li><a class="link">Notes</a></li>
                     </div>
                 </ul>
-            </li>
-            <li class="sidebar-link">
-                <a routerLink="/dashboard/calendar" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }" class="link">
-                    <i class="bx bxs-calendar bx-sm"></i>
-                    <span>Calendar</span>
-                </a>
-            </li>
+            </li> -->
             <div class="links-divider"></div>
           <li class="sidebar-link">
             <a class="link" (click)="toggleDarkMode()">

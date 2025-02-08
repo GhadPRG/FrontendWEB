@@ -52,9 +52,6 @@ export class DashSportComponent implements OnInit, AfterViewInit {
 
         this.exerciseDict = this.sportService.mapExericesToExerciseDictionary(unflattenResponse);
         this.todayExerciseDict = this.sportService.mapToTodayExerices(this.exerciseDict);
-
-        console.log('exercise dict', this.exerciseDict);
-        console.log('today dict', this.todayExerciseDict);
       }
     });
   }
@@ -127,9 +124,6 @@ export class DashSportComponent implements OnInit, AfterViewInit {
         // Local Update
         this.exerciseDict[currentExercise.exerciseInfo.target_muscle_group].push(currentExercise);
         this.todayExerciseDict[currentExercise.exerciseInfo.target_muscle_group].push(currentExercise);
-
-        console.log('exercise dict', this.exerciseDict);
-        console.log('today dict', this.todayExerciseDict);
 
         // Resetting Values
         setTimeout(() => {
