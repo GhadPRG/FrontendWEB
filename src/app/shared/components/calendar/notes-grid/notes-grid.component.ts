@@ -52,7 +52,8 @@ export class NotesGridComponent implements OnInit {
   }
 
   onFilterChange() {
-    this.filteredNotes = this.getFilteredNotes();
+
+    this.filteredNotes = [...this.getFilteredNotes()];
     this.cdr.detectChanges()
   }
 
