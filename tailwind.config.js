@@ -63,7 +63,7 @@ module.exports = {
     plugin(function ({ addComponents }) {
       addComponents({
         '.glass-panel' : {
-          'background': 'linear-gradient(225deg, rgba(255 255 255 / 0.3), rgba(255 255 255 / 0.1)), rgba(255 255 255 / .2)',
+          'background': 'linear-gradient(225deg, rgba(var(--glass-panel-bg) / 0.3), rgba(var(--glass-panel-bg) / 0.1)), rgba(var(--glass-panel-bg) / .2)',
 
           '-webkit-backdrop-filter': 'blur(8px)',
           'backdrop-filter': 'blur(8px)',

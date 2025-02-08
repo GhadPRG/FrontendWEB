@@ -6,11 +6,38 @@
     @apply  w-full h-full
             grid grid-cols-[auto_1fr_auto];
 
-    background-image: linear-gradient(to bottom right, var(--bg-grad-1), var(--bg-grad-2));
+    /* background-image: linear-gradient(to bottom right, var(--bg-grad-1), var(--bg-grad-light)); */
+
+    background:  
+                /* ----- Sphere at Top Left 2 ----- */
+                radial-gradient(circle at 33% 10%, rgba(var(--bg-lin-grad-tone) / 20%) 3%, rgba(var(--bg-lin-grad-tone) / 10%) 5%, transparent ),
+                radial-gradient(circle at 32% 15%, rgba(var(--bg-lin-grad-light) / 70%) 3%, transparent 0),
+                /* ----- Sphere at Top Left 1 ----- */
+                radial-gradient(circle at 23% 20%, rgba(var(--bg-lin-grad-tone) / 20%) 3%, rgba(var(--bg-lin-grad-tone) / 10%) 5%, transparent ),
+                radial-gradient(circle at 25% 25%, rgba(var(--bg-lin-grad-light) / 100%) 5%, rgba(var(--bg-lin-grad-light) / 60%) 5%, rgba(var(--bg-lin-grad-dark) / 20%) 5%, transparent ),
+                /* ----- Sphere at Center Right ----- */
+                radial-gradient(circle at 60% 60%, rgba(var(--bg-lin-grad-tone) / 50%) 3%, rgba(var(--bg-lin-grad-tone) / 30%) 8%, transparent ),
+                radial-gradient(circle at 65% 65%, rgba(var(--bg-lin-grad-light) / 100%) 5%, rgba(var(--bg-lin-grad-light) / 60%) 10%, rgba(var(--bg-lin-grad-dark) / 20%) 5%, transparent ),
+                /* ----- Sphere at Bottom Right ----- */
+                radial-gradient(circle at 90% 90%, rgba(var(--bg-lin-grad-dark) / 80%) 5%, rgba(var(--bg-lin-grad-dark) / 30%) 10%, transparent ),
+                radial-gradient(circle at 80% 80%, rgba(var(--bg-lin-grad-tone) / 80%) 20%, transparent 0),
+                /* ----- Big Donut on Top Left ----- */
+                radial-gradient(circle at 100% 0%, transparent 20%, rgba(var(--bg-lin-grad-light) / 50%) 0 40.3%, transparent 0),
+                /* ----- Sphere at Bottom Left ----- */
+                radial-gradient(circle at 0% 85%, rgba(var(--bg-lin-grad-light) / 70%) 5%, rgba(var(--bg-lin-grad-light) / 40%) 10%, transparent ),
+                radial-gradient(circle at 0% 100%, rgba(var(--bg-lin-grad-dark) / 80%) 15%, transparent 0),
+                /* ----- Background Gradient ----- */
+                linear-gradient(217deg, rgba(var(--bg-lin-grad-tone) / 80%), rgba(var(--bg-lin-grad-tone) / 0%) 70.71%),
+                linear-gradient(127deg, rgba(var(--bg-lin-grad-light) / 80%), rgba(var(--bg-lin-grad-light) / 0%) 70.71%),
+                linear-gradient(335deg, rgba(var(--bg-lin-grad-dark) / 80%), rgba(var(--bg-lin-grad-dark) / 0%) 70.71%),
+                /* ----- Background Color Default ----- */
+                rgba(var(--bg-default-fill) / 100);
+    
 
     --sidebar-sm-size: calc(var(--icon-with-padding-size) + 1.5rem);
     --sidebar-close-size: calc(var(--icon-with-padding-size) + 1rem);
     --icon-with-padding-size: calc(24.8px + 1rem);
+
 }
 
 .dashboard-container .wrapper { @apply w-min h-min sticky top-0; }

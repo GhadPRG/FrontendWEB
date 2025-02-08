@@ -21,11 +21,10 @@
 .sidebar .toggle-btn-container .logo {
     @apply  w-[var(--icon-with-padding-size)] h-[var(--icon-with-padding-size)]
             absolute left-0
-            rounded-lg glass-panel /* bg-gradient-to-br from-skin-fill-dark to-skin-fill-darker */
+            rounded-lg glass-panel
             flex justify-center items-center
             text-2xl font-bold
             transition-all duration-300
-            /* shadow-custom-for-button; */
 }
 
 .sidebar .toggle-btn-container .toggle-btn {
@@ -57,8 +56,7 @@
             flex flex-col justify-start items-start
             transition-all duration-500 ease-in-out;
 }
-.sidebar .account-info-box .account-text-info .user-name { @apply text-xl font-bold; }
-.sidebar .account-info-box .account-text-info .user-mail { @apply text-xs; }
+.sidebar .account-info-box .account-text-info .user-name { @apply text-xl font-bold text-wrap; }
 
 
 /* ----- SideBar: Navigation Links ---------------------------------------------------------------------------------- */

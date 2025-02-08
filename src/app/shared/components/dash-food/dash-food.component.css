@@ -112,11 +112,11 @@
 
 /* ----- Nutrition: Food Search ------------------------------------------------------------------------------------- */
 .info-container.dish-form .food-search {
-    @apply  w-full h-12 p-2 rounded-full shadow-glass
+    @apply  w-full h-12 p-1 rounded-full shadow-glass
             flex justify-start items-center space-x-1;
 }
 .info-container.dish-form .food-search .food-search-input {
-    @apply  w-full h-full flex-1 px-2
+    @apply  w-full h-full flex-1 px-3
             bg-transparent outline-none placeholder:text-skin-base-light;
 }
 .info-container.dish-form .food-search .food-search-btn {
