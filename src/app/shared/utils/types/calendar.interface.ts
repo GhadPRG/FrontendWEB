@@ -2,7 +2,6 @@ import type { DateTime } from "luxon"
 
 export interface CalendarEvent {
   id: number
-  categoryId?: number
   title: string
   description?: string
   start: DateTime
@@ -37,7 +36,6 @@ export interface Category {
 // Backend DTO interfaces
 export interface EventDTO {
   id?: number
-  categoryId?: number
   title: string
   description?: string
   start: string

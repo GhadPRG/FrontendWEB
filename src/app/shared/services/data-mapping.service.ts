@@ -127,7 +127,6 @@ export class DataMappingService {
   private convertEventDTOToCalendarEvent(dto: EventDTO): CalendarEvent {
     return {
       id: dto.id!,
-      categoryId: dto.categoryId,
       title: dto.title,
       description: dto.description,
       start: DateTime.fromISO(dto.start),
@@ -139,7 +138,6 @@ export class DataMappingService {
   private convertCalendarEventToEventDTO(event: CalendarEvent): EventDTO {
     return {
       id: event.id,
-      categoryId: event.categoryId,
       title: event.title,
       description: event.description,
       start: event.start.toISO() ?? DateTime.now().toISO(),
