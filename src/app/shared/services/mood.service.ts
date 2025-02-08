@@ -78,11 +78,7 @@ export class MoodService {
   }
 
   getMoods(): Observable<MoodInterface[]>{
-    let request = this.http.get<MoodInterface[]>(`${this.serverUrl}`, { headers: this.getHeaders() });
-
-    request.subscribe((response) => console.log(response))
-
-    return request;
+    return this.http.get<MoodInterface[]>(`${this.serverUrl}`, { headers: this.getHeaders() });
   }
 
   registerNewMood(mood: MoodInterface): Observable<any> {
