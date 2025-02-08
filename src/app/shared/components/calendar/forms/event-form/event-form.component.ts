@@ -103,7 +103,7 @@ export class EventFormComponent implements OnInit, OnChanges {
         next: () => {
         },
         error: (error) => {
-          console.error('Error updating event:', error);
+          //console.error('Error updating event:', error);
         }
       });
     } else {
@@ -111,7 +111,7 @@ export class EventFormComponent implements OnInit, OnChanges {
         next: () => {
         },
         error: (error) => {
-          console.error('Error adding event:', error);
+          //console.error('Error adding event:', error);
         }
       });
     }
@@ -167,7 +167,7 @@ export class EventFormComponent implements OnInit, OnChanges {
       next: () => {
       },
       error: (error) => {
-        console.error('Error deleting event:', error);
+        // console.error('Error deleting event:', error);
       }
     });
   }
