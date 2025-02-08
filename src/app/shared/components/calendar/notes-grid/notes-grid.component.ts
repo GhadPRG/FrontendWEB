@@ -36,7 +36,7 @@ export class NotesGridComponent implements OnInit {
 
   loadData(): void {
     this.eventNoteService.notes$.subscribe((notes) => {
-      this.notes = [...notes]
+      this.notes = notes
       this.onFilterChange()
     })
 
@@ -52,8 +52,7 @@ export class NotesGridComponent implements OnInit {
   }
 
   onFilterChange() {
-
-    this.filteredNotes = [...this.getFilteredNotes()];
+    this.filteredNotes = this.getFilteredNotes();
     this.cdr.detectChanges()
   }
 
@@ -120,10 +119,6 @@ export class NotesGridComponent implements OnInit {
   closeNoteForm() {
       this.isNoteFormOpen = false
       this.selectedNote = null
-  }
-
-  trackByNoteId(index: number, note: Note): number {
-    return note.id
   }
 
 }
