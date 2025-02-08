@@ -9,12 +9,12 @@
     </header>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-        <article *ngFor="let note of filteredNotes"
+        <article *ngFor="let note of filteredNotes; trackBy: trackByNoteId"
                  (click)="onNoteClick(note)"
                  class="bg-background/60 backdrop-blur-sm rounded-lg p-2 sm:p-3 md:p-4 hover:bg-background/80 transition-all cursor-pointer group border border-border"
                  [style.backgroundColor]="getNoteBgColor(note)">
             <header class="flex justify-between items-start mb-2">
-                <h3 class="text-sm sm:text-base md:text-lg font-medium text-foreground">{{ note.title }}</h3>
+                <h3 class="text-sm line-clamp-2 sm:text-base md:text-lg font-medium text-foreground">{{ note.title }}</h3>
                 <div class="flex space-x-1 sm:space-x-2 opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity">
                     <button (click)="$event.stopPropagation(); onNoteClick(note)"
                             class="text-muted-foreground hover:text-foreground transition-colors p-1 rounded-full hover:bg-background/80">

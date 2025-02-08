@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ConfirmDeleteModalComponent} from '../forms/confirm-delete-modal/confirm-delete-modal.component';
 import {NgForOf} from '@angular/common';
 import {Note, Tag} from '../../../utils/types/calendar.interface';
@@ -27,7 +27,8 @@ export class NotesGridComponent implements OnInit {
   noteToDelete: Note | null = null;
   filteredNotes: Note[] = []
 
-  constructor(private eventNoteService: EventNoteService) {}
+  constructor(private eventNoteService: EventNoteService,
+              private cdr: ChangeDetectorRef,) {}
 
   ngOnInit() {
     this.loadData()
@@ -52,6 +53,7 @@ export class NotesGridComponent implements OnInit {
 
   onFilterChange() {
     this.filteredNotes = this.getFilteredNotes();
+    this.cdr.detectChanges()
   }
 
   getFilteredNotes(): Note[] {
@@ -117,6 +119,10 @@ export class NotesGridComponent implements OnInit {
   closeNoteForm() {
       this.isNoteFormOpen = false
       this.selectedNote = null
+  }
+
+  trackByNoteId(index: number, note: Note): number {
+    return note.id
   }
 
 }
