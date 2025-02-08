@@ -78,11 +78,19 @@ export class MoodService {
   }
 
   getMoods(): Observable<MoodInterface[]>{
-    return this.http.get<MoodInterface[]>(`${this.serverUrl}`, { headers: this.getHeaders() });;
+    let request = this.http.get<MoodInterface[]>(`${this.serverUrl}`, { headers: this.getHeaders() });
+
+    request.subscribe((response) => console.log(response))
+
+    return request;
   }
 
   registerNewMood(mood: MoodInterface): Observable<any> {
-    return this.http.post(`${this.serverUrl}`, mood, { headers: this.getHeaders() });
+    let request = this.http.post(`${this.serverUrl}`, mood, { headers: this.getHeaders() });
+    
+    request.subscribe((response) => console.log(response));
+
+    return request;
   }
 
   mapMoodArrayToDictionary(moods: MoodInterface[]): MoodDictionary {
