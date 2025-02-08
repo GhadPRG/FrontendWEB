@@ -62,18 +62,14 @@ export class SportService {
         });
 
     let request = this.http.post(`${this.apiUrlSearchExercise}`, { query: exerciseName }, { headers });
-    
+
     request.subscribe();
 
     return request;
   }
 
   registerNewExercise(exercise: ExerciseInterface): Observable<any> {
-    let request = this.http.post(`${this.serverUrl}`, this.flattenExercise(exercise), { headers: this.getHeaders() });
-
-    request.subscribe();
-
-    return request;
+    return this.http.post(`${this.serverUrl}`, this.flattenExercise(exercise), { headers: this.getHeaders() });
   }
 
 
