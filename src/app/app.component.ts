@@ -26,6 +26,5 @@ export class AppComponent implements OnInit {
     this.themeService.themeColor$.subscribe((color) => {
       this.themeColor = color
     })
-    console.log(this.themeColor);
   }
 }

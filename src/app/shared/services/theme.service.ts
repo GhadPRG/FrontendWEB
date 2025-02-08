@@ -22,7 +22,7 @@ export class ThemeService {
     const haveDark = localStorage.getItem("dark-mode");
 
     if (haveDark) {
-      this.setDarkMode(haveDark === "dark-mode")
+      this.setDarkMode(haveDark === "dark")
     } else {
       // If no stored theme, check system preference
       const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches

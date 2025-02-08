@@ -1,7 +1,7 @@
-<div class="bg-background/60 backdrop-blur-sm rounded-lg shadow-lg p-3 sm:p-4 md:p-6 text-foreground">
+<div class=" backdrop-blur-sm rounded-lg shadow-lg p-3 sm:p-4 md:p-6 text-skin-base-light">
     <h2 class="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 md:mb-6">Timeline</h2>
     <div *ngFor="let day of groupedEvents | keyvalue" class="mb-4 sm:mb-6 md:mb-8">
-        <div class="bg-background/80 text-foreground rounded-md px-2 sm:px-3 py-1 inline-block mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm font-medium">
+        <div class="rounded-md px-2 sm:px-3 py-1 inline-block mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm font-medium">
             {{ formatDate(day.key) }}
         </div>
         <div *ngFor="let event of day.value" class="relative pl-4 sm:pl-6 md:pl-8 pb-3 sm:pb-4 md:pb-6">
@@ -18,11 +18,11 @@
                              class="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full"
                              [style.backgroundColor]="getTagColor(tagId)">
                         </div>
-                        <div *ngIf="event.tags.length > 3" class="text-[10px] sm:text-xs text-muted-foreground">+{{ event.tags.length - 3 }}</div>
+                        <div *ngIf="event.tags.length > 3" class="text-[10px] sm:text-xs text-skin-muted-light">+{{ event.tags.length - 3 }}</div>
                     </div>
                 </div>
-                <h3 class="text-sm sm:text-base md:text-lg font-medium mb-1 text-foreground">{{ event.title }}</h3>
-                <p class="text-xs sm:text-sm text-muted-foreground line-clamp-2">{{ event.description }}</p>
+                <h3 class="text-sm sm:text-base md:text-lg font-medium mb-1">{{ event.title }}</h3>
+                <p class="text-xs sm:text-sm text-skin-muted-light line-clamp-2">{{ event.description }}</p>
             </div>
         </div>
     </div>

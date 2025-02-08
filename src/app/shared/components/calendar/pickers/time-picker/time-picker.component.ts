@@ -99,19 +99,6 @@ export class TimePickerComponent implements ControlValueAccessor {
     this.timeChange.emit(time)
   }
 
-  confirm(event: Event): void {
-    event.preventDefault()
-    event.stopPropagation()
-    this.isOpen = false
-    this.updateTime()
-  }
-
-  cancel(event: Event): void {
-    event.preventDefault()
-    event.stopPropagation()
-    this.isOpen = false
-  }
-
   onClickOutside(): void {
     this.isOpen = false
   }

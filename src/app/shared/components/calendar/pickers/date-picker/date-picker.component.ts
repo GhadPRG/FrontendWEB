@@ -96,21 +96,6 @@ export class DatePickerComponent implements ControlValueAccessor {
     }
   }
 
-  confirm(event: Event) {
-    event.preventDefault()
-    event.stopPropagation()
-    this.isOpen = false
-    if (this.selectedDate) {
-      this.dateSelected.emit(this.selectedDate)
-    }
-  }
-
-  cancel(event: Event) {
-    event.preventDefault()
-    event.stopPropagation()
-    this.isOpen = false
-  }
-
   writeValue(value: DateTime | null): void {
     this.selectedDate = value
     if (value) {

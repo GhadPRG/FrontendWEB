@@ -41,13 +41,18 @@ export class CalendarNotesComponent implements OnInit {
     this.loadData()
   }
 
-  loadData() {
+  loadData()
+  {
     this.eventNoteService.events$.subscribe((events) => {
       this.events = events
+      // Forza l'aggiornamento della vista
+      this.updateCalendar()
     })
 
     this.eventNoteService.categories$.subscribe(() => {
       this.tags = this.eventNoteService.getAllTags()
+      // Forza l'aggiornamento della vista
+      this.updateCalendar()
     })
 
     this.eventNoteService.tagSelected$.subscribe((filteredTags) => {
@@ -94,13 +99,24 @@ export class CalendarNotesComponent implements OnInit {
     this.selectedDay = date
   }
 
-  getEventsForDay(day: DateTime): (CalendarEvent & { color: string })[] {
+  getEventsForDay(day: DateTime)
+    : (CalendarEvent &
+    {
+      color: string
+    }
+    )[]
+  {
     return this.events
-      .filter((event) => event.start.hasSame(day, "day") || (event.end && event.end.hasSame(day, "day")))
+      .filter((event) => {
+        const eventStart = event.start.startOf('day');
+        const eventEnd = event.end ? event.end.startOf('day') : eventStart;
+        const currentDay = day.startOf('day');
+        return currentDay >= eventStart && currentDay <= eventEnd;
+      })
       .map((event) => ({
         ...event,
         color: this.getEventColor(event),
-      }))
+      }));
   }
 
   getEventColor(event: CalendarEvent): string {

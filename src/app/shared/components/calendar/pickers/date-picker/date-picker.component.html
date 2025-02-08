@@ -6,7 +6,7 @@
     readonly
     [placeholder]="placeholder"
     [disabled]="disabled"
-    class="w-full px-2 sm:px-3 py-1 sm:py-2 text-foreground rounded-md border border-input focus:outline-none focus:ring-2 focus:ring-skin-accent-light focus:border-transparent cursor-pointer text-sm sm:text-base"
+    class="text-black w-full px-2 sm:px-3 py-1 sm:py-2 rounded-md border border-input focus:outline-none focus:ring-2 focus:ring-skin-accent-light focus:border-transparent cursor-pointer text-sm sm:text-base"
   />
 
   <div *ngIf="isOpen"
@@ -45,16 +45,5 @@
         {{ date.toFormat('d') }}
       </button>
     </div>
-
-    <footer class="flex justify-end space-x-2 mt-2 sm:mt-3">
-      <button (click)="cancel($event)"
-              class="px-2 sm:px-3 py-1 rounded-md hover:bg-skin-fill-medium text-foreground transition-colors text-xs sm:text-sm">
-        Annulla
-      </button>
-      <button (click)="confirm($event)"
-              class="px-2 sm:px-3 py-1 rounded-md bg-skin-fill-medium hover:bg-skin-fill-dark text-skin-base-dark transition-colors text-xs sm:text-sm">
-        OK
-      </button>
-    </footer>
   </div>
 </div>

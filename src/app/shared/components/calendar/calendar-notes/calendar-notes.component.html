@@ -1,21 +1,21 @@
-<article >
+<article class="text-skin-base-light">
     <header class="flex justify-between items-center mb-2">
         <h2 class="text-sm font-semibold text-foreground">{{ currentMonth.toFormat('MMM yyyy') }}</h2>
         <div class="flex gap-1">
             <button (click)="prevMonth()"
-                    class="w-8 h-8 rounded-lg bg-skin-fill-dark text-skin-base-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
+                    class="w-8 h-8 rounded-lg bg-skin-fill-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
             <button (click)="nextMonth()"
-                    class="w-8 h-8 rounded-lg bg-skin-fill-dark text-skin-base-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
+                    class="w-8 h-8 rounded-lg bg-skin-fill-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
             </button>
             <button (click)="openEventForm()"
-                    class="w-8 h-8 rounded-lg bg-skin-fill-dark text-skin-base-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
+                    class="w-8 h-8 rounded-lg bg-skin-fill-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
