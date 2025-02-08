@@ -48,11 +48,14 @@ export class ApiService {
   }
 
   updateEvent(event: EventDTO): Observable<EventDTO> {
-    return this.http.put<EventDTO>(`${this.baseUrl}/events/${event.id}`, event, { headers: this.getHeaders() })
+    return this.http.put<EventDTO>(`${this.baseUrl}/calendar`, event, { headers: this.getHeaders() })
   }
 
   deleteEvent(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/events/${id}`, { headers: this.getHeaders() })
+    return this.http.delete<void>(`${this.baseUrl}/calendar`, {
+      headers: this.getHeaders(),
+      params: { id: id } // Aggiungi l'id come query parameter
+    })
   }
 
   // Notes CRUD
