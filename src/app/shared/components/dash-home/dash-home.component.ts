@@ -33,8 +33,11 @@ export class DashHomeComponent implements OnInit {
   ngOnInit(): void {
     this.dashService.setHeaderText('');
 
-    // Start Services
+    // Start Services - Nutrition
     this.nutritionService.getTodayMeals();
+    this.nutritionService.setMacroValues();
+
+    // Start Services - Sport
     this.sportService.getWeekExercise().subscribe({
       next: (response) => {
         const unflattenResponse = this.sportService.unflattenExercises(response);
@@ -44,6 +47,8 @@ export class DashHomeComponent implements OnInit {
         this.sportService.mapExericesToExerciseDictionary(unflattenResponse);
       }
     });
+
+    // Start Services - Moods
     this.moodService.getMoods();
   }
 

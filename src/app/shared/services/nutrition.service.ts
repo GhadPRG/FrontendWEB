@@ -17,7 +17,7 @@ export class NutritionService implements OnInit{
   private baseUrl = "http://localhost:8080/api"
   private token: string | null = localStorage.getItem("token") ? localStorage.getItem("token") : null
 
-  private dailyKcals: number | undefined;
+  private dailyKcals: number = 2000;
 
   private getHeaders(): HttpHeaders {
       let headers = new HttpHeaders()
@@ -57,9 +57,10 @@ export class NutritionService implements OnInit{
   {}
 
   ngOnInit(): void {
-      // Assegna il valore direttamente alla proprietà di classe
-      this.dailyKcals = this.userService.getUserInfo().dailyCalories;
-      console.log(this.dailyKcals); // Usa "this" per accedere alla proprietà di classe
+    const dailyUserCalories = this.userService.getUserInfo().dailyCalories;
+    if (!dailyUserCalories || dailyUserCalories === 0) { this.dailyKcals = dailyUserCalories; }
+
+    console.log(this.dailyKcals);
   }
 
   // External Data Requests
@@ -106,40 +107,36 @@ export class NutritionService implements OnInit{
   }
 
   setMacroValues(): void {
-      // Assicurati che dailyKcals sia definito
-      if (this.dailyKcals === undefined) {
-          console.error('Daily calories are not defined');
-          return; // Esci dalla funzione se dailyKcals non è definito
-      }
 
-      // Costanti per i calcoli
+      // Constant Factors
       const carbsDailyKcalFactor = 0.5;
-      const carbsPowerFactor = 3.75;
       const fatsDailyKcalFactor = 0.25;
+
+      const carbsPowerFactor = 3.75;
       const fatsPowerFactor = 9;
       const proteinPowerFactor = 4;
 
-      // Calcoli delle calorie per macronutrienti
+      // Minimum MacroKcals from Daily Kcalories
       const carbsKcal = this.dailyKcals * carbsDailyKcalFactor;
       const fatsKcal = this.dailyKcals * fatsDailyKcalFactor;
       const proteinsKcal = this.dailyKcals - carbsKcal - fatsKcal;
 
-      // Conversione delle calorie in grammi
+      // Minimum MacroGrams from MacroKcals
       const carbsGPerDay = carbsKcal / carbsPowerFactor;
       const fatsGPerDay = fatsKcal / fatsPowerFactor;
       const proteinsGPerDay = proteinsKcal / proteinPowerFactor;
 
-      // Fibre fisse
+      // Fixed Number of Fibers
       const fibersGPerDay = 26;
 
-      // Aggiorna il target giornaliero
-      this.dailyTarget.update(current => ({
-          kcalories: this.dailyKcals!, // Usa l'operatore "non-null assertion" (!)
+      // Set Daiily Target
+      this.dailyTarget.set({
+          kcalories: this.dailyKcals!,
           carbs: carbsGPerDay,
           fats: fatsGPerDay,
           proteins: proteinsGPerDay,
           fibers: fibersGPerDay
-      }));
+      });
     }
 
   recalculateMacros(mealDict: MealDictionary): void {
