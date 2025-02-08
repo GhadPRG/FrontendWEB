@@ -12,7 +12,7 @@
                     class="bg-background/40 backdrop-blur-sm rounded-lg p-2 sm:p-3 md:p-4 hover:bg-skin-fill-light transition-all duration-300 cursor-pointer shadow-lg border border-skin-fill-medium/20"
             >
                 <div class="flex items-center justify-between mb-1 sm:mb-2">
-                    <div class="text-xs sm:text-sm text-skin-accent-light dark:text-skin-accent-dark font-medium">{{ event.start.toFormat('HH:mm') }}</div>
+                    <div class="text-xs sm:text-sm font-medium">{{ event.start.toFormat('HH:mm') }}</div>
                     <div class="flex space-x-1">
                         <div *ngFor="let tagId of event.tags.slice(0, 3)"
                              class="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full"

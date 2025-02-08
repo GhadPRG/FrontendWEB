@@ -163,7 +163,13 @@ export class EventFormComponent implements OnInit, OnChanges {
   }
 
   deleteEvent(event: CalendarEvent) {
-    this.eventNoteService.deleteEvent(event.id)
+    this.eventNoteService.deleteEvent(event.id).subscribe({
+      next: () => {
+      },
+      error: (error) => {
+        console.error('Error deleting event:', error);
+      }
+    });
   }
 
   confirmDelete() {

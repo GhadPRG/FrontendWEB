@@ -131,6 +131,7 @@ export class CalendarNotesComponent implements OnInit {
   openEventForm(event?: CalendarEvent) {
     this.selectedEvent = event || null
     this.isEventFormOpen = true
+    this.closeDayView()
   }
 
   closeEventForm() {
