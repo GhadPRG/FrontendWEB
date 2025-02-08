@@ -35,7 +35,8 @@ export class EventNoteService {
       this.dataMappingService.addEvent(event).subscribe(
         (newEvent) => {
           const currentEvents = this.eventsSubject.value
-          this.eventsSubject.next([...currentEvents, newEvent])
+          const updatedEvents = [...currentEvents, newEvent]
+          this.eventsSubject.next(updatedEvents)
           observer.next(newEvent)
           observer.complete()
         },
@@ -80,7 +81,8 @@ export class EventNoteService {
       this.dataMappingService.addNote(note).subscribe(
         (newNote) => {
           const currentNotes = this.notesSubject.value
-          this.notesSubject.next([...currentNotes, newNote])
+          const updatedNotes = [...currentNotes, newNote]
+          this.notesSubject.next(updatedNotes)
           observer.next(newNote)
           observer.complete()
         },

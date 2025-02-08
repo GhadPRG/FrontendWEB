@@ -131,7 +131,7 @@ export class LoginComponent implements OnInit {
           () => {
             console.log("Registration successful")
             this.isLogin = true
-            this.authForm.reset()
+            this.toggleForm();
           },
           (error) => {
             console.error("Registration failed", error)

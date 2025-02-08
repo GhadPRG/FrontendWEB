@@ -36,21 +36,21 @@ export class NotesGridComponent implements OnInit {
   loadData(): void {
     this.eventNoteService.notes$.subscribe((notes) => {
       this.notes = notes
-      this.filteredNotes = this.getFilteredNotes();
+      this.onFilterChange()
     })
 
     this.eventNoteService.categories$.subscribe(() => {
       this.tags = this.eventNoteService.getAllTags()
-      this.filteredNotes = this.getFilteredNotes();
+      this.onFilterChange()
     })
 
     this.eventNoteService.tagSelected$.subscribe((filteredTags) => {
-      this.onFilterChange(filteredTags)
+      this.selectedTagIds = filteredTags
+      this.onFilterChange()
     })
   }
 
-  onFilterChange(selectedTagIds: number[]) {
-    this.selectedTagIds = selectedTagIds
+  onFilterChange() {
     this.filteredNotes = this.getFilteredNotes();
   }
 
@@ -85,6 +85,7 @@ export class NotesGridComponent implements OnInit {
       this.eventNoteService.deleteNote(this.noteToDelete.id).subscribe({
         next: () => {
           this.closeDeleteModal();
+          this.onFilterChange()
         },
         error: (error) => {
           console.error('Error deleting note:', error);
