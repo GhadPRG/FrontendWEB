@@ -17,7 +17,7 @@ export class DashSportComponent implements OnInit, AfterViewInit {
 
   // Forms
   form_registerExercise!: FormGroup;
-  
+
   // HTML Elements
   @ViewChildren('muscleGroupBtn') muscleGroupBtnsRef!: QueryList<ElementRef>;  // Muscle Groups
 
@@ -30,7 +30,7 @@ export class DashSportComponent implements OnInit, AfterViewInit {
     private dashService: DashboardService,
     public sportService: SportService,
     private fb: FormBuilder
-  ) 
+  )
   {
     this.initiateForms();
   }
@@ -49,7 +49,7 @@ export class DashSportComponent implements OnInit, AfterViewInit {
         const unflattenResponse = this.sportService.unflattenExercises(response);
 
         this.exerciseDict = this.sportService.mapExericesToExerciseDictionary(unflattenResponse);
-        this.todayExerciseDict = this.sportService.mapToTodayExerices(this.exerciseDict); 
+        this.todayExerciseDict = this.sportService.mapToTodayExerices(this.exerciseDict);
       }
     });
   }
@@ -90,7 +90,7 @@ export class DashSportComponent implements OnInit, AfterViewInit {
     this.form_registerExercise.get('muscleGroup_choice')?.setValue(this.currentMuscleGroupShown());
   }
 
-  
+
   onRegisterExercise(): void {
     if(!this.form_registerExercise.valid) return;
 
@@ -114,7 +114,10 @@ export class DashSportComponent implements OnInit, AfterViewInit {
           weight_used: this.form_registerExercise.get('weight_used')?.value,
         };
 
-        this.sportService.registerNewExercise(currentExercise);
+        this.sportService.registerNewExercise(currentExercise).subscribe(
+          response => console.log('Success:', response),
+          error => console.error('Error:', error)
+        );
 
         // Local Update
         this.exerciseDict[currentExercise.exerciseInfo.target_muscle_group].push(currentExercise);
