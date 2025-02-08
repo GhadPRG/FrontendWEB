@@ -1,7 +1,7 @@
 <div class=" backdrop-blur-sm rounded-lg shadow-lg p-3 sm:p-4 md:p-6 text-skin-base-light">
     <h2 class="text-lg sm:text-xl md:text-2xl font-bold mb-3 sm:mb-4 md:mb-6">Timeline</h2>
     <div *ngFor="let day of groupedEvents | keyvalue" class="mb-4 sm:mb-6 md:mb-8">
-        <div class="rounded-md px-2 sm:px-3 py-1 inline-block mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm font-medium">
+        <div class="text-skin-base-light rounded-md px-2 sm:px-3 py-1 inline-block mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm font-medium">
             {{ formatDate(day.key) }}
         </div>
         <div *ngFor="let event of day.value" class="relative pl-4 sm:pl-6 md:pl-8 pb-3 sm:pb-4 md:pb-6">
