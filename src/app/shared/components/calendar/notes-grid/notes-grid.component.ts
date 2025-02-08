@@ -36,7 +36,7 @@ export class NotesGridComponent implements OnInit {
 
   loadData(): void {
     this.eventNoteService.notes$.subscribe((notes) => {
-      this.notes = notes
+      this.notes = [...notes]
       this.onFilterChange()
     })
 
