@@ -48,7 +48,11 @@ export class SportService {
   constructor(private http: HttpClient) {}
 
   getWeekExercise(): Observable<ExerciseFlatten[]> {
-    return this.http.get<ExerciseFlatten[]>(`${this.serverUrl}`, { headers: this.getHeaders() });
+    let request = this.http.get<ExerciseFlatten[]>(`${this.serverUrl}`, { headers: this.getHeaders() });
+
+    request.subscribe((response) => console.log(response));
+
+    return request;
   }
 
   getExerciseInfo(exerciseName: string): Observable<any> {
@@ -57,11 +61,19 @@ export class SportService {
           'x-app-key': this.appKey
         });
 
-    return this.http.post(`${this.apiUrlSearchExercise}`, { query: exerciseName }, { headers });
+    let request = this.http.post(`${this.apiUrlSearchExercise}`, { query: exerciseName }, { headers });
+    
+    request.subscribe();
+
+    return request;
   }
 
   registerNewExercise(exercise: ExerciseInterface): Observable<any> {
-    return this.http.post(`${this.serverUrl}`, this.flattenExercise(exercise), { headers: this.getHeaders() });
+    let request = this.http.post(`${this.serverUrl}`, this.flattenExercise(exercise), { headers: this.getHeaders() });
+
+    request.subscribe();
+
+    return request;
   }
 
 

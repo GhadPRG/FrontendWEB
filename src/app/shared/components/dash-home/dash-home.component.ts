@@ -38,6 +38,8 @@ export class DashHomeComponent implements OnInit {
     this.sportService.getWeekExercise().subscribe({
       next: (response) => {
         const unflattenResponse = this.sportService.unflattenExercises(response);
+        const currentDate = new Date().toISOString().split("T")[0];
+        unflattenResponse.forEach((ex) => ex.date = currentDate);
 
         this.sportService.mapExericesToExerciseDictionary(unflattenResponse);
       }
