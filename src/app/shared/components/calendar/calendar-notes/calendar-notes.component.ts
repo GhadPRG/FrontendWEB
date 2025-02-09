@@ -6,7 +6,6 @@ import { DateTime } from "luxon"
 import { CalendarEvent, Note, Tag } from "../../../utils/types/calendar.interface"
 import { EventNoteService } from "../../../services/event-note.service"
 import {BehaviorSubject} from 'rxjs';
-import {Router} from '@angular/router';
 
 @Component({
   selector: "app-calendar-notes",
@@ -39,7 +38,6 @@ export class CalendarNotesComponent implements OnInit {
 
   constructor(
     private eventNoteService: EventNoteService,
-    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -53,7 +51,6 @@ export class CalendarNotesComponent implements OnInit {
       this.events = events
       this.eventsSubject.next(this.events)
       // Forza l'aggiornamento della vista
-      this.refreshComponent()
       this.updateCalendar()
 
     })
@@ -67,12 +64,6 @@ export class CalendarNotesComponent implements OnInit {
     this.eventNoteService.tagSelected$.subscribe((filteredTags) => {
       this.onFilterChange(filteredTags)
     })
-  }
-
-  refreshComponent() {
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-      this.router.navigate([this.router.url]);
-    });
   }
 
   updateCalendar() {
