@@ -1,18 +1,20 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ConfirmDeleteModalComponent} from '../forms/confirm-delete-modal/confirm-delete-modal.component';
-import {NgForOf} from '@angular/common';
+import {AsyncPipe, NgForOf} from '@angular/common';
 import {Note, Tag} from '../../../utils/types/calendar.interface';
 import {EventNoteService} from '../../../services/event-note.service';
 import {NoteFormComponent} from "../forms/note-form/note-form.component";
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-notes-grid',
   standalone: true,
-    imports: [
-        ConfirmDeleteModalComponent,
-        NgForOf,
-        NoteFormComponent
-    ],
+  imports: [
+    ConfirmDeleteModalComponent,
+    NgForOf,
+    NoteFormComponent,
+    AsyncPipe
+  ],
   templateUrl: './notes-grid.component.html',
   styleUrl: './notes-grid.component.css'
 })
@@ -25,7 +27,7 @@ export class NotesGridComponent implements OnInit {
   selectedNote: Note | null = null
   isDeleteModalOpen = false;
   noteToDelete: Note | null = null;
-  filteredNotes: Note[] = []
+  filteredNotes$ = new BehaviorSubject<Note[]>([]);
 
   constructor(private eventNoteService: EventNoteService,
               private cdr: ChangeDetectorRef,) {}
@@ -52,7 +54,7 @@ export class NotesGridComponent implements OnInit {
   }
 
   onFilterChange() {
-    this.filteredNotes = this.getFilteredNotes();
+    this.filteredNotes$.next(this.getFilteredNotes());
     this.cdr.detectChanges()
   }
 

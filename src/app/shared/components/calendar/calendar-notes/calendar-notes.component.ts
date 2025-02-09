@@ -1,10 +1,12 @@
 import { Component, OnInit } from "@angular/core"
 import { DayViewComponent } from "../day-view/day-view.component"
-import { NgClass, NgForOf, NgIf } from "@angular/common"
+import {AsyncPipe, NgClass, NgForOf, NgIf} from "@angular/common"
 import { EventFormComponent } from "../forms/event-form/event-form.component"
 import { DateTime } from "luxon"
 import type { CalendarEvent, Note, Tag } from "../../../utils/types/calendar.interface"
 import { EventNoteService } from "../../../services/event-note.service"
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: "app-calendar-notes",
@@ -15,6 +17,7 @@ import { EventNoteService } from "../../../services/event-note.service"
     EventFormComponent,
     NgForOf,
     NgClass,
+    AsyncPipe,
   ],
   templateUrl: "./calendar-notes.component.html",
   styleUrl: "./calendar-notes.component.css",
@@ -32,6 +35,9 @@ export class CalendarNotesComponent implements OnInit {
   selectedEvent: CalendarEvent | null = null
   selectedDay: DateTime | null = null
 
+  private eventsSubject = new BehaviorSubject<CalendarEvent[]>([]); // 🔄 Variabile reattiva
+  events$ = this.eventsSubject.asObservable();
+
   constructor(
     private eventNoteService: EventNoteService
   ) {}
@@ -45,6 +51,7 @@ export class CalendarNotesComponent implements OnInit {
   {
     this.eventNoteService.events$.subscribe((events) => {
       this.events = events
+      this.eventsSubject.next(this.events)
       // Forza l'aggiornamento della vista
       this.updateCalendar()
     })
@@ -99,14 +106,9 @@ export class CalendarNotesComponent implements OnInit {
     this.selectedDay = date
   }
 
-  getEventsForDay(day: DateTime)
-    : (CalendarEvent &
-    {
-      color: string
-    }
-    )[]
+  getEventsForDay(day: DateTime): (CalendarEvent & { color: string })[]
   {
-    return this.events
+    return this.eventsSubject.getValue()
       .filter((event) => {
         const eventStart = event.start.startOf('day');
         const eventEnd = event.end ? event.end.startOf('day') : eventStart;
@@ -117,6 +119,23 @@ export class CalendarNotesComponent implements OnInit {
         ...event,
         color: this.getEventColor(event),
       }));
+  }
+
+  getEventsForDayObservable(day: DateTime): Observable<(CalendarEvent & { color: string })[]> {
+    return this.events$.pipe(
+      map(events => events
+        .filter((event) => {
+          const eventStart = event.start.startOf('day');
+          const eventEnd = event.end ? event.end.startOf('day') : eventStart;
+          const currentDay = day.startOf('day');
+          return currentDay >= eventStart && currentDay <= eventEnd;
+        })
+        .map((event) => ({
+          ...event,
+          color: this.getEventColor(event),
+        }))
+      )
+    );
   }
 
   getEventColor(event: CalendarEvent): string {
@@ -141,12 +160,13 @@ export class CalendarNotesComponent implements OnInit {
 
   onFilterChange(selectedTagIds: number[]) {
     this.selectedTagIds = selectedTagIds
-    this.getFilteredEvents();
+    this.eventsSubject.next(this.getFilteredEvents());
   }
 
   getFilteredEvents(): CalendarEvent[] {
-    if (this.selectedTagIds.length === 0) return this.events
-    return this.events.filter((event) => event.tags.some((tagId) => this.selectedTagIds.includes(tagId)))
+    const allEvents = this.eventsSubject.getValue();
+    if (this.selectedTagIds.length === 0) return allEvents
+    return allEvents.filter((event) => event.tags.some((tagId) => this.selectedTagIds.includes(tagId)))
   }
 
   focusOnEvent(event: CalendarEvent) {
