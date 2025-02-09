@@ -3,7 +3,7 @@ import { DayViewComponent } from "../day-view/day-view.component"
 import {AsyncPipe, NgClass, NgForOf, NgIf} from "@angular/common"
 import { EventFormComponent } from "../forms/event-form/event-form.component"
 import { DateTime } from "luxon"
-import type { CalendarEvent, Note, Tag } from "../../../utils/types/calendar.interface"
+import { CalendarEvent, Note, Tag } from "../../../utils/types/calendar.interface"
 import { EventNoteService } from "../../../services/event-note.service"
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';

@@ -1,16 +1,16 @@
 import { Component, type OnInit } from "@angular/core"
 import {
-  type AbstractControl,
-  type FormBuilder,
-  type FormGroup,
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
   ReactiveFormsModule,
-  type ValidationErrors,
-  type ValidatorFn,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from "@angular/forms"
 import { NgIf } from "@angular/common"
-import type { AuthService } from "../../shared/services/auth.service"
-import type { Router } from "@angular/router"
+import { AuthService } from "../../shared/services/auth.service"
+import { Router } from "@angular/router"
 
 @Component({
   selector: "app-login",
@@ -146,6 +146,7 @@ export class LoginComponent implements OnInit {
             console.log("Registration successful")
             this.isLogin = true
             this.toggleForm()
+            this.router.navigate(["/login"])
           },
           (error) => {
             console.error("Registration failed", error)
