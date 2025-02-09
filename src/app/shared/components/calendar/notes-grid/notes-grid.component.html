@@ -1,6 +1,6 @@
 <section class="glass-panel text-skin-base-light backdrop-blur-sm rounded-lg shadow-lg p-3 sm:p-4 md:p-6 border border-border">
     <header class="flex justify-between items-center mb-3 sm:mb-4 md:mb-6">
-        <h2 class="text-lg sm:text-xl md:text-2xl font-semibold text-foreground">Note</h2>
+        <h2 class="text-lg sm:text-xl md:text-2xl font-semibold text-foreground">Notes</h2>
         <button (click)="createNote()" class="w-10 h-10 rounded-full bg-skin-fill-dark backdrop-blur-sm flex items-center justify-center hover:bg-skin-fill-medium transition-all fixed bottom-4 right-4 sm:bottom-6 sm:right-6 shadow-lg z-10">
             <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -9,7 +9,7 @@
     </header>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-        <article *ngFor="let note of filteredNotes"
+        <article *ngFor="let note of filteredNotes$ | async"
                  (click)="onNoteClick(note)"
                  class="bg-background/60 backdrop-blur-sm rounded-lg p-2 sm:p-3 md:p-4 hover:bg-background/80 transition-all cursor-pointer group border border-border"
                  [style.backgroundColor]="getNoteBgColor(note)">
@@ -52,6 +52,7 @@
         [isOpen]="isDeleteModalOpen"
         (confirm)="confirmDelete()"
         (cancel)="closeDeleteModal()"
+        [title]="'note'"
 ></app-confirm-delete-modal>
 
 <app-note-form [isOpen]="isNoteFormOpen"

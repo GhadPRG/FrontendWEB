@@ -1,73 +1,75 @@
 <article class="text-skin-base-light">
-    <header class="flex justify-between items-center mb-2">
-        <h2 class="text-sm font-semibold text-foreground">{{ currentMonth.toFormat('MMM yyyy') }}</h2>
-        <div class="flex gap-1">
-            <button (click)="prevMonth()"
-                    class="w-8 h-8 rounded-lg bg-skin-fill-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-            <button (click)="nextMonth()"
-                    class="w-8 h-8 rounded-lg bg-skin-fill-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
-            <button (click)="openEventForm()"
-                    class="w-8 h-8 rounded-lg bg-skin-fill-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                </svg>
-            </button>
-        </div>
-    </header>
-
-    <!-- Mobile Day View -->
-    <div class="block sm:hidden">
-        <div class="flex overflow-x-auto pb-2">
-            <div *ngFor="let day of getDaysArray()"
-                 class="flex-shrink-0 w-14 mr-1 flex flex-col">
-                <div class="text-center text-xs text-muted-foreground mb-1">
-                    {{ day.toFormat('ccc') }}
-                </div>
-                <div (click)="selectDate(day)"
-                     class="aspect-square rounded-lg flex flex-col items-center justify-between p-2 cursor-pointer hover:bg-skin-fill-light transition-all"
-                     [class.opacity-50]="!isCurrentMonth(day)"
-                     [class.bg-skin-accent-light]="isToday(day)">
-                <span class="text-sm font-semibold" [class.text-skin-accent-light]="isToday(day)">
-                  {{ day.toFormat('d') }}
-                </span>
-                    <div class="flex flex-wrap gap-0.5 justify-center w-full">
-                        <div *ngFor="let event of getEventsForDay(day).slice(0, 3)"
-                             class="w-1.5 h-1.5 rounded-full"
-                             [style.backgroundColor]="event.color">
-                        </div>
-                        <span *ngIf="getEventsForDay(day).length > 3"
-                              class="text-[8px] text-muted-foreground">
-                    +{{ getEventsForDay(day).length - 3 }}
-                  </span>
-                    </div>
-                </div>
-                <!-- Eventi del giorno -->
-                <div *ngIf="getEventsForDay(day).length > 0"
-                     class="mt-1 w-full">
-                    <div *ngFor="let event of getEventsForDay(day)"
-                         class="text-xs p-1 mb-1 rounded truncate"
-                         [style.backgroundColor]="event.color + '33'"
-                         (click)="openEventForm(event)">
-                        {{ event.title }}
-                    </div>
-                </div>
-            </div>
-        </div>
+  <header class="flex justify-between items-center mb-2">
+    <h2 class="text-sm font-semibold">{{ currentMonth.toFormat('MMM yyyy') }}</h2>
+    <div class="flex gap-1">
+      <button (click)="prevMonth()"
+              class="w-8 h-8 rounded-lg bg-skin-fill-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button (click)="nextMonth()"
+              class="w-8 h-8 rounded-lg bg-skin-fill-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+      <button (click)="openEventForm()"
+              class="w-8 h-8 rounded-lg bg-skin-fill-dark hover:bg-skin-fill-medium transition-all flex items-center justify-center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+      </button>
     </div>
+  </header>
 
-    <!-- Desktop Grid View -->
+  <!-- Mobile Day View -->
+  <div class="block sm:hidden">
+    <div class="flex overflow-x-auto pb-2">
+      <div *ngFor="let day of getDaysArray()"
+           class="flex-shrink-0 w-14 mr-1 flex flex-col">
+        <div class="text-center text-xs text-skin-muted-light mb-1">
+          {{ day.toFormat('ccc') }}
+        </div>
+        <div (click)="selectDate(day)"
+             class="aspect-square rounded-lg flex flex-col items-center justify-between p-2 cursor-pointer hover:bg-skin-fill-light transition-all"
+             [class.opacity-50]="!isCurrentMonth(day)"
+             [class.bg-skin-accent-light]="isToday(day)">
+                    <span class="text-sm font-semibold" [class.text-skin-accent-light]="isToday(day)">
+                      {{ day.toFormat('d') }}
+                    </span>
+          <div class="flex flex-wrap gap-0.5 justify-center w-full">
+            <ng-container *ngIf="getEventsForDayObservable(day) | async as events">
+              <div *ngFor="let event of events.slice(0, 3)"
+                   class="w-1.5 h-1.5 rounded-full"
+                   [style.backgroundColor]="event.color">
+              </div>
+              <span *ngIf="events.length > 3"
+                    class="text-[8px]">
+                                +{{ events.length - 3 }}
+                            </span>
+            </ng-container>
+          </div>
+        </div>
+        <!-- Eventi del giorno -->
+        <div *ngIf="(getEventsForDayObservable(day) | async)?.length > 0"
+             class="mt-1 w-full">
+          <div *ngFor="let event of getEventsForDayObservable(day) | async"
+               class="text-xs p-1 mb-1 rounded truncate"
+               [style.backgroundColor]="event.color + '33'"
+               (click)="openEventForm(event)">
+            {{ event.title }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop Grid View -->
   <div class="hidden sm:block">
     <div class="grid grid-cols-7 mb-1">
       <div *ngFor="let day of daysOfWeek"
-           class="text-center text-muted-foreground text-xs">
+           class="text-center text-skin-muted-light text-xs">
         {{ day }}
       </div>
     </div>
@@ -76,26 +78,28 @@
       <ng-container *ngFor="let week of calendar">
         <div *ngFor="let day of week"
              [ngClass]="{
-                 'opacity-50': !isCurrentMonth(day),
-                 'ring-1 ring-skin-accent-light': isToday(day)
-               }"
+                         'opacity-50': !isCurrentMonth(day),
+                         'ring-1 ring-skin-accent-light': isToday(day)
+                       }"
              class="min-h-[100px] p-1 rounded-lg cursor-pointer hover:bg-skin-fill-light transition-all flex flex-col"
              (click)="selectDate(day)">
           <div class="text-xs mb-1">{{ day.toFormat('d') }}</div>
           <!-- Indicatori eventi -->
           <div class="flex flex-wrap gap-0.5 justify-start mb-1">
-            <div *ngFor="let event of getEventsForDay(day).slice(0, 3)"
-                 class="w-1.5 h-1.5 rounded-full"
-                 [style.backgroundColor]="event.color">
-            </div>
-            <span *ngIf="getEventsForDay(day).length > 3"
-                  class="text-[8px] text-muted-foreground">
-                        +{{ getEventsForDay(day).length - 3 }}
-                    </span>
+            <ng-container *ngIf="getEventsForDayObservable(day) | async as events">
+              <div *ngFor="let event of events.slice(0, 3)"
+                   class="w-1.5 h-1.5 rounded-full"
+                   [style.backgroundColor]="event.color">
+              </div>
+              <span *ngIf="events.length > 3"
+                    class="text-[8px]">
+                                +{{ events.length - 3 }}
+                            </span>
+            </ng-container>
           </div>
           <!-- Lista eventi -->
           <div class="flex-1 overflow-y-auto">
-            <div *ngFor="let event of getEventsForDay(day)"
+            <div *ngFor="let event of getEventsForDayObservable(day) | async"
                  class="text-xs p-1 mb-1 rounded truncate hover:bg-opacity-50"
                  [style.backgroundColor]="event.color + '33'"
                  (click)="openEventForm(event)">

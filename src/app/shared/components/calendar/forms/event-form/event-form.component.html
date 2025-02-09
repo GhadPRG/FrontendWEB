@@ -1,40 +1,40 @@
 <div *ngIf="isOpen" class="fixed inset-0 text-skin-base-light z-50 flex items-center justify-center glass-panel p-4">
   <div class="shadow-glass rounded-lg w-full max-w-[600px] max-h-[90vh] overflow-y-auto p-4 sm:p-6">
     <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
-      {{ event ? 'Modifica Evento' : 'Crea Nuovo Evento' }}
+      {{ event ? 'Edit Event' : 'Add Event' }}
     </h2>
 
     <form [formGroup]="eventForm" (ngSubmit)="onSubmit($event)" class="grid grid-cols-1 gap-4 sm:gap-6">
       <div>
-        <label for="title" class="block text-sm font-medium">Titolo</label>
+        <label for="title" class="block text-sm font-medium">Title</label>
         <input type="text" id="title" formControlName="title"
                class="mt-1 block w-full rounded-md border border-skin-fill-light text-black bg-white shadow-sm focus:border-skin-accent focus:ring-skin-accent">
       </div>
 
       <div>
-        <label for="description" class="block text-sm font-medium">Descrizione</label>
+        <label for="description" class="block text-sm font-medium">Description</label>
         <textarea id="description" formControlName="description" rows="3"
                   class="mt-1 block w-full rounded-md border border-skin-fill-light bg-white shadow-sm text-black focus:border-skin-accent focus:ring-skin-accent"></textarea>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <div class="relative z-30">
-          <label for="start" class="block text-sm font-medium">Data Inizio</label>
+          <label for="start" class="block text-sm font-medium">Start Date</label>
           <app-date-picker formControlName="start" (dateSelected)="onDateChange('start', $event)" class="mt-1 block w-full"></app-date-picker>
         </div>
         <div class="relative z-30">
-          <label for="startTime" class="block text-sm font-medium">Ora Inizio</label>
+          <label for="startTime" class="block text-sm font-medium">Time Start</label>
           <app-time-picker formControlName="startTime" (timeChange)="onTimeChange('startTime', $event)" class="mt-1 block w-full"></app-time-picker>
         </div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         <div class="relative z-20">
-          <label for="end" class="block text-sm font-medium">Data Fine</label>
+          <label for="end" class="block text-sm font-medium">End Date</label>
           <app-date-picker formControlName="end" (dateSelected)="onDateChange('end', $event)" class="mt-1 block w-full"></app-date-picker>
         </div>
         <div class="relative z-20">
-          <label for="endTime" class="block text-sm font-medium">Ora Fine</label>
+          <label for="endTime" class="block text-sm font-medium">Time End</label>
           <app-time-picker formControlName="endTime" (timeChange)="onTimeChange('endTime', $event)" class="mt-1 block w-full"></app-time-picker>
         </div>
       </div>
@@ -56,16 +56,16 @@
       <div class="flex flex-col sm:flex-row justify-between space-y-3 sm:space-y-0 sm:space-x-3 pt-4">
         <button *ngIf="event?.id" type="button" (click)="onDeleteEvent()"
                 class="px-4 py-2 border border-red-500 rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
-          Elimina
+          Delete
         </button>
         <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
           <button type="button" (click)="closeModal.emit()"
                   class="px-4 py-2 border border-skin-fill-light rounded-md shadow-sm text-sm font-medium bg-skin-fill-light hover:bg-skin-fill-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-skin-accent">
-            Annulla
+            Cancel
           </button>
           <button type="submit" [disabled]="!eventForm.valid"
                   class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-skin-inverted bg-skin-fill-dark hover:bg-skin-fill-darker focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-skin-accent disabled:opacity-50 disabled:cursor-not-allowed">
-            {{ event ? 'Aggiorna' : 'Crea' }}
+            {{ event ? 'Update' : 'Add' }}
           </button>
         </div>
       </div>
@@ -77,5 +77,6 @@
   [isOpen]="isDeleteModalOpen"
   (confirm)="confirmDelete()"
   (cancel)="closeDeleteModal()"
+  [title]="'event'"
 ></app-confirm-delete-modal>
 

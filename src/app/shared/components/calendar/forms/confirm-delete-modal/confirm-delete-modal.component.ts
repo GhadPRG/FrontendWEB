@@ -12,6 +12,7 @@ import {NgIf} from '@angular/common';
 })
 export class ConfirmDeleteModalComponent {
   @Input() isOpen: boolean = false;
+  @Input() title: string = "event";
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 
