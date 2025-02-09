@@ -1,12 +1,11 @@
 import { Component, OnInit } from "@angular/core"
 import { DayViewComponent } from "../day-view/day-view.component"
-import {AsyncPipe, NgClass, NgForOf, NgIf} from "@angular/common"
+import { NgClass, NgForOf, NgIf} from "@angular/common"
 import { EventFormComponent } from "../forms/event-form/event-form.component"
 import { DateTime } from "luxon"
 import { CalendarEvent, Note, Tag } from "../../../utils/types/calendar.interface"
 import { EventNoteService } from "../../../services/event-note.service"
-import {BehaviorSubject, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
 import {Router} from '@angular/router';
 
 @Component({
@@ -18,7 +17,6 @@ import {Router} from '@angular/router';
     EventFormComponent,
     NgForOf,
     NgClass,
-    AsyncPipe,
   ],
   templateUrl: "./calendar-notes.component.html",
   styleUrl: "./calendar-notes.component.css",
@@ -129,23 +127,6 @@ export class CalendarNotesComponent implements OnInit {
         ...event,
         color: this.getEventColor(event),
       }));
-  }
-
-  getEventsForDayObservable(day: DateTime): Observable<(CalendarEvent & { color: string })[]> {
-    return this.events$.pipe(
-      map(events => events
-        .filter((event) => {
-          const eventStart = event.start.startOf('day');
-          const eventEnd = event.end ? event.end.startOf('day') : eventStart;
-          const currentDay = day.startOf('day');
-          return currentDay >= eventStart && currentDay <= eventEnd;
-        })
-        .map((event) => ({
-          ...event,
-          color: this.getEventColor(event),
-        }))
-      )
-    );
   }
 
   getEventColor(event: CalendarEvent): string {
