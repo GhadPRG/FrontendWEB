@@ -7,6 +7,7 @@ import { DashSportComponent } from './shared/components/dash-sport/dash-sport.co
 import { DashMoodComponent } from './shared/components/dash-mood/dash-mood.component';
 import {LoginComponent} from './business/login/login.component';
 import {authGuard} from './shared/utils/guards/auth.guard';
+import {RegisterComponent} from './business/register/register.component';
 
 export const routes: Routes = [
     {
@@ -53,5 +54,9 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
   }
 ];
