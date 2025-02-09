@@ -7,6 +7,7 @@ import type { CalendarEvent, Note, Tag } from "../../../utils/types/calendar.int
 import { EventNoteService } from "../../../services/event-note.service"
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Component({
   selector: "app-calendar-notes",
@@ -39,7 +40,8 @@ export class CalendarNotesComponent implements OnInit {
   events$ = this.eventsSubject.asObservable();
 
   constructor(
-    private eventNoteService: EventNoteService
+    private eventNoteService: EventNoteService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -53,7 +55,9 @@ export class CalendarNotesComponent implements OnInit {
       this.events = events
       this.eventsSubject.next(this.events)
       // Forza l'aggiornamento della vista
+      this.refreshComponent()
       this.updateCalendar()
+
     })
 
     this.eventNoteService.categories$.subscribe(() => {
@@ -65,6 +69,12 @@ export class CalendarNotesComponent implements OnInit {
     this.eventNoteService.tagSelected$.subscribe((filteredTags) => {
       this.onFilterChange(filteredTags)
     })
+  }
+
+  refreshComponent() {
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+      this.router.navigate([this.router.url]);
+    });
   }
 
   updateCalendar() {
