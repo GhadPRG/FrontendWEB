@@ -26,7 +26,7 @@ export class SportService {
   private serverUrl: string = 'http://localhost:8080/api/exercises';
 
   // Data
-  readonly muscleGroups = ['Back','Chest', 'Shoudlers', 'Legs', 'Core', 'Arms'];
+  readonly muscleGroups = ['Back','Chest', 'Shoulders', 'Legs', 'Core', 'Arms'];
 
   exerciseWeeklyDonePerType = signal<Record<string, number>>(
     Object.fromEntries(this.muscleGroups.map(key => [key, 0])) as Record<string, number>
@@ -39,7 +39,7 @@ export class SportService {
     if (total === 0) return { upper_body: 0, lower_body: 0, core: 0, };
 
     return {
-      upper_body: ((exValues['Back'] + exValues['Shoudlers'] + exValues['Arms'])/ total) * 100,
+      upper_body: ((exValues['Back'] + exValues['Shoulders'] + exValues['Arms'])/ total) * 100,
       lower_body: (exValues['Legs']/ total) * 100,
       core: ((exValues['Core'] + exValues['Chest'])/ total) * 100, };
   });
